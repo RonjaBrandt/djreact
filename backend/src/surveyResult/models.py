@@ -1,5 +1,17 @@
 from django.db import models
 
+#import requests
+#
+#
+#headers = {
+#    'Authorization': 'Bearer 94HyzhMYCbSZyAczo6xXi7GZuFLRuvUA9krjC9FFahUf',
+#}
+#
+#response = requests.get('https://api.typeform.com/forms/nv4fXG/responses', headers=headers)
+
+#print(response.json())
+
+
 #Survey
 class Survey(models.Model):
     # The model Survey takes out the information from Typefrom in JSON
