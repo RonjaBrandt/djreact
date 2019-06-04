@@ -34,6 +34,9 @@ class Answers(models.Model):
     # The model Answer takes out object from Typeform in JSON
     # from the array called "answers"
     #
+    #If the survey is deleted then delete the answer to that survey
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE),
+    #
     # Takes out the id for question
     # ex: "id": "ovmiTI7jMvHR",
     answers_field_id = models.CharField(max_length=250),
