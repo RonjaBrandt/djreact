@@ -22,10 +22,16 @@ class Survey(models.Model):
     # ex: "referer": "https://ronjabrandt.typeform.com/to/nv4fXG",
     item_metadata_referer = models.CharField(max_length=250),
     #
-    #Takes out id for network to help with get right survey
+    # Takes out id for network to help with get right survey
     # ex: "network_id": "0cf28107c5",
     item_metadata_network_id = models.CharField(max_length=250)
     #
+    # #Print out info:
+    def __str__(self):
+        return 'Respons ID: ' self.item_response_id + ' -Start Time: ' + self.item_landed_at + ' -End Time: ' + return self.item_submitted_at + ' -HTTPadress/survey ID;: ' + self.item_metadata_referer + ' -NetworkID: ' + self.item_metadata_referer + ' -end- '
+
+
+
 ##########################################################################
 # 1 Survey to many Answers
 ##########################################################################
@@ -34,7 +40,7 @@ class Answers(models.Model):
     # The model Answer takes out object from Typeform in JSON
     # from the array called "answers"
     #
-    #If the survey is deleted then delete the answer to that survey
+    # If the survey is deleted then delete the answer to that survey
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE),
     #
     # Takes out the id for question
@@ -61,10 +67,12 @@ class Answers(models.Model):
     #       }
     # or
     # ex: "text": "Sweden"
+    answers_choice = models.CharField(max_length=250),
     #TODO: Gör så att programmet känner av olika fällt, alt en kategori för varje typ av svar
-    answers_type = models.CharField(max_length=250),
     #
-    
+    #Print out:
+     def __str__(self):
+        return 'Question ID: ' self.answers_field_id + ' -Question Type: ' + self.answers_field_type + ' -Question Referens: ' + return self.answers_field_ref + ' -Answer Type: ' + self.answers_type + ' -Choice: ' + self.answers_choice + ' -end- '
 ##########################################################################
 # 1 Answer to many Points
 ##########################################################################
