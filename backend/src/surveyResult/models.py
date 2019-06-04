@@ -28,7 +28,7 @@ class Survey(models.Model):
     #
     # #Print out info:
     def __str__(self):
-        return 'Respons ID: ' self.item_response_id + ' -Start Time: ' + self.item_landed_at + ' -End Time: ' + return self.item_submitted_at + ' -HTTPadress/survey ID;: ' + self.item_metadata_referer + ' -NetworkID: ' + self.item_metadata_referer + ' -end- '
+        return 'Respons ID: ' + self.item_response_id + ' -Start Time: ' + self.item_landed_at + ' -End Time: ' + self.item_submitted_at + ' -HTTPadress/survey ID;: ' + self.item_metadata_referer + ' -NetworkID: ' + self.item_metadata_referer + ' -end- '
 
 
 
@@ -71,8 +71,9 @@ class Answers(models.Model):
     #TODO: Gör så att programmet känner av olika fällt, alt en kategori för varje typ av svar
     #
     #Print out:
-     def __str__(self):
-        return 'Question ID: ' self.answers_field_id + ' -Question Type: ' + self.answers_field_type + ' -Question Referens: ' + return self.answers_field_ref + ' -Answer Type: ' + self.answers_type + ' -Choice: ' + self.answers_choice + ' -end- '
+    
+    def __str__(self):
+        return 'Question ID: ' + self.answers_field_id + ' -Question Type: ' + self.answers_field_type + ' -Question Referens: ' + self.answers_field_ref + ' -Answer Type: ' + self.answers_type + ' -Choice: ' + self.answers_choice + ' -end- '
 ##########################################################################
 # 1 Answer to many Points
 ##########################################################################
