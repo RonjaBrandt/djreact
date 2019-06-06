@@ -1,16 +1,5 @@
 from django.db import models
 
-#import requests
-#
-#
-#headers = {
-#    'Authorization': 'Bearer 94HyzhMYCbSZyAczo6xXi7GZuFLRuvUA9krjC9FFahUf',
-#}
-#
-#response = requests.get('https://api.typeform.com/forms/nv4fXG/responses', headers=headers)
-
-#print(response.json())
-
 
 #Survey
 class Survey(models.Model):
@@ -81,8 +70,8 @@ class Survey(models.Model):
     #
     #Print out:
     
-    def __str__(self):
-        return 'Respons ID: ' + self.item_response_id + ' -Start Time: ' + self.item_landed_at + ' -End Time: ' + self.item_submitted_at + ' -HTTPadress/survey ID;: ' + self.item_metadata_referer + ' -NetworkID: ' + self.item_metadata_referer + 'Question ID: ' + self.answers_field_id + ' -Question Type: ' + self.answers_field_type + ' -Question Referens: ' + self.answers_field_ref + ' -Answer Type: ' + self.answers_type + ' -Choice: ' + self.answers + ' -end- '
+    #def __str__(self):
+     #   return 'Respons ID: ' + self.item_response_id + ' -Start Time: ' + self.item_landed_at + ' -End Time: ' + self.item_submitted_at + ' -HTTPadress/survey ID;: ' + self.item_metadata_referer + ' -NetworkID: ' + self.item_metadata_referer + 'Question ID: ' + self.answers_field_id + ' -Question Type: ' + self.answers_field_type + ' -Question Referens: ' + self.answers_field_ref + ' -Answer Type: ' + self.answers_type + ' -Choice: ' + self.answers + ' -end- '
 ##########################################################################
 # 1 Answer to many Points
 ##########################################################################

@@ -38,9 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'surveyResult.apps.SurveyresultConfig',
-    
+    'rest_framework',    
     
 ]
+# Template directory setting
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(__file__), 'templates'),
+)
+
+#EMBEDLY_KEY = 'Bearer 94HyzhMYCbSZyAczo6xXi7GZuFLRuvUA9krjC9FFahUf'
+
 
 MIDDLEWARE = [
    

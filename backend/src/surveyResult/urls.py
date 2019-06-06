@@ -6,8 +6,8 @@ from . import views
 
 urlpatterns = [
     # /surveyResult/
-    path('', views.index, name='index'),
-
+    path('', views.save_survey, name='survey'),
+    #path('survey/', views.save_survey, name='survey'),
     # /surveyResult/123  (id)
     re_path(r'^(?P<survey_id>[0-9]+)/$', views.detail, name='detail'),
 ]
