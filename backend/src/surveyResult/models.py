@@ -39,21 +39,18 @@ class Survey(models.Model):
     item_metadata_network_id = models.CharField(max_length=250)
     #
     # #Print out info:
-    def __str__(self):
-        return 'Respons ID: ' + self.item_response_id + ' -Start Time: ' + self.item_landed_at + ' -End Time: ' + self.item_submitted_at + ' -HTTPadress/survey ID;: ' + self.item_metadata_referer + ' -NetworkID: ' + self.item_metadata_referer + ' -end- '
-
-
-
-##########################################################################
-# 1 Survey to many Answers
-##########################################################################
-#Answers
-class Answers(models.Model):
+   # def __str__(self):
+    #    return 'Respons ID: ' + self.item_response_id + ' -Start Time: ' + self.item_landed_at + ' -End Time: ' + #self.item_submitted_at + ' -HTTPadress/survey ID;: ' + self.item_metadata_referer + ' -NetworkID: ' + #self.item_metadata_referer + ' -end- '
+ ##########################################################################
+ # 1 Survey to many Answers
+ ##########################################################################
+ #Answers
+ #class Answers(models.Model):
     # The model Answer takes out object from Typeform in JSON
     # from the array called "answers"
     #
     # If the survey is deleted then delete the answer to that survey
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE),
+    #survey = models.ForeignKey(Survey, on_delete=models.CASCADE),
     #
     # Takes out the id for question
     # ex: "id": "ovmiTI7jMvHR",
@@ -79,13 +76,13 @@ class Answers(models.Model):
     #       }
     # or
     # ex: "text": "Sweden"
-    answers_choice = models.CharField(max_length=250),
+    answers = models.CharField(max_length=250),
     #TODO: Gör så att programmet känner av olika fällt, alt en kategori för varje typ av svar
     #
     #Print out:
     
     def __str__(self):
-        return 'Question ID: ' + self.answers_field_id + ' -Question Type: ' + self.answers_field_type + ' -Question Referens: ' + self.answers_field_ref + ' -Answer Type: ' + self.answers_type + ' -Choice: ' + self.answers_choice + ' -end- '
+        return 'Respons ID: ' + self.item_response_id + ' -Start Time: ' + self.item_landed_at + ' -End Time: ' + self.item_submitted_at + ' -HTTPadress/survey ID;: ' + self.item_metadata_referer + ' -NetworkID: ' + self.item_metadata_referer + 'Question ID: ' + self.answers_field_id + ' -Question Type: ' + self.answers_field_type + ' -Question Referens: ' + self.answers_field_ref + ' -Answer Type: ' + self.answers_type + ' -Choice: ' + self.answers + ' -end- '
 ##########################################################################
 # 1 Answer to many Points
 ##########################################################################
