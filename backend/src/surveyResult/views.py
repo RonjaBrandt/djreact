@@ -4,8 +4,7 @@ from django.conf import settings
 
 import requests
 
-from .forms import  Survey
-from .serializer import SurveySerializer
+#from .serializer import SurveySerializer
 
 
 def index(request):
@@ -19,11 +18,10 @@ def detail(request, survey_id):
 
 
 def save_survey(request):
-   headers = {
-    'Authorization': 'Bearer 94HyzhMYCbSZyAczo6xXi7GZuFLRuvUA9krjC9FFahUf',
-}
-   response = requests.get('https://api.typeform.com/forms/nv4fXG/responses', headers=headers)
 
-   print(response.json())
+   url="https://api.typeform.com/forms/nv4fXG/responses"
+   headers = {'Authorization': 'Bearer 94HyzhMYCbSZyAczo6xXi7GZuFLRuvUA9krjC9FFahUf'}
+   r = requests.get(url, headers=headers)
+   
 
-   return HttpResponse("se if get respons in consol" + str(response.json()))
+   return HttpResponse("se if get respons in consol" + str(r.json()))

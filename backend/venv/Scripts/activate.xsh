@@ -28,7 +28,7 @@ def _deactivate(args):
 _deactivate(["nondestructive"])
 aliases["deactivate"] = _deactivate
 
-$VIRTUAL_ENV = r"C:\Users\brand\MYDOCU~1\github\djreact\backend\venv"
+$VIRTUAL_ENV = r"C:\Users\brand\Documents\GitHub\djreact\backend\venv"
 
 $_OLD_VIRTUAL_PATH = $PATH
 $PATH = $PATH[:]

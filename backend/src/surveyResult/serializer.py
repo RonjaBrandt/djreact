@@ -4,3 +4,4 @@ from .models import Survey
 class SurveySerializer(serializers.ModelSerializer):
     class Meta:
         model = Survey
+        fieds = ['response_id']

@@ -1,6 +1,6 @@
 @echo off
 
-set "VIRTUAL_ENV=C:\Users\brand\MYDOCU~1\github\djreact\backend\venv"
+set "VIRTUAL_ENV=C:\Users\brand\Documents\GitHub\djreact\backend\venv"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"
