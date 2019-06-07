@@ -1,21 +1,7 @@
-from django.shortcuts import render
 from django.http import HttpResponse
 from django.conf import settings
 
 import requests
-
-#from .serializer import SurveySerializer
-
-
-def index(request):
-    #Sendsback the respons.
-    return HttpResponse("This is the result homepage")
-
-def detail(request, survey_id):
-    return HttpResponse("Details for the Answers with id: " + str(survey_id) + ".")
-
-
-
 
 def save_survey(request):
 
