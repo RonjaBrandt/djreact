@@ -1,12 +1,12 @@
 from django.db import models
 import json
-
-def get_data(request):
-       if request.method == 'post':
-          url="https://api.typeform.com/forms/nv4fXG/responses"
-          headers = {'Authorization': 'Bearer 94HyzhMYCbSZyAczo6xXi7GZuFLRuvUA9krjC9FFahUf'}
-          r = requests.get(url, headers=headers)
-          items = JSODNField()
+##Not working
+#def get_data(request):
+ #      if request.method == 'post':
+  #        url="https://api.typeform.com/forms/nv4fXG/responses"
+   #       headers = {'Authorization': 'Bearer 94HyzhMYCbSZyAczo6xXi7GZuFLRuvUA9krjC9FFahUf'}
+    #      r = requests.get(url, headers=headers)
+     #     items = JSODNField()
          #for landing_id in items['items']:
 
 #Survey
