@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 
-import Articles from '../components/Article';
+import Articles from '../components/Survey';
 
 
 
