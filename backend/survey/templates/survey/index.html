@@ -1,0 +1,11 @@
+{% if all_survey %}
+
+    <ul>
+        {% for survey in all_survey %}
+        <li><a href="/survey/{{ survey.id }}/">{{ survey.item }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h3>No survey found</h3>
+{% endif %}
+
