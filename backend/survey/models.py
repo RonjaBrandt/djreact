@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 
 class Surveys(models.Model):
    # Takes in all the data

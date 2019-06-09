@@ -9,7 +9,5 @@
                 <li><a href="{% url 'survey:detail' survey.id %}">{{ survey.titlel }}</a></li>
             {% endfor %}
         </ul>
-    {% else %}
-        <h3>No Surveys found</h3>
     {% endif %}
 {% endblock body %}

@@ -1,24 +1,16 @@
 {% extends 'survey/base.html' %}
+{% block title %}Survey Detail {% endblock title %}
 
 {% block body %}
   <h1>{{ surveys.titlel }}</h1>
   <h3>{{ surveys.items }}</h3>
 
-  {% if error_message %}
-    <p><strong>{{ error_message }}</strong></p>
-  {% endif %}
-<!--Display db items-->
-  <form action="{% url 'survey:results' surveys.id %}" method="POST">
-      {% csrf_token %}
       {% for questions in surveys.questions_set.all %}
-        <input type="radio" name="questions" id="questions{{ forloop.counter }}"  value="{{ questions.id }}">
-        <label for="questions{{ forloop.counter }}">
             {{ questions.answers }}
             {% if questions.is_results %}
               <p>-DONE-</p>
             {% endif %}
-        </label><br>
+        <br>
       {% endfor %}
-      <input type="submit" value="results">
-  </form>
+
 {% endblock body %}
