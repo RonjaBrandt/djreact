@@ -1,4 +1,5 @@
 from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Surveys
 
 class IndexView(generic.ListView):
@@ -12,3 +13,8 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Surveys
     template_name='survey/detail.html'
+
+
+class SurveyCreate(CreateView):
+    model = Surveys
+    fields = ['titlel', 'items']

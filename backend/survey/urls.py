@@ -8,4 +8,6 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     # /survey/<surveys_id>
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
+    #/survey/add/
+    path('survey/add/', views.SurveyCreate.as_view(), name='surveys-add'),
 ]

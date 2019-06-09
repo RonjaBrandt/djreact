@@ -6,6 +6,9 @@ class Surveys(models.Model):
    titlel = models.CharField(max_length=500, default="Something defult titel")
    items = models.CharField(max_length=500, default="Something defult item")
 
+   def get_absolute_url(self):
+      return reverse('survey:detail', kwargs={'pk':self.pk})
+
    def __str__(self):
       return '//Titlel: ' + self.titlel + ' //Item: ' + self.items
 
