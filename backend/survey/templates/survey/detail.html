@@ -11,7 +11,7 @@
       <input type="radio" name="questions" id="questions{{ forloop.counter }}"  value="{{ questions.id }}">
       <label for="questions{{ forloop.counter }}">
           {{ questions.answers }}
-          {% if questions.is_resutls %}
+          {% if questions.is_results %}
             <p>-DONE-</p>
           {% endif %}
       </label><br>
