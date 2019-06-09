@@ -2,10 +2,9 @@
     <h3>Here ar all Survey: </h3>
     <ul>
         {% for survey in all_surveys %}
-        <li><a href="/survey/{{ survey.id }}">{{ survey.titlel }}</a></li>
-        <p>hello</p>
+            <li><a href="{% url 'detail' survey.id %}">{{ survey.titlel }}</a></li>
         {% endfor %}
     </ul>
 {% else %}
-    <h3>No Surveys</h3>
+    <h3>No Surveys found</h3>
 {% endif %}
