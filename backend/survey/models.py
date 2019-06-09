@@ -1,17 +1,18 @@
 from django.db import models
 
 
-class Survey(models.Model):
+class Surveys(models.Model):
    # Takes in all the data
-   title = models.CharField(max_length=100)
-   items = models.CharField(max_length=500)
+   titlel = models.CharField(max_length=500, default="Something defult titel")
+   items = models.CharField(max_length=500, default="Something defult item")
 
    def __str__(self):
-       return '----BEGINING---- ' + self.items + ' ---- END-----'
+      return '//Titlel: ' + self.titlel + ' //Item: ' + self.items
+
+
 
 class Questions(models.Model):
-    items = models.ForeignKey(Survey, on_delete=models.CASCADE)
-    question_answers = models.CharField(max_length=500)
+    surveys = models.ForeignKey(Surveys, on_delete=models.CASCADE, default=2)
+    answers = models.TextField(max_length=500, default="Something defult ansewr")
 
-    def __str__(self):
-       return '----BEGINING---- ' + self.question_answers + ' ---- END-----'
+   

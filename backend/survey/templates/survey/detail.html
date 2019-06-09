@@ -1,0 +1,9 @@
+<h1>{{ surveys.titlel }}</h1>
+<h3>{{ surveys.items }}}</h3>
+
+
+<ul>
+    {% for questions in surveys.questions_set.all  %}
+        <li>{{ questions.answers }}</li>
+    {% endfor %}
+</ul>

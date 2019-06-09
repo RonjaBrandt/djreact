@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     # /survey/
     path('', views.index, name='index'),
-
+    path('<int:surveys_id>/', views.detail, name='detail'),
     # /survey/6214/  <-that is  (id)
-    re_path(r'^(?P<survey_id>[0-9]+)/$', views.detail, name='detail'),
+    #re_path(r'^(?P<survey_id>[0-9]+)/$', views.detail, name='detail'),
 ]
