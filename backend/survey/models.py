@@ -14,5 +14,6 @@ class Surveys(models.Model):
 class Questions(models.Model):
     surveys = models.ForeignKey(Surveys, on_delete=models.CASCADE, default=2)
     answers = models.TextField(max_length=500, default="Something defult ansewr")
-
-   
+    is_results = models.BooleanField(default=False)
+    def __str__(self):
+      return self.answers

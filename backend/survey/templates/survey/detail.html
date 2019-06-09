@@ -1,9 +1,20 @@
 <h1>{{ surveys.titlel }}</h1>
-<h3>{{ surveys.items }}}</h3>
+<h3>{{ surveys.items }}</h3>
 
+{% if error_message %}
+  <p><strong>{{ error_message }}</strong></p>
+{% endif %}
 
-<ul>
-    {% for questions in surveys.questions_set.all  %}
-        <li>{{ questions.answers }}</li>
+<form action="{% url 'survey:results' surveys.id %}" method="POST">
+    {% csrf_token %}
+    {% for questions in surveys.questions_set.all %}
+      <input type="radio" name="questions" id="questions{{ forloop.counter }}"  value="{{ questions.id }}">
+      <label for="questions{{ forloop.counter }}">
+          {{ questions.answers }}
+          {% if questions.is_resutls %}
+            <p>-DONE-</p>
+          {% endif %}
+      </label><br>
     {% endfor %}
-</ul>
+    <input type="submit" value="results">
+</form>
