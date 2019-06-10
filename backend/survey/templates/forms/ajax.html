@@ -5,12 +5,13 @@
 {% block content %}
     <form class='my-ajax-form' method='POST' data-url=''>
         {% csrf_token %}
+        <!--Hur den renderas-->
         {{form.as_p|safe}}
+        <!-- -->
         <button class="btn btn-defailt" type='submit' value="Submit">Submit</button>
     </form>
 {% endblock content %}
 
 
 {% block javascript %}
-
 {% endblock javascript %}

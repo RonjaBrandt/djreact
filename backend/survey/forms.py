@@ -6,7 +6,7 @@ class JoinForm(forms.Form):
     item = forms.CharField(max_length=600)
 
     def __str__(self):
-        return 'Respons ID: ' + self.item
+        return 'Json: ' + self.item
    
     # The model Survey takes out the information from Typefrom in JSON
     # from the array called "item"

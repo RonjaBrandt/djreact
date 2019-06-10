@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 import json
+import requests
 '''
 class AjaxFormMixin(object):
     def form_invalid(self, form):
@@ -26,9 +27,5 @@ class JsonFormMixin(object):
         #Valdition för Json
 
 	def get_form_kwargs(self):
-        url="https://api.typeform.com/forms/nv4fXG/responses"
-        headers = {'Authorization': 'Bearer 94HyzhMYCbSZyAczo6xXi7GZuFLRuvUA9krjC9FFahUf'}
-        json = requests.get(url, headers=headers)
-
 		return json.loads(self.request.body)
 
