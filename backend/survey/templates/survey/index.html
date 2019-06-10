@@ -1,7 +1,7 @@
 {% extends 'survey/base.html' %}
 {% block title %}Surveys{% endblock title %}
 <!--Display db items-->
-{% block body %}
+{% block content %}
     {% if all_surveys %}
         <h3>Here ar all Survey: </h3>
         <ul>
@@ -10,4 +10,4 @@
             {% endfor %}
         </ul>
     {% endif %}
-{% endblock body %}
+{% endblock content %}

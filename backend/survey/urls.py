@@ -10,4 +10,6 @@ urlpatterns = [
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     #/survey/add/
     path('survey/add/', views.SurveyCreate.as_view(), name='surveys-add'),
+    #/join/
+    path('join/', views.JoinFormView.as_view(), name='joinform')
 ]

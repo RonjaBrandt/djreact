@@ -1,17 +1,19 @@
-from django.shortcuts import get_object_or_404
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from django.views import generic
+from django.views.generic import FormView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Surveys
-from .serializeres import SurveysSerializer
 
-import requests
-import json
+from .models import Surveys
+from .forms import JoinForm
+from .mixins import AjaxFormMixin
 
 
 #En model.Model är ditt interface mot databasen. En View är ett sätt att visa data, eller ta emot.##
+
+class JoinFormView(AjaxFormMixin, FormView):
+    form_class = JoinForm
+    template_name  = 'forms/ajax.html'
+    success_url = '/form-success/'
+
 
 class IndexView(generic.ListView):
     template_name = 'survey/index.html'
@@ -29,12 +31,6 @@ class DetailView(generic.DetailView):
 class SurveyCreate(CreateView):
     model = Surveys
     fields = ['titlel', 'items']
-
-    def save_survey(request, fr):
-        url="https://api.typeform.com/forms/nv4fXG/responses"
-        headers = {'Authorization': 'Bearer 94HyzhMYCbSZyAczo6xXi7GZuFLRuvUA9krjC9FFahUf'}
-        response = requests.get(url, headers=headers)
-        return
 
 
 ''' Get JSON working but dont know where to put it
