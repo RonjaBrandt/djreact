@@ -40,7 +40,7 @@ class Display(generic.TemplateView):
         r = requests.get(self.url, headers=self.headers)
         #Felhantera sen try exept
         json = r.json()
-        #Dictionary Key, felhantera sen.
+    #Dictionary / Key, felhantera sen.
         context['items'] = json['items']
 
         return context
