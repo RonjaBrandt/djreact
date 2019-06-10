@@ -7,6 +7,7 @@ class Surveys(models.Model):
    items = models.CharField(max_length=500, default="Something defult item")
 
    def get_absolute_url(self):
+      #send user to page that display the detiels of the input data
       return reverse('survey:detail', kwargs={'pk':self.pk})
 
    def __str__(self):
