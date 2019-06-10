@@ -23,7 +23,7 @@ class DetailView(generic.DetailView):
 
 # TROLIGEN ÄR DET HÄR SOM JSON DATA SKA IN PÅ NÅGOT SÄTT
 # Sedan se över Cash ramverket. Django Cash
-class SurveyCreate(JsonFormMixin, CreateView):
+class SurveyCreate(CreateView):
     model = Surveys
     fields = ['titlel', 'items']
 
