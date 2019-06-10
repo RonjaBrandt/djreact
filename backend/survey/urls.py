@@ -11,5 +11,7 @@ urlpatterns = [
     #/survey/add/
     path('survey/add/', views.SurveyCreate.as_view(), name='surveys-add'),
     #/join/
-   # path('join/', views.JoinFormView.as_view(), name='joinform')
+    #path('join/', views.JoinFormView.as_view(), name='joinform'),
+
+    path('test/', views.Display.as_view(), name='test'),
 ]

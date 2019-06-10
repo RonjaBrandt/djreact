@@ -2,10 +2,12 @@
 {% block title %}Surveys{% endblock title %}
 <!--Display db items-->
 {% block content %}
+{{items}}
     {% if all_surveys %}
         <h3>Here ar all Survey: </h3>
+        
         <ul>
-            {% for survey in all_surveys %}
+            {% for survey in all_surveys %} <!--- in items-->
                 <li><a href="{% url 'survey:detail' survey.id %}">{{ survey.titlel }}</a></li>
             {% endfor %}
         </ul>
