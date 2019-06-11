@@ -14,7 +14,8 @@
         <h1>ITEMS.ANSWERS.FIELD</h1>
         {% for answers in items.answers  %}
         <ul>
-            <li><h5>{{answers.field}}</h5></li>
+            <li><h5>Question: {{answers.field}} Answer Type: {{answers.type}}<br>
+            Answer: {{answers.choice}}{{answers.text}}{{answers.number}}{{answers.choices}}
         </ul>
             
         {% endfor %}
