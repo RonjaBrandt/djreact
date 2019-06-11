@@ -12,14 +12,27 @@
         <h4>{{items.answers}}</h4>
     <h1>--------------------------------</h1>
         <h1>ITEMS.ANSWERS.FIELD</h1>
+
         {% for answers in items.answers  %}
-        <ul>
-            <li><h5>Question: {{answers.field}} Answer Type: {{answers.type}}<br>
-            Answer: {{answers.choice}}{{answers.text}}{{answers.number}}{{answers.choices}}
-        </ul>
+        
+            <ul>
+                <li><h5>Question: {{answers.field.id}} Answer Type: {{answers.type}}<br>
+                Answer: {{answers.choice}}{{answers.text}}{{answers.number}}{{answers.choices}}<br>
+                ID {{answers.field.id}}<br>
+                    <!-- takes out a specifik question-->
+                {% if answers.field.id == 'xLuVq41DJ9ti' %}
+                    <!--Check if the answer is not equels to something-->
+                    Result = 
+                    {% if answers.text != 'norge' %}
+                        <!-- om svaret är rätt behöver öka värdet för varibale tillhörande kategori-->
+                      
+                    {% endif %}
+                {% endif %}
+            </ul>
             
         {% endfor %}
-  
+        <h1>--------------------------------</h1>
+        
 {% endfor %}
 
     {% if all_surveys %}
