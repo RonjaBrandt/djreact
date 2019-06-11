@@ -2,7 +2,25 @@
 {% block title %}Surveys{% endblock title %}
 <!--Display db items-->
 {% block content %}
-{{items}}
+
+{% for items in items  %}
+
+        <h1>ITEMS:</h1>
+        <h5>{{items}}</h5>
+    <h1>--------------------------------</h1>
+        <h1>ITEMS.ANSWERS</h1>
+        <h4>{{items.answers}}</h4>
+    <h1>--------------------------------</h1>
+        <h1>ITEMS.ANSWERS.FIELD</h1>
+        {% for answers in items.answers  %}
+        <ul>
+            <li><h5>{{answers.field}}</h5></li>
+        </ul>
+            
+        {% endfor %}
+  
+{% endfor %}
+
     {% if all_surveys %}
         <h3>Here ar all Survey: </h3>
         
