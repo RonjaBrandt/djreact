@@ -41,7 +41,7 @@ class Surveys(models.Model):
 
  
    questionID = models.CharField(max_length=500, default="Something default ID")
-   questionTypes = models.CharField(max_length=500, default="Something default item")
+   questionType = models.CharField(max_length=500, default="Something default item")
    questionLabel = models.CharField(max_length=20, choices=typeChoices, default=longText)
    questionMaxPoints = models.IntegerField(default=0)
    questionPoints = models.IntegerField(blank=True, default=0)
@@ -51,11 +51,10 @@ class Surveys(models.Model):
       #send user to page that display the detiels of the input data
       return reverse('survey:detail', kwargs={'pk':self.pk})
 
-   def __str__(self):
-      return '//Titlel: ' + self.titlel + ' //Item: ' + self.items
 
 
 
+   #Better naming?
 class Score(models.Model):
     verksamhetsstyrning = models.IntegerField(blank=True, default=0)
     engagemang =  models.IntegerField(blank=True, default=0)
