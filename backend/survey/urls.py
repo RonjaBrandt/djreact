@@ -6,10 +6,10 @@ app_name = 'survey'
 urlpatterns = [
     # /survey/
     path('', views.IndexView.as_view(), name='index'),
-    # /survey/<surveys_id>
+    # /survey/<survey_id>
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     #/survey/add/
-    path('survey/add/', views.SurveyCreate.as_view(), name='surveys-add'),
+    path('survey/add/', views.SurveyCreate.as_view(), name='survey-add'),
     #/join/
     #path('join/', views.JoinFormView.as_view(), name='joinform'),
 

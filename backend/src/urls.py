@@ -7,7 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('survey/', include('survey.urls')),
     #Rest API -not working-
-    # path('surveylist/', views.SurveysList.as_view())
+    # path('surveylist/', views.SurveyList.as_view())
 ]
  #Rest API -not working-
 #urlpatterns = format_suffix_patterns(urlpatterns)

@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-class Surveys(models.Model):
+class Survey(models.Model):
    # Takes in all the data
    #Menu for type of questions
    shortText = 'text'
@@ -40,11 +40,11 @@ class Surveys(models.Model):
    )
 
  
-   questionID = models.CharField(max_length=500, default="Something default ID")
-   questionType = models.CharField(max_length=500, default="Something default item")
-   questionLabel = models.CharField(max_length=20, choices=typeChoices, default=longText)
+   questionID = models.CharField(max_length=500, default="Question ID from Typefrom goes here")
+   questionType = models.CharField(max_length=20, choices=typeChoices)
+   questionAnswer = models.CharField(max_length=500, default="Exact answer goes here")
    questionMaxPoints = models.IntegerField(default=0)
-   questionPoints = models.IntegerField(blank=True, default=0)
+   questionPoints = models.DecimalField(max_digits=2, decimal_places=1, blank=True, default=0)
    
 
    def get_absolute_url(self):

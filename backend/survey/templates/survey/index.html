@@ -1,5 +1,5 @@
 {% extends 'survey/base.html' %}
-{% block title %}Surveys{% endblock title %}
+{% block title %}Survey{% endblock title %}
 <!--Display db items-->
 {% block content %}
 
@@ -42,11 +42,11 @@
         
 {% endfor %}
 
-    {% if all_surveys %}
+    {% if all_survey %}
         <h3>Here ar all Survey: </h3>
         
         <ul>
-            {% for survey in all_surveys %} <!--- in items-->
+            {% for survey in all_survey %} <!--- in items-->
                 <li><a href="{% url 'survey:detail' survey.id %}">{{ survey.titlel }}</a></li>
             {% endfor %}
         </ul>

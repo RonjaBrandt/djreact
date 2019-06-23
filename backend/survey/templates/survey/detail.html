@@ -3,10 +3,10 @@
 {% block title %}Survey Detail {% endblock title %}
 
 {% block content %}
-  <h1>{{ surveys.titlel }}</h1>
-  <h3>{{ surveys.items }}</h3>
+  <h1>{{ survey.titlel }}</h1>
+  <h3>{{ survey.items }}</h3>
 
-      {% for questions in surveys.questions_set.all %}
+      {% for questions in survey.questions_set.all %}
             {{ questions.answers }}
             {% if questions.is_results %}
               <p>-DONE-</p>

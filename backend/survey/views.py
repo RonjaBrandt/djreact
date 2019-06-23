@@ -2,7 +2,7 @@ from django.views import generic
 from django.views.generic import FormView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from .models import Surveys
+from .models import Survey
 import json
 import requests
 
@@ -11,20 +11,20 @@ import requests
 
 class IndexView(generic.ListView):
     template_name = 'survey/index.html'
-    context_object_name = 'all_surveys'        
+    context_object_name = 'all_survey'        
 
     def get_queryset(self):
-        return Surveys.objects.all()
+        return Survey.objects.all()
 
 
 class DetailView(generic.DetailView):
-    model = Surveys
+    model = Survey
     template_name='survey/detail.html'
 
 
 # Sedan se över Cash ramverket. Django Cash
 class SurveyCreate(CreateView):
-    model = Surveys
+    model = Survey
     fields = ['titlel', 'items']
 
     
