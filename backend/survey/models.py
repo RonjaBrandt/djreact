@@ -3,15 +3,24 @@ from django.urls import reverse
 from django.db.models import Max
 
 class Survey(models.Model):
-   survey_Id = models.CharField(max_length=20, default='The Survyes ID here plz')
+   survey_Id = models.CharField(max_length=20, help_text="Add the Survey ID from Typefrom here")
    
    def __str__(self):
-      return self.surveyid
+      return self.survey_Id
+   # TODO: Skapa Read-only fält för current points
+class Category(models.Model):
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, help_text="Choose what Survey thos Category belogs to." , blank=True, null=True)
+    category_Name = models.CharField(max_length=20, help_text="Name of the Catagory", blank=True, null=True)
+    max_Points = models.DecimalField(max_digits=2, decimal_places=1, default=0, help_text="Maximum points for this catagory", blank=True, null=True)
+    current_Points = models.DecimalField(max_digits=2, decimal_places=1, default=0, help_text="Displaying current points. DO NOT CHANGE THIS.", blank=True, null=True)
+    
+
+    def __str__(self):
+       return 'Category: '+ self.category_Name + ' - SurveyID:' + str(self.survey)
 
 
 class Question(models.Model):
-   # Takes in all the data
-   #Menu for type of questions
+   # Menu for type of questions
    shortText = 'text'
    longText = 'text'
    dropdown = 'text'
@@ -47,32 +56,15 @@ class Question(models.Model):
       (date, 'date'),
    )
 
-   survey = models.ForeignKey(Survey, on_delete=models.CASCADE,help_text="Choose to what Survey this question belongs to" ,blank=True, null=True)
-   question_ID = models.CharField(max_length=500, help_text="Question ID from Typefrom goes here", blank=True, null=True)
+   category = models.ForeignKey(Category, on_delete=models.CASCADE,help_text="Choose to what Category this question belongs to" ,blank=True, null=True)
+   question_ID = models.CharField(max_length=500, help_text="Add the Question ID from Typefrom goes here", blank=True, null=True)
    question_Type = models.CharField(max_length=20, choices=typeChoices, help_text="Important that this is right")
    question_Answer = models.CharField(max_length=500, help_text="Important that this is exact", blank=True, null=True)
-   question_Points = models.DecimalField(max_digits=2, decimal_places=1, blank=True, default=0)
+   question_Points = models.DecimalField(max_digits=2, decimal_places=1, blank=True, default=0, help_text='Make sure that this is not higher then Max Points for the catagory. {Category.max_Points}' )
    
-
    def get_absolute_url(self):
       #send user to page that display the detiels of the input data
       return reverse('question:detail', kwargs={'pk':self.pk})
    
    def __str__(self):
-      return 'QuestionID: ' + self.questionID + ' -SurveyID: ' +self.survey
-
-
-
-   #Better naming?
-class Score(models.Model):
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, blank=True, null=True)
-    verksamhetsstyrning = models.IntegerField(blank=True, default=0, help_text="Don't change this value")
-    engagemang =  models.IntegerField(blank=True, default=0, help_text="Don't change this value")
-    resurser =  models.IntegerField(blank=True,  default=0, help_text="Don't change this value")
-    kommunikation =  models.IntegerField(blank=True, default=0, help_text="Don't change this value")
-
-    def __str__(self):
-       return 'Score to SurveyID: ' + str(self.survey)
-    
-
-    
+      return 'QuestionID: ' + self.question_ID + ' - ' + str(self.category)
