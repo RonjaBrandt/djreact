@@ -8,7 +8,8 @@ import requests
 
 
 #En model.Model är ditt interface mot databasen. En View är ett sätt att visa data, eller ta emot.
-
+#CKANSKE DELETE
+'''
 class IndexView(generic.ListView):
     template_name = 'survey/index.html'
     context_object_name = 'all_survey'        
@@ -16,16 +17,24 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return Question.objects.all()
 
+#KANSKE DELETE?
 
 class DetailView(generic.DetailView):
     model = Question
     template_name='survey/detail.html'
+'''
+
 
 
 # Sedan se över Cash ramverket. Django Cash
 class QuestionCreate(CreateView):
     model = Question
-    fields = ['titlel', 'items']
+    fields = ['category', 
+            'question_ID',
+            'question_Type',
+            'question_Answer',
+            'question_Points'
+            ]
 
     
 class Display(generic.TemplateView):

@@ -38,18 +38,9 @@
             </ul>
             
         {% endfor %}
-        <h1>--------------------------------</h1>
+        <h1>---------------END--------------</h1>
         
 {% endfor %}
 
-    {% if all_survey %}
-        <h3>Here ar all Survey: </h3>
-        
-        <ul>
-            {% for survey in all_survey %} <!--- in items-->
-                <li><a href="{% url 'survey:detail' survey.id %}">{{ survey.titlel }}</a></li>
-            {% endfor %}
-        </ul>
-        
-    {% endif %}
+
 {% endblock content %}
