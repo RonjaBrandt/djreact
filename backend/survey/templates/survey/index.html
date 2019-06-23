@@ -20,19 +20,21 @@
                     Answer: {{answers.choice.label}}{{answers.text}}{{answers.number}}{{answers.choices.labels}}<br>
                     ID: {{answers.field.id}}<br>
                     <!-- takes out a specifik question-->
-                    {% if answers.field.id == 'ovmiTI7jMvHR' %}
-                    <!--Check if the answer is not equels to something-->
-                    - Visa detta om det går att få ut question med id:ovmiTI7jMvHR <br>
-                    {% if answers.choice.label == '1-2 years' %}
-                    <!-- om svaret är rätt behöver öka värdet för varibale tillhörande kategori-->
-                    - Visa detta om svaret är likamed "1-2 years" visa detta <br>
-                    {% endif %}
+                    {% if answers.field.id == 'ovmiTI7jMvHR' %}1
+                    
+                        <!--Check if the answer is not equels to something-->
+                        - Visa detta om det går att få ut question med id:ovmiTI7jMvHR <br>
+                        {% if answers.choice.label == '1-2 years' %}
+                            <!-- om svaret är rätt behöver öka värdet för varibale tillhörande kategori-->
+                            - Visa detta om svaret är likamed "1-2 years" visa detta <br>
+                        {% endif %}
 
-                    {% if answers.choice.label != '1-3' %}
-                    <!-- om svaret är rätt behöver öka värdet för varibale tillhörande kategori-->
-                    - Visa detta om svaret INTE är likamed "1-3" visa detta <br>
+                        {% if answers.choice.label != '1-3' %}
+                            <!-- om svaret är rätt behöver öka värdet för varibale tillhörande kategori-->
+                            - Visa detta om svaret INTE är likamed "1-3" visa detta <br>
+                        {% endif %}
+
                     {% endif %}
-                {% endif %}
             </ul>
             
         {% endfor %}
@@ -48,5 +50,6 @@
                 <li><a href="{% url 'survey:detail' survey.id %}">{{ survey.titlel }}</a></li>
             {% endfor %}
         </ul>
+        
     {% endif %}
 {% endblock content %}
