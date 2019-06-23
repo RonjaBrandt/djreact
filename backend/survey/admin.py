@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Surveys, Questions
+from .models import Surveys, Score
 
 admin.site.register(Surveys)
-admin.site.register(Questions)
+admin.site.register(Score)
