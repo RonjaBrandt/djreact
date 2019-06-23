@@ -9,14 +9,14 @@ class Survey(models.Model):
       return self.survey_Id
    # TODO: Skapa Read-only fält för current points
 class Category(models.Model):
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, help_text="Choose what Survey thos Category belogs to." , blank=True, null=True)
+    survey = models.ForeignKey(Survey, related_name='catagory', on_delete=models.CASCADE, help_text="Choose what Survey thos Category belogs to." , blank=True, null=True)
     category_Name = models.CharField(max_length=20, help_text="Name of the Catagory", blank=True, null=True)
     max_Points = models.DecimalField(max_digits=2, decimal_places=1, default=0, help_text="Maximum points for this catagory", blank=True, null=True)
     current_Points = models.DecimalField(max_digits=2, decimal_places=1, default=0, help_text="Displaying current points. DO NOT CHANGE THIS.", blank=True, null=True)
     
 
     def __str__(self):
-       return 'Category: '+ self.category_Name + ' - SurveyID:' + str(self.survey)
+       return 'Category: '+ self.category_Name + ' - SurveyID:' + str(self.survey.name)
 
 
 class Question(models.Model):
@@ -56,7 +56,7 @@ class Question(models.Model):
       (date, 'date'),
    )
 
-   category = models.ForeignKey(Category, on_delete=models.CASCADE,help_text="Choose to what Category this question belongs to" ,blank=True, null=True)
+   category = models.ForeignKey(Category, related_name='question', on_delete=models.CASCADE,help_text="Choose to what Category this question belongs to" ,blank=True, null=True)
    question_ID = models.CharField(max_length=500, help_text="Add the Question ID from Typefrom goes here", blank=True, null=True)
    question_Type = models.CharField(max_length=20, choices=typeChoices, help_text="Important that this is right")
    question_Answer = models.CharField(max_length=500, help_text="Important that this is exact", blank=True, null=True)

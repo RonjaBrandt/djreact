@@ -3,6 +3,10 @@
 <!--Display db items-->
 {% block content %}
 
+{% for survey in survey %}
+    <h1>{{survey}}</h1>
+{% endfor %}
+
 {% for items in items  %}
 
         <h1>ITEMS:</h1>

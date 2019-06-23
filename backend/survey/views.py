@@ -1,42 +1,39 @@
 from django.views import generic
-from django.views.generic import FormView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import FormView, TemplateView
+
+
+from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 from .models import Survey, Category, Question
+from .serializeres import SurveySerializer, CategorySerializer, QuestionSerializer
+
 import json
 import requests
-
-
 #En model.Model är ditt interface mot databasen. En View är ett sätt att visa data, eller ta emot.
-#KANSKE DELETE
 
-class IndexView(generic.ListView):
+#Make data on the database to APIrepsonse
+class SurveyList(APIView):
+
+    def get(self, request):
+        survey = Survey.objects.all()
+        serializer = SurveySerializer(survey, many=True)
+        return Response(serializer.data)
+
+
+class SurveyView(TemplateView):
     template_name = 'survey/index.html'
-    context_object_name = 'all_survey'        
-
-    def get_queryset(self):
-        return Survey.objects.all()
-
-#KANSKE DELETE?
-
-class DetailView(generic.DetailView):
-    model = Category
-    template_name='survey/detail.html'
-
-
-
-
-# Sedan se över Cash ramverket. Django Cash
-class QuestionCreate(CreateView):
-    model = Question
-    fields = ['category', 
-            'question_ID',
-            'question_Type',
-            'question_Answer',
-            'question_Points'
-            ]
-
     
+    def get(self, request):
+        model = Survey()
+        survey = Survey.objects.all()
+        print(survey)
+        return render(request, self.template_name)
+
+
+
 class Display(generic.TemplateView):
     #Getting the hole form (forms)
     template_name = 'survey/index.html'
@@ -55,4 +52,4 @@ class Display(generic.TemplateView):
 
         return context
     
- 
+  
