@@ -9,7 +9,7 @@ urlpatterns = [
     # /survey/<survey_id>
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     #/survey/add/
-    path('survey/add/', views.SurveyCreate.as_view(), name='survey-add'),
+    path('survey/add/', views.QuestionCreate.as_view(), name='survey-add'),
     #/join/
     #path('join/', views.JoinFormView.as_view(), name='joinform'),
 

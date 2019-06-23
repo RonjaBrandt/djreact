@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import Survey
+from .models import Question
 
-class SurveySerializer(serializers.ModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Survey
+        model = Question
         #field = ('titlel', 'items')
         fields = '__all__'

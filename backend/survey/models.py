@@ -1,7 +1,15 @@
 from django.db import models
 from django.urls import reverse
+from django.db.models import Max
 
 class Survey(models.Model):
+   survey_Id = models.CharField(max_length=20, default='The Survyes ID here plz')
+   
+   def __str__(self):
+      return self.surveyid
+
+
+class Question(models.Model):
    # Takes in all the data
    #Menu for type of questions
    shortText = 'text'
@@ -39,27 +47,32 @@ class Survey(models.Model):
       (date, 'date'),
    )
 
- 
-   questionID = models.CharField(max_length=500, default="Question ID from Typefrom goes here")
-   questionType = models.CharField(max_length=20, choices=typeChoices)
-   questionAnswer = models.CharField(max_length=500, default="Exact answer goes here")
-   questionMaxPoints = models.IntegerField(default=0)
-   questionPoints = models.DecimalField(max_digits=2, decimal_places=1, blank=True, default=0)
+   survey = models.ForeignKey(Survey, on_delete=models.CASCADE,help_text="Choose to what Survey this question belongs to" ,blank=True, null=True)
+   question_ID = models.CharField(max_length=500, help_text="Question ID from Typefrom goes here", blank=True, null=True)
+   question_Type = models.CharField(max_length=20, choices=typeChoices, help_text="Important that this is right")
+   question_Answer = models.CharField(max_length=500, help_text="Important that this is exact", blank=True, null=True)
+   question_Points = models.DecimalField(max_digits=2, decimal_places=1, blank=True, default=0)
    
 
    def get_absolute_url(self):
       #send user to page that display the detiels of the input data
-      return reverse('survey:detail', kwargs={'pk':self.pk})
-
+      return reverse('question:detail', kwargs={'pk':self.pk})
+   
+   def __str__(self):
+      return 'QuestionID: ' + self.questionID + ' -SurveyID: ' +self.survey
 
 
 
    #Better naming?
 class Score(models.Model):
-    verksamhetsstyrning = models.IntegerField(blank=True, default=0)
-    engagemang =  models.IntegerField(blank=True, default=0)
-    resurser =  models.IntegerField(blank=True,  default=0)
-    kommunikation =  models.IntegerField(blank=True, default=0)
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, blank=True, null=True)
+    verksamhetsstyrning = models.IntegerField(blank=True, default=0, help_text="Don't change this value")
+    engagemang =  models.IntegerField(blank=True, default=0, help_text="Don't change this value")
+    resurser =  models.IntegerField(blank=True,  default=0, help_text="Don't change this value")
+    kommunikation =  models.IntegerField(blank=True, default=0, help_text="Don't change this value")
 
     def __str__(self):
-      return self.answers
+       return 'Score to SurveyID: ' + str(self.survey)
+    
+
+    
