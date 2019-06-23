@@ -1,4 +1,4 @@
-<!-- DELETET THIS LATER
+<!-- DELETET THIS LATER-->
 {% extends 'survey/base.html' %}
 {% block title %}Survey Detail {% endblock title %}
 
@@ -6,13 +6,12 @@
   <h1>{{ survey.titlel }}</h1>
   <h3>{{ survey.items }}</h3>
 
-      {% for questions in survey.questions_set.all %}
-            {{ questions.answers }}
-            {% if questions.is_results %}
+      {% for category in survey.category_set.all %}
+            {{ category.catagory_Name }}
+            {% if category.is_results %}
               <p>-DONE-</p>
             {% endif %}
         <br>
       {% endfor %}
 
 {% endblock content %}
--->

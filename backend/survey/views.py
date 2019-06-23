@@ -2,27 +2,27 @@ from django.views import generic
 from django.views.generic import FormView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from .models import Question
+from .models import Survey, Category, Question
 import json
 import requests
 
 
 #En model.Model är ditt interface mot databasen. En View är ett sätt att visa data, eller ta emot.
-#CKANSKE DELETE
-'''
+#KANSKE DELETE
+
 class IndexView(generic.ListView):
     template_name = 'survey/index.html'
     context_object_name = 'all_survey'        
 
     def get_queryset(self):
-        return Question.objects.all()
+        return Survey.objects.all()
 
 #KANSKE DELETE?
 
 class DetailView(generic.DetailView):
-    model = Question
+    model = Category
     template_name='survey/detail.html'
-'''
+
 
 
 
