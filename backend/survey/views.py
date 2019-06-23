@@ -21,7 +21,7 @@ class DetailView(generic.DetailView):
     model = Surveys
     template_name='survey/detail.html'
 
-# TROLIGEN ÄR DET HÄR SOM JSON DATA SKA IN PÅ NÅGOT SÄTT
+
 # Sedan se över Cash ramverket. Django Cash
 class SurveyCreate(CreateView):
     model = Surveys
@@ -31,6 +31,7 @@ class SurveyCreate(CreateView):
 class Display(generic.TemplateView):
     #Getting the hole form (forms)
     template_name = 'survey/index.html'
+    #URL to get the latest repsonses
     url="https://api.typeform.com/forms/nv4fXG/responses?page_size=1"
     headers = {'Authorization': 'Bearer 94HyzhMYCbSZyAczo6xXi7GZuFLRuvUA9krjC9FFahUf'}
 
