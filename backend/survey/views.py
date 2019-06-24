@@ -1,15 +1,14 @@
 from django.views import generic
 from django.views.generic import FormView, TemplateView, ListView, DetailView
-
-from betterforms.multiform import MultiModelForm, MultiForm
-
-from django.shortcuts import render
+from django.views.generic.edit import UpdateView, CreateView
+from django.shortcuts import render, get_object_or_404, redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
 from .models import Survey, Category, Question
 from .serializeres import SurveySerializer, CategorySerializer, QuestionSerializer
+from .forms import CategoryModelForm
 
 import json
 import requests
@@ -42,22 +41,14 @@ class Display(generic.TemplateView):
         #Dictionary / Key, felhantera sen.
         context['items'] = json['items']
         context['question'] = Question.objects.all()
-        print(context)
+       
         return context
-
-
-     
-
-class SurveyList(ListView):
-    template_name = 'survey/index.html'
-    model = Survey
-    context_object_name ='survey'
-
-class QuestionList(TemplateView):
-    template_name = 'survey/index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['question'] = Question.objects.all()
-        return context
-
+    
+    def post(self, requests):
+        form = CategoryModelForm(requests.POST)
+        if form.is_valid():
+            form.save()
+            text = form.cleaned_data['current_Points']
+            #form = QuestionModelForm()
+           # return redirect('survey:test')
+       

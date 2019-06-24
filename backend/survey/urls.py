@@ -9,11 +9,5 @@ urlpatterns = [
     #Shows API for Survey
     path('surveyapi/', views.SurveyAPIView.as_view(), name='SurveyAPIView'),
     
-    #path('surveylist/', views.SurveyList.as_view(), name='surveylist'),
-    path('questionlist/', views.QuestionList.as_view(), name='questionlist'),
-   
-    #path('category/', views.CategoryList.as_view()),
-    #path('index(', views.IndexView.as_view(), name='index'),
-    # /survey/<survey_id>
-    #path('index/<int:pk>/', views.DetailView.as_view(), name='detail'),    
+    #path('list/', views.CategoryList.as_view(), name='list')
 ]

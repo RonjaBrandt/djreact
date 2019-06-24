@@ -1,8 +1,12 @@
 from django import forms
-from .models import Survey
+from django.db import models
+from .models import Category
 
-class SurveyForm(forms.ModelForm):
-    
+class CategoryModelForm(forms.ModelForm):
+    current_Points = models.DecimalField()
+
     class Meta:
-       model = Survey
-       fields = ('survey_Id',)
+        model = Category
+        fields = [
+            'current_Points',
+        ]
