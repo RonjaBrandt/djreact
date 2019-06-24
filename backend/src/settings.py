@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'survey.apps.SurveyConfig',
     'rest_framework',
+    'betterforms',
 ]
 
 MIDDLEWARE = [

@@ -1,6 +1,7 @@
 from django.views import generic
 from django.views.generic import FormView, TemplateView, ListView, DetailView
 
+from betterforms.multiform import MultiModelForm, MultiForm
 
 from django.shortcuts import render
 from rest_framework.views import APIView
@@ -9,7 +10,6 @@ from rest_framework import status
 
 from .models import Survey, Category, Question
 from .serializeres import SurveySerializer, CategorySerializer, QuestionSerializer
-from .forms import SurveyForm
 
 import json
 import requests
@@ -41,8 +41,10 @@ class Display(generic.TemplateView):
         json = r.json()
         #Dictionary / Key, felhantera sen.
         context['items'] = json['items']
-
+        context['question'] = Question.objects.all()
+        print(context)
         return context
+
 
      
 
@@ -59,11 +61,3 @@ class QuestionList(TemplateView):
         context['question'] = Question.objects.all()
         return context
 
-
-
-'''
-class QuestionList(ListView):
-    template_name = 'survey/index.html'
-    model = Question
-    context_object_name ='question'
-    '''
