@@ -3,23 +3,6 @@
 <!--Display db items-->
 {% block content %}
 
-
-{% for question in question %}
-<h1>question här</h1>
-  <li>{{question}}</li>
-  <li>{{question.category}}</li>
-   test
-   <li>{{question.category.survey}}</li>
-   <li>{{question.category.category_Name}}</li>
-  
-{% endfor %}
-
-
-
-
-
-
-
 {% for items in items  %}
 {% for category in category %}
     {% for question in question %}
@@ -52,15 +35,14 @@
                                 <!--adds points-->
                             <b>CURRENT points</b> <br>
                             {{category.current_Points}}<br>
-                            
-                                    <form method="POST">{% csrf_token %}
-                                        {{form.as_p|add:question.question_Points}}
-                                        <input type="submit" value="Update">
-                                    </form>
-                            
-                            
 
                                 {% if answers.choice.label == '1-2 years' %}
+                                    <form class='my-ajax-form' method='POST' action='.' data-url='http://127.0.0.1:8000/'>
+                                        {% csrf_token %}
+                                        <!--{{form.as_p|safe}}-->
+                                        {{form.as_p|add:question.question_Points}}
+                                        <button type='submit'>Submit</button>
+                                    </form>
                                     <!-- om svaret är rätt behöver öka värdet för varibale tillhörande kategori--><br>
                                     - Visa detta om svaret är likamed "1-2 years" visa detta <br>
                                 {% endif %}
@@ -81,3 +63,35 @@
 
 
 {% endblock content %}
+{% block javascript %}
+<script>
+        $(document).ready(function(){
+            var $myForm = $('.my-ajax-form')
+            $myForm.submit(function(event){
+                event.preventDefault()
+                var $formData = $(this).serialize()
+                var $endpoint = $myForm.attr('data-url') || window.location.href // or set your own url
+                $.ajax({
+                    method: "POST",
+                    url: $endpoint,
+                    data: $formData,
+                    success: handleFormSuccess,
+                    error: handleFormError,
+                })
+            })
+        
+            function handleFormSuccess(data, textStatus, jqXHR){
+                console.log(data)
+                console.log(textStatus)
+                console.log(jqXHR)
+                $myForm.reset[0]; // reset form data
+            }
+        
+            function handleFormError(jqXHR, textStatus, errorThrown){
+                console.log(jqXHR)
+                console.log(textStatus)
+                console.log(errorThrown)
+            }
+        })
+</script>
+{% endblock javascript %}

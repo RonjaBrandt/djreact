@@ -9,6 +9,7 @@ from rest_framework import status
 from .models import Survey, Category, Question
 from .serializeres import SurveySerializer, CategorySerializer, QuestionSerializer
 from .forms import CategoryModelForm
+from .mixins import AjaxFormMixin
 
 import json
 import requests
@@ -23,6 +24,9 @@ class SurveyAPIView(APIView):
         serializer = SurveySerializer(survey, many=True)
         return Response(serializer.data)
 
+class JoinFormView(AjaxFormMixin, FormView):
+    form_class = CategoryModelForm
+    template_name = 'survey/index.html'
 
 class Display(generic.TemplateView):
     #Getting the hole form (forms)
@@ -42,16 +46,6 @@ class Display(generic.TemplateView):
         context['items'] = json['items']
         context['question'] = Question.objects.all()
         context['category'] = Category.objects.all()
+        
        
         return context
-    
-    def post(self, requests):
-        form = CategoryModelForm(requests.POST)
-        if form.is_valid():
-            form.save()
-            text = form.cleaned_data['current_Points']
-            form = CategoryModelForm()
-            return redirect('survey:test')
-        
-        args ={'form': form, 'text': text}
-        return render(request, self.template_name, args)
