@@ -11,7 +11,7 @@ class Survey(models.Model):
 class Category(models.Model):
     survey = models.ForeignKey(Survey, related_name='catagory', on_delete=models.CASCADE, help_text="Choose what Survey thos Category belogs to." , blank=True, null=True)
     category_Name = models.CharField(max_length=20, help_text="Name of the Catagory", blank=True, null=True)
-    max_Points = models.DecimalField(max_digits=2, decimal_places=1, default=0, help_text="Maximum points for this catagory", blank=True, null=True)
+    max_Points = models.DecimalField(max_digits=3, decimal_places=1, default=0, help_text="Maximum points for this catagory", blank=True, null=True)
     current_Points = models.DecimalField(max_digits=2, decimal_places=1, default=0, help_text="Displaying current points. DO NOT CHANGE THIS.", blank=True, null=True)
     
 

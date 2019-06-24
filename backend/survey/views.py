@@ -41,6 +41,7 @@ class Display(generic.TemplateView):
         #Dictionary / Key, felhantera sen.
         context['items'] = json['items']
         context['question'] = Question.objects.all()
+        context['category'] = Category.objects.all()
        
         return context
     
@@ -49,6 +50,8 @@ class Display(generic.TemplateView):
         if form.is_valid():
             form.save()
             text = form.cleaned_data['current_Points']
-            #form = QuestionModelForm()
-           # return redirect('survey:test')
-       
+            form = CategoryModelForm()
+            return redirect('survey:test')
+        
+        args ={'form': form, 'text': text}
+        return render(request, self.template_name, args)

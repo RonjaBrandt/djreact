@@ -21,58 +21,62 @@
 
 
 {% for items in items  %}
+{% for category in category %}
     {% for question in question %}
-    <h1>--------------------------------</h1>
-    {{question.question_ID}}
-    {{question.category.max_Points}}
-    <h1>--------------------------------</h1>
-        <h1>ITEMS:</h1>
-        <h5>{{items}}</h5>
-    <h1>--------------------------------</h1>
-        <h1>ITEMS.ANSWERS</h1>
-        <h4>{{items.answers}}</h4>
-    <h1>--------------------------------</h1>
-        <h1>ITEMS.ANSWERS.FIELD</h1>
-
-        {% for answers in items.answers  %}
         
-            <ul>
-                <li><h5>Question: {{answers.field.id}} Answer Type: {{answers.type}}<br>
-                    Answer: {{answers.choice.label}}{{answers.text}}{{answers.number}}{{answers.choices.labels}}<br>
-                    ID: {{answers.field.id}}<br>
-                    <!-- takes out a specifik question-->
-                    {% if answers.field.id == question.question_ID %}
-                        <b>Points for the question:</b> 
-                        {{question.question_Points}} <br>
-                        <!--Check if the answer is not equels to something-->
-                        - Visa detta om det går att få ut question med id:ovmiTI7jMvHR <br>
-                        <br>
-                        <!--adds points-->
-                       <b>Current points</b> <br>
-                       {{question.category.max_Points}}<br>
-                            <form method="POST">{% csrf_token %}
-                                {{form.as_p|add:question.question_Points}}
-                                <input type="submit" value="Update">
-                            </form>
-                       
-                    
+            <h1>--------------------------------</h1>
+            {{question.question_ID}}
+            {{category.max_Points}}
+            <h1>--------------------------------</h1>
+                <h1>ITEMS:</h1>
+                <h5>{{items}}</h5>
+            <h1>--------------------------------</h1>
+                <h1>ITEMS.ANSWERS</h1>
+                <h4>{{items.answers}}</h4>
+            <h1>--------------------------------</h1>
+                <h1>ITEMS.ANSWERS.FIELD</h1>
 
-                        {% if answers.choice.label == '1-2 years' %}
-                            <!-- om svaret är rätt behöver öka värdet för varibale tillhörande kategori--><br>
-                            - Visa detta om svaret är likamed "1-2 years" visa detta <br>
-                        {% endif %}
+                {% for answers in items.answers  %}
+                
+                    <ul>
+                        <li><h5>Question: {{answers.field.id}} Answer Type: {{answers.type}}<br>
+                            Answer: {{answers.choice.label}}{{answers.text}}{{answers.number}}{{answers.choices.labels}}<br>
+                            ID: {{answers.field.id}}<br>
+                            <!-- takes out a specifik question-->
+                            {% if answers.field.id == question.question_ID %}
+                                <b>Points for the question:</b> 
+                                {{question.question_Points}} <br>
+                                <!--Check if the answer is not equels to something-->
+                                - Visa detta om det går att få ut question med id:ovmiTI7jMvHR <br>
+                                <br>
+                                <!--adds points-->
+                            <b>CURRENT points</b> <br>
+                            {{category.current_Points}}<br>
+                            
+                                    <form method="POST">{% csrf_token %}
+                                        {{form.as_p|add:question.question_Points}}
+                                        <input type="submit" value="Update">
+                                    </form>
+                            
+                            
 
-                        {% if answers.choice.label != '1-3' %}
-                            <!-- om svaret är rätt behöver öka värdet för varibale tillhörande kategori-->
-                            - Visa detta om svaret INTE är likamed "1-3" visa detta <br>
-                        {% endif %}
+                                {% if answers.choice.label == '1-2 years' %}
+                                    <!-- om svaret är rätt behöver öka värdet för varibale tillhörande kategori--><br>
+                                    - Visa detta om svaret är likamed "1-2 years" visa detta <br>
+                                {% endif %}
 
-                    {% endif %}
-            </ul>
+                                {% if answers.choice.label != '1-3' %}
+                                    <!-- om svaret är rätt behöver öka värdet för varibale tillhörande kategori-->
+                                    - Visa detta om svaret INTE är likamed "1-3" visa detta <br>
+                                {% endif %}
+
+                            {% endif %}
+                    </ul>
             
-        {% endfor %}
+            {% endfor %}
         <h1>---------------END--------------</h1>
         {% endfor %}
+    {% endfor %}
 {% endfor %}
 
 
