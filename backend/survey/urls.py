@@ -6,10 +6,11 @@ app_name = 'survey'
 
 urlpatterns = [
     # /survey/
-    path('', views.Display.as_view(), name='test'),
-    path('test/', views.SurveyView.as_view(), name='SurveyView'),
+    path('test/', views.Display.as_view(), name='test'),
+    path('surveyapi/', views.SurveyAPIView.as_view(), name='SurveyAPIView'),
     #Shows API for Survey
-    path('surveys/', views.SurveyList.as_view()),
+    path('', views.SurveyList.as_view(), name='list'),
+   
     #path('category/', views.CategoryList.as_view()),
     #path('index(', views.IndexView.as_view(), name='index'),
     # /survey/<survey_id>

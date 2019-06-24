@@ -16,7 +16,7 @@ class Category(models.Model):
     
 
     def __str__(self):
-       return 'Category: '+ self.category_Name + ' - SurveyID:' + str(self.survey.name)
+       return 'Category: '+ self.category_Name + ' - SurveyID:' + str(self.survey)
 
 
 class Question(models.Model):
