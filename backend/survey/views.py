@@ -50,3 +50,9 @@ class SurveyList(ListView):
     template_name = 'survey/index.html'
     model = Survey
     context_object_name ='survey'
+
+
+class QuestionList(ListView):
+    template_name = 'survey/index.html'
+    model = Question
+    context_object_name ='question'

@@ -6,7 +6,7 @@ class Survey(models.Model):
    survey_Id = models.CharField(max_length=20, help_text="Add the Survey ID from Typefrom here")
    
    def __str__(self):
-      return self.survey_Id
+      return 'SurveyID: '+self.survey_Id
    # TODO: Skapa Read-only fält för current points
 class Category(models.Model):
     survey = models.ForeignKey(Survey, related_name='catagory', on_delete=models.CASCADE, help_text="Choose what Survey thos Category belogs to." , blank=True, null=True)

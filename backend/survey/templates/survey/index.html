@@ -5,11 +5,18 @@
 
 
 
+{% for question in question %}
+<h1>question här</h1>
+  <li>{{questionx§}}</li>
+  
+{% endfor %}
 
+
+{% for survey in survey %}
 <h1>Survey här</h1>
-{% for querset in survey %}
-Hello
   <li>{{survey}}</li>
+  <li>{{survey.survey_Id}}</li>
+  
 {% endfor %}
 
 
