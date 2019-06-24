@@ -37,7 +37,7 @@
                             {{category.current_Points}}<br>
 
                                 {% if answers.choice.label == '1-2 years' %}
-                                    <form class='my-ajax-form' method='POST' action='.' data-url='http://127.0.0.1:8000/'>
+                                    <form class='my-ajax-form' method='POST' action='.' data-url='update/'>
                                         {% csrf_token %}
                                         <!--{{form.as_p|safe}}-->
                                         {{form.as_p|add:question.question_Points}}
@@ -70,11 +70,11 @@
             $myForm.submit(function(event){
                 event.preventDefault()
                 var $formData = $(this).serialize()
-                var $endpoint = $myForm.attr('data-url') || window.location.href // or set your own url
+                var $endpoint = $myForm.attr('data-url')
                 $.ajax({
                     method: "POST",
                     url: $endpoint,
-                    data: $formData,
+                    data: $formData, //add PK HERE!!!!! Hur får jag ut pk värdet
                     success: handleFormSuccess,
                     error: handleFormError,
                 })
@@ -94,4 +94,5 @@
             }
         })
 </script>
+<select id="survey"
 {% endblock javascript %}

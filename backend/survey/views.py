@@ -28,6 +28,10 @@ class JoinFormView(AjaxFormMixin, FormView):
     form_class = CategoryModelForm
     template_name = 'survey/index.html'
 
+class CategoryUpdate(UpdateView):
+    model = Category
+    fields = ['current_Points']
+
 class Display(generic.TemplateView):
     #Getting the hole form (forms)
     template_name = 'survey/index.html'
@@ -45,6 +49,7 @@ class Display(generic.TemplateView):
         #Dictionary / Key, felhantera sen.
         context['items'] = json['items']
         context['question'] = Question.objects.all()
+        print(context)
         context['category'] = Category.objects.all()
         
        
