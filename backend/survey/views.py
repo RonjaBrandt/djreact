@@ -31,9 +31,10 @@ class JoinFormView(AjaxFormMixin, FormView):
 class CategoryUpdate(UpdateView):
     model = Category
     fields = ['current_Points']
-
-class Display(generic.TemplateView):
+#generic.TemplateView
+class CategoryListView(ListView):
     #Getting the hole form (forms)
+    model = Category
     template_name = 'survey/index.html'
     #URL to get the latest repsonses
     url="https://api.typeform.com/forms/nv4fXG/responses?page_size=1"

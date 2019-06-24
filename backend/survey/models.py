@@ -14,6 +14,9 @@ class Category(models.Model):
     max_Points = models.DecimalField(max_digits=3, decimal_places=1, default=0, help_text="Maximum points for this catagory", blank=True, null=True)
     current_Points = models.DecimalField(max_digits=2, decimal_places=1, default=0, help_text="Displaying current points. DO NOT CHANGE THIS.", blank=True, null=True)
     
+    def get_absolute_url(self):
+      #send user to page that display the detiels of the input data
+      return reverse('Category:detail', kwargs={'pk':self.pk})
 
     def __str__(self):
        return 'Category: '+ self.category_Name + ' - ' + str(self.survey)
