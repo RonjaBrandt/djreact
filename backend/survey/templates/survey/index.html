@@ -7,7 +7,11 @@
 
 {% for question in question %}
 <h1>question här</h1>
-  <li>{{questionx§}}</li>
+  <li>{{question}}</li>
+  <li>{{question.category}}</li>
+   test
+   <li>{{question.category.survey}}</li>
+   <li>{{question.category.category_Name}}</li>
   
 {% endfor %}
 
@@ -16,7 +20,6 @@
 <h1>Survey här</h1>
   <li>{{survey}}</li>
   <li>{{survey.survey_Id}}</li>
-  
 {% endfor %}
 
 

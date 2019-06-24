@@ -16,7 +16,7 @@ class Category(models.Model):
     
 
     def __str__(self):
-       return 'Category: '+ self.category_Name + ' - SurveyID:' + str(self.survey)
+       return 'Category: '+ self.category_Name + ' - ' + str(self.survey)
 
 
 class Question(models.Model):
@@ -67,4 +67,4 @@ class Question(models.Model):
       return reverse('question:detail', kwargs={'pk':self.pk})
    
    def __str__(self):
-      return 'QuestionID: ' + self.question_ID + ' - ' + str(self.category)
+      return 'QuestionID: ' + self.question_ID + ' - ' + str(self.category.survey)
