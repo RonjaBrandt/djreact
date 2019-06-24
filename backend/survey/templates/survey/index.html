@@ -21,7 +21,10 @@
 
 
 {% for items in items  %}
-
+    {% for question in question %}
+    <h1>--------------------------------</h1>
+    {{question.question_ID}}
+    <h1>--------------------------------</h1>
         <h1>ITEMS:</h1>
         <h5>{{items}}</h5>
     <h1>--------------------------------</h1>
@@ -37,7 +40,7 @@
                     Answer: {{answers.choice.label}}{{answers.text}}{{answers.number}}{{answers.choices.labels}}<br>
                     ID: {{answers.field.id}}<br>
                     <!-- takes out a specifik question-->
-                    {% if answers.field.id == 'ovmiTI7jMvHR' %}1
+                    {% if answers.field.id == question.question_ID %}
                     
                         <!--Check if the answer is not equels to something-->
                         - Visa detta om det går att få ut question med id:ovmiTI7jMvHR <br>
@@ -56,7 +59,7 @@
             
         {% endfor %}
         <h1>---------------END--------------</h1>
-        
+        {% endfor %}
 {% endfor %}
 
 
