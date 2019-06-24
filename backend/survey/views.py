@@ -51,8 +51,19 @@ class SurveyList(ListView):
     model = Survey
     context_object_name ='survey'
 
+class QuestionList(TemplateView):
+    template_name = 'survey/index.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['question'] = Question.objects.all()
+        return context
+
+
+
+'''
 class QuestionList(ListView):
     template_name = 'survey/index.html'
     model = Question
     context_object_name ='question'
+    '''

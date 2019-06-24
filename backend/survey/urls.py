@@ -7,9 +7,10 @@ app_name = 'survey'
 urlpatterns = [
     # /survey/
     path('test/', views.Display.as_view(), name='test'),
-    path('surveyapi/', views.SurveyAPIView.as_view(), name='SurveyAPIView'),
     #Shows API for Survey
-    path('surveylist/', views.SurveyList.as_view(), name='surveylist'),
+    path('surveyapi/', views.SurveyAPIView.as_view(), name='SurveyAPIView'),
+    
+    #path('surveylist/', views.SurveyList.as_view(), name='surveylist'),
     path('questionlist/', views.QuestionList.as_view(), name='questionlist'),
    
     #path('category/', views.CategoryList.as_view()),
