@@ -1,6 +1,7 @@
 {
     "git.ignoreLimitWarning": true,
-    "python.linting.enabled": false
+    "python.linting.enabled": false,
+    "python.pythonPath": "backend/bin/python3.7"
 }
 
 /*Todo
