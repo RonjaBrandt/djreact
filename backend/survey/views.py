@@ -16,7 +16,6 @@ import requests
 #En model.Model är ditt interface mot databasen. En View är ett sätt att visa data, eller ta emot.
 
 #Make data on the database to APIrepsonse
-
 class SurveyAPIView(APIView):
 
     def get(self, request):
@@ -31,6 +30,7 @@ class JoinFormView(AjaxFormMixin, FormView):
 class CategoryUpdate(UpdateView):
     model = Category
     fields = ['current_Points']
+
 #generic.TemplateView
 class CategoryListView(ListView):
     #Getting the hole form (forms)
@@ -55,3 +55,34 @@ class CategoryListView(ListView):
         
        
         return context
+
+#generic.TemplateView
+#Detailview 
+class CategoryDetailView(DetailView):
+    #Getting the hole form (forms)
+    model = Category
+    template_name = 'survey/index.html'
+    #URL to get the latest repsonses
+    url="https://api.typeform.com/forms/nv4fXG/responses?page_size=1"
+    headers = {'Authorization': 'Bearer 94HyzhMYCbSZyAczo6xXi7GZuFLRuvUA9krjC9FFahUf'}
+    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #Felhantera sen
+        r = requests.get(self.url, headers=self.headers)
+        #Felhantera sen try exept
+        json = r.json()
+        #Dictionary / Key, felhantera sen.
+        context['items'] = json['items']
+        
+        context['question'] = Question.objects.all()
+        
+        context['category'] = Category.objects.all()
+        
+        print(context)
+        return context
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(Category, id=id_)

@@ -9,6 +9,7 @@ class Survey(models.Model):
       return 'SurveyID: '+self.survey_Id
    # TODO: Skapa Read-only fält för current points
 class Category(models.Model):
+    id = models.AutoField(primary_key=True)
     survey = models.ForeignKey(Survey, related_name='catagory', on_delete=models.CASCADE, help_text="Choose what Survey thos Category belogs to." , blank=True, null=True)
     category_Name = models.CharField(max_length=20, help_text="Name of the Catagory", blank=True, null=True)
     max_Points = models.DecimalField(max_digits=3, decimal_places=1, default=0, help_text="Maximum points for this catagory", blank=True, null=True)
@@ -16,7 +17,7 @@ class Category(models.Model):
     
     def get_absolute_url(self):
       #send user to page that display the detiels of the input data
-      return reverse('Category:detail', kwargs={'pk':self.pk})
+      return reverse('survey:test-detail', kwargs={'id':self.id})
 
     def __str__(self):
        return 'Category: '+ self.category_Name + ' - ' + str(self.survey)
