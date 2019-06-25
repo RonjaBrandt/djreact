@@ -1,3 +1,4 @@
+from django import http
 from django.views import generic
 from django.views.generic import FormView, TemplateView, ListView, DetailView
 from django.views.generic.edit import UpdateView, CreateView
@@ -30,6 +31,11 @@ class JoinFormView(AjaxFormMixin, FormView):
 class CategoryUpdate(UpdateView):
     model = Category
     fields = ['current_Points']
+
+    def form_valid(self, form):
+        """If the form is valid, save the associated model."""
+        self.object = form.save()
+        return http.JsonResponse({'status': 'SUCCESS', 'value': 1})
 
 #generic.TemplateView
 class CategoryListView(ListView):

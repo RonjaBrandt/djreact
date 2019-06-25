@@ -37,11 +37,9 @@
                             {{category.current_Points}}<br>
 
                                 {% if answers.choice.label == '1-2 years' %}
-                                    <form class='my-ajax-form' method='POST' action='.' data-url="{{ request.build_absolute_uri|safe }"> <!-- Här skickas infon {% url 'survey:update' 1 %}
-                                                                                                                    }-->
+                                    <form class='my-ajax-form' method='POST' action='.' data-url="{% url 'survey:update' 1 %}">
                                         {% csrf_token %}
-                                        <!--{{form.as_p|safe}}-->
-                                        {{form.as_p|safe|add:question.question_Points}}
+                                        <input type="hidden" name="current_Points" value="{{question.question_Points}}">
                                         <button type='submit'>Submit</button>
                                     </form>
                                     <!-- om svaret är rätt behöver öka värdet för varibale tillhörande kategori--><br>
@@ -85,7 +83,8 @@
                 console.log(data)
                 console.log(textStatus)
                 console.log(jqXHR)
-                $myForm.reset[0]; // reset form data
+                // $myForm.reset(0); // reset form data
+                location.reload();
             }
         
             function handleFormError(jqXHR, textStatus, errorThrown){
