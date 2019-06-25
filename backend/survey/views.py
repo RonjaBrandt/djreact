@@ -61,7 +61,7 @@ class CategoryListView(ListView, TypeFormApiMixin):
         context = super().get_context_data(**kwargs)
         try:
             data = self.typeform_get('forms/{id}/responses?page_size=1'.format(id='nv4fXG')).json()
-            context['items'] = data['items']
+            context['items'] = data['items'] #ev kan krångla se över. om ej kan kontakta api /admin view sen
         except requests.HTTPError:
             pass
 
