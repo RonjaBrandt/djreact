@@ -35,7 +35,7 @@ class CategoryUpdate(UpdateView):
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
         self.object = form.save()
-        return http.JsonResponse({'status': 'SUCCESS', 'value': 1})
+        return http.JsonResponse({'status': 'SUCCESS', 'value': self.object.current_Points})
 
 #generic.TemplateView
 class CategoryListView(ListView):
