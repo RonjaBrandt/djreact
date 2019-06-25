@@ -1,7 +1,7 @@
 {
     "git.ignoreLimitWarning": true,
     "python.linting.enabled": false,
-    "python.pythonPath": "backend/bin/python3.7"
+    "python.pythonPath": "backend\\Scripts\\python.exe"
 }
 
 /*Todo

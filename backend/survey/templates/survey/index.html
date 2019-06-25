@@ -34,7 +34,7 @@
                                 <br>
                                 <!--adds points-->
                             <b>CURRENT points</b> <br>
-                            {{category.current_Points}}<br>
+                                {{category.current_Points}}<br>
 
                                 {% if answers.choice.label == '1-2 years' %}
                                     <form class='my-ajax-form' method='POST' action='.' data-url="{% url 'survey:update' 1 %}">
