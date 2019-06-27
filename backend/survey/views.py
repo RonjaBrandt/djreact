@@ -39,7 +39,7 @@ class CategoryUpdate(AjaxFormMixin ,UpdateView):
         """If the form is valid, save the associated model."""
         self.object = form.save()
         return http.JsonResponse({'status': 'SUCCESS', 'value': self.object.current_Points})
-Unionen
+
 
 
 
