@@ -7,6 +7,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from random import choice
+from string import ascii_letters, digits
+
 from .models import Survey, Category, Question
 from .serializeres import SurveySerializer, CategorySerializer, QuestionSerializer
 from .forms import CategoryModelForm
@@ -28,7 +31,7 @@ class JoinFormView(AjaxFormMixin, FormView):
     form_class = CategoryModelForm
     template_name = 'survey/index.html'
 
-class CategoryUpdate(UpdateView):
+class CategoryUpdate(AjaxFormMixin ,UpdateView):
     model = Category
     fields = ['current_Points']
 
@@ -36,6 +39,9 @@ class CategoryUpdate(UpdateView):
         """If the form is valid, save the associated model."""
         self.object = form.save()
         return http.JsonResponse({'status': 'SUCCESS', 'value': self.object.current_Points})
+
+
+
 
 class TypeFormApiMixin:
     base_url="https://api.typeform.com/"
@@ -48,6 +54,8 @@ class TypeFormApiMixin:
         r = requests.get(self._get_url(path), headers=self.headers)
         r.raise_for_status()
         return r
+        
+
         
 
 #generic.TemplateView
@@ -65,8 +73,9 @@ class CategoryListView(ListView, TypeFormApiMixin):
         except requests.HTTPError:
             pass
 
-        context['question'] = Question.objects.all()
-        context['category'] = Category.objects.all()
+        context['questions'] = Question.objects.all()
+        context['categorys'] = Category.objects.all()
+        context['surveys'] = Survey.objects.all()
         print(context)
         return context
 
@@ -86,11 +95,26 @@ class CategoryDetailView(DetailView, TypeFormApiMixin):
         except requests.HTTPError:
             pass
         
-        context['question'] = Question.objects.all()
-        context['category'] = Category.objects.all()
+        context['questions'] = Question.objects.all()
+        context['categorys'] = Category.objects.all()
+        context['surveys'] = Survey.objects.all()
         print(context)
         return context
 
     def get_object(self):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Category, id=id_)
+
+
+
+#Generat token for the form to send with to Typeforms hiddenfield 
+
+def _generate_token(length=50):
+   out = ""
+   for i in range(length):
+       out += choice(ascii_letters + digits)
+   return out
+
+
+def _get_link():
+   return "http://someserver.somewhere?token=" + _generate_token()

@@ -4,12 +4,19 @@
 {% block content %}
 
 {% for items in items  %}
-{% for category in category %}
-    {% for question in question %}
-        
+{% for survey in surveys  %}
+test
+{% for category in survey.category_set.all %}
+test
+<li>{{category}}</li>
+    {% for question in questions %}
+       
+    
+            
             <h1>--------------------------------</h1>
-            {{question.question_ID}}
-            {{category.max_Points}}
+           
+            
+            
             <h1>--------------------------------</h1>
                 <h1>ITEMS:</h1>
                 <h5>{{items}}</h5>
@@ -57,6 +64,7 @@
             {% endfor %}
         <h1>---------------END--------------</h1>
         {% endfor %}
+    {% endfor %}
     {% endfor %}
 {% endfor %}
 

@@ -9,8 +9,7 @@ class Survey(models.Model):
       return 'SurveyID: '+self.survey_Id
    # TODO: Skapa Read-only fält för current points
 class Category(models.Model):
-    id = models.AutoField(primary_key=True)
-    survey = models.ForeignKey(Survey, related_name='catagory', on_delete=models.CASCADE, help_text="Choose what Survey thos Category belogs to." , blank=True, null=True)
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, help_text="Choose what Survey thos Category belogs to." , blank=True, null=True)
     category_Name = models.CharField(max_length=20, help_text="Name of the Catagory", blank=True, null=True)
     max_Points = models.DecimalField(max_digits=3, decimal_places=1, default=0, help_text="Maximum points for this catagory", blank=True, null=True)
     current_Points = models.DecimalField(max_digits=5, decimal_places=1, default=0, help_text="Displaying current points. DO NOT CHANGE THIS.", blank=True, null=True)
@@ -60,7 +59,7 @@ class Question(models.Model):
       (date, 'date'),
    )
 
-   category = models.ForeignKey(Category, related_name='question', on_delete=models.CASCADE,help_text="Choose to what Category this question belongs to" ,blank=True, null=True)
+   category = models.ForeignKey(Category, on_delete=models.CASCADE,help_text="Choose to what Category this question belongs to" ,blank=True, null=True)
    question_ID = models.CharField(max_length=500, help_text="Add the Question ID from Typefrom goes here", blank=True, null=True)
    question_Type = models.CharField(max_length=20, choices=typeChoices, help_text="Important that this is right")
    question_Answer = models.CharField(max_length=500, help_text="Important that this is exact", blank=True, null=True)
@@ -72,3 +71,8 @@ class Question(models.Model):
    
    def __str__(self):
       return 'QuestionID: ' + self.question_ID + ' - ' + str(self.category.survey)
+
+
+class Answers(models.Model):
+   survey_Id = models.CharField(max_length=20, help_text="Add the Survey ID from Typefrom here")
+   
