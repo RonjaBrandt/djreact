@@ -39,7 +39,7 @@ class CategoryUpdate(AjaxFormMixin ,UpdateView):
         """If the form is valid, save the associated model."""
         self.object = form.save()
         return http.JsonResponse({'status': 'SUCCESS', 'value': self.object.current_Points})
-
+Unionen
 
 
 
@@ -72,6 +72,16 @@ class CategoryListView(ListView, TypeFormApiMixin):
             context['items'] = data['items'] #ev kan krångla se över. om ej kan kontakta api /admin view sen
         except requests.HTTPError:
             pass
+        else:
+            # TODO Update scores here
+            for item in data['items']:
+                for answer in item['answers']:
+                    try:
+                        question = Question.objects.get(question_ID = answer['field']['id'])
+                        question.category.current_Points += question.question_Points
+                        question.category.save()
+                    except Question.DoesNotExist:
+                        pass
 
         context['questions'] = Question.objects.all()
         context['categorys'] = Category.objects.all()

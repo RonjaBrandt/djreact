@@ -76,3 +76,4 @@ class Question(models.Model):
 class Answers(models.Model):
    survey_Id = models.CharField(max_length=20, help_text="Add the Survey ID from Typefrom here")
    
+
