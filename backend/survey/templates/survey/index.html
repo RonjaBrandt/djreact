@@ -1,102 +1,71 @@
 {% extends 'survey/base.html' %}
 {% block title %}Survey{% endblock title %}
-<!--Display db items-->
+
+
+
+
+<script>
+{% block jquery %}
+
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'polarArea',
+                    data: {
+                        labels: [{% for survey in surveys %}{% for category in survey.category_set.all %}'{{category.category_Name}}', {% endfor %}{% endfor %}],
+                        datasets: [{
+                            label: '# of Scores',
+                            data: [ {% for survey in surveys %}{% for category in survey.category_set.all %}{{category.current_Points}},{% endfor %}{% endfor %}],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                   
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+        {% endblock jquery %}
+         </script>
+
+
+
 {% block content %}
-
-{% for items in items  %}
-{% for survey in surveys  %}
-test
-{% for category in survey.category_set.all %}
-test
-<li>{{category}}</li>
-    {% for question in questions %}
-       
-    
-            
-            <h1>--------------------------------</h1>
+<div class='row'>
+    <div class='col-sm-12' '>
+            <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+            <canvas id="myChart" ></canvas>
            
-            
-            
-            <h1>--------------------------------</h1>
-                <h1>ITEMS:</h1>
-                <h5>{{items}}</h5>
-            <h1>--------------------------------</h1>
-                <h1>ITEMS.ANSWERS</h1>
-                <h4>{{items.answers}}</h4>
-            <h1>--------------------------------</h1>
-                <h1>ITEMS.ANSWERS.FIELD</h1>
-
-                {% for answers in items.answers  %}
-                
-                    <ul>
-                        <li><h5>Question: {{answers.field.id}} Answer Type: {{answers.type}}<br>
-                            Answer: {{answers.choice.label}}{{answers.text}}{{answers.number}}{{answers.choices.labels}}<br>
-                            ID: {{answers.field.id}}<br>
-                            <!-- takes out a specifik question-->
-                            {% if answers.field.id == question.question_ID %}
-                                <b>Points for the question:</b> 
-                                {{question.question_Points}} <br>
-                                <!--Check if the answer is not equels to something-->
-                                - Visa detta om det går att få ut question med id:ovmiTI7jMvHR <br>
-                                <br>
-                                <!--adds points-->
-                            <b>CURRENT points</b> <br>
-                                 category {{category.current_Points}}<br>
-                                Points {{question.question_Points}})
-                                {% if answers.choice.label == '1-2 years' %}
-                                  
-                                    <!-- om svaret är rätt behöver öka värdet för varibale tillhörande kategori--><br>
-                                    - Visa detta om svaret är likamed "1-2 years" visa detta <br>
-                                {% endif %}
-
-                                {% if answers.choice.label != '1-3' %}
-                                    <!-- om svaret är rätt behöver öka värdet för varibale tillhörande kategori-->
-                                    - Visa detta om svaret INTE är likamed "1-3" visa detta <br>
-                                {% endif %}
-
-                            {% endif %}
-                    </ul>
-            
-            {% endfor %}
-        <h1>---------------END--------------</h1>
-        {% endfor %}
-    {% endfor %}
-    {% endfor %}
-{% endfor %}
-
+        </div>
+    </div>
+</div>
+        
 
 {% endblock content %}
-{% block javascript %}
-<script>
-        $(document).ready(function(){
-            var $myForm = $('.my-ajax-form')
-            $myForm.submit(function(event){
-                event.preventDefault()
-                var $formData = $(this).serialize()
-                var $endpoint = $myForm.attr('data-url')
-                $.ajax({
-                    method: "POST",
-                    url: $endpoint,
-                    data: $formData, //add PK HERE!!!!! Hur får jag ut pk värdet
-                    success: handleFormSuccess,
-                    error: handleFormError,
-                })
-            })
-        
-            function handleFormSuccess(data, textStatus, jqXHR){
-                console.log(data)
-                console.log(textStatus)
-                console.log(jqXHR)
-                // $myForm.reset(0); // reset form data
-                location.reload();
-            }
-        
-            function handleFormError(jqXHR, textStatus, errorThrown){
-                console.log(jqXHR)
-                console.log(textStatus)
-                console.log(errorThrown)
-            }
-        })
-</script>
-<select id="survey"
-{% endblock javascript %}
+
+
+
+
+
+
+

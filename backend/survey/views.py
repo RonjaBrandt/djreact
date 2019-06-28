@@ -19,13 +19,6 @@ import json
 import requests
 #En model.Model är ditt interface mot databasen. En View är ett sätt att visa data, eller ta emot.
 
-#Make data on the database to APIrepsonse
-class SurveyAPIView(APIView):
-
-    def get(self, request):
-        survey = Survey.objects.all()
-        serializer = SurveySerializer(survey, many=True)
-        return Response(serializer.data)
 
 class JoinFormView(AjaxFormMixin, FormView):
     form_class = CategoryModelForm
@@ -41,11 +34,32 @@ class CategoryUpdate(AjaxFormMixin ,UpdateView):
         return http.JsonResponse({'status': 'SUCCESS', 'value': self.object.current_Points})
 
 
+# API view for catagory
+class  ChartData(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, format=None):
+        category = Category.objects.all()
+        serializer = CategorySerializer(category, many=True)
+
+        return Response(serializer.data)
+
+class  QuestionData(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, format=None):
+        question = Question.objects.all()
+        serializer = QuestionSerializer(question, many=True)
+
+        return Response(serializer.data)
+
 
 
 class TypeFormApiMixin:
     base_url="https://api.typeform.com/"
-    headers = {'Authorization': 'Bearer 94HyzhMYCbSZyAczo6xXi7GZuFLRuvUA9krjC9FFahUf'}
+    headers = {'Authorization': 'Bearer G5YQ7E5yn8qRdVMcAEUxEHpvHNjnnhq8EUXsrChdqid7'}
 
     def _get_url(self, path):
         return self.base_url + path
@@ -57,10 +71,8 @@ class TypeFormApiMixin:
         
 
         
-
-#generic.TemplateView
+# List
 class CategoryListView(ListView, TypeFormApiMixin):
-    #Getting the hole form (forms)
     model = Category
     template_name = 'survey/index.html'
     
@@ -68,7 +80,7 @@ class CategoryListView(ListView, TypeFormApiMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         try:
-            data = self.typeform_get('forms/{id}/responses?page_size=1'.format(id='nv4fXG')).json()
+            data = self.typeform_get('forms/{id}/responses?page_size=1'.format(id='g46uGI')).json()
             context['items'] = data['items'] #ev kan krångla se över. om ej kan kontakta api /admin view sen
         except requests.HTTPError:
             pass
@@ -77,7 +89,7 @@ class CategoryListView(ListView, TypeFormApiMixin):
             for item in data['items']:
                 for answer in item['answers']:
                     try:
-                        question = Question.objects.get(question_ID = answer['field']['id'])
+                        question = Question.objects.get(question_ID = answer['field']['ref'])
                         question.category.current_Points += question.question_Points
                         question.category.save()
                     except Question.DoesNotExist:
@@ -86,13 +98,13 @@ class CategoryListView(ListView, TypeFormApiMixin):
         context['questions'] = Question.objects.all()
         context['categorys'] = Category.objects.all()
         context['surveys'] = Survey.objects.all()
-        print(context)
+        #print(context)
         return context
 
-#generic.TemplateView
+
 #Detailview 
 class CategoryDetailView(DetailView, TypeFormApiMixin):
-    #Getting the hole form (forms)
+   
     model = Category
     template_name = 'survey/index.html'
 
@@ -117,8 +129,14 @@ class CategoryDetailView(DetailView, TypeFormApiMixin):
 
 
 
-#Generat token for the form to send with to Typeforms hiddenfield 
 
+
+
+
+
+
+
+#Generat token for the form to send with to Typeforms hiddenfield 
 def _generate_token(length=50):
    out = ""
    for i in range(length):

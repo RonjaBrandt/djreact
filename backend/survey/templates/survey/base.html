@@ -4,18 +4,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> {% block title %}Result{% endblock title %}</title>
-    <!--Loads the path to your static files-->
-{% load staticfiles %}
+   
+
+<!--Loads css-->    
+
 <!-- Adds Boostrap-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<!--Our own CSS-->
-<link rel="stylesheet" type="css" href="{% static 'survey/style.css' %}" />
+
+
 
 <!--Scripts-->
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<!--Chart.Js-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 
 
 </head>
@@ -30,11 +34,11 @@
         </div>
     </div>
 </nav>
-
-{% block content %}
-{% endblock content %}
-{% block javascript %}
-  
-{% endblock javascript %}
+<div class="container">
+{% block content %}{% endblock content %}
+<script>
+    $(document).ready(function(){})
+{% block jquery %}{% endblock jquery %}
+</script>
 </body>
 </html>

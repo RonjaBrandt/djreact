@@ -11,7 +11,7 @@ class CategorySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ('id', 'category_Name', 'current_Points')
 
 class QuestionSerializer(serializers.ModelSerializer):
 
