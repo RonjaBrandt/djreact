@@ -9,7 +9,7 @@ class Survey(models.Model):
       return 'SurveyID: '+self.survey_Id
    # TODO: Skapa Read-only fält för current points
 class Category(models.Model):
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, help_text="Choose what Survey thos Category belogs to." , blank=True, null=True)
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, help_text="Choose what Survey this Category belogs to." , blank=True, null=True)
     category_Name = models.CharField(max_length=20, help_text="Name of the Catagory", blank=True, null=True)
     max_Points = models.DecimalField(max_digits=3, decimal_places=1, default=0, help_text="Maximum points for this catagory", blank=True, null=True)
     current_Points = models.DecimalField(max_digits=5, decimal_places=2, default=0, help_text="Displaying current points. DO NOT CHANGE THIS.", blank=True, null=True)
@@ -62,19 +62,32 @@ class Question(models.Model):
    category = models.ForeignKey(Category, on_delete=models.CASCADE,help_text="Choose to what Category this question belongs to" ,blank=True, null=True)
    question_ID = models.CharField(max_length=500, help_text="Add the Question ID from Typefrom goes here", blank=True, null=True)
    question_Type = models.CharField(max_length=20, choices=typeChoices, help_text="Important that this is right")
-   question_Answer = models.CharField(max_length=500, help_text="Important that this is exact", blank=True, null=True)
-   question_Points = models.DecimalField(max_digits=5, decimal_places=2, blank=True, default=0, help_text='Make sure that this is not higher then Max Points for the catagory. {Category.max_Points}' )
    
    def get_absolute_url(self):
       #send user to page that display the detiels of the input data
       return reverse('question:detail', kwargs={'pk':self.pk})
    
    def __str__(self):
-      return 'QuestionID: ' + self.question_ID + 'Question Type ' + self.question_Type + ' Question Answer: ' + self.question_Answer + ' Question Points:  ' + str(self.question_Points)+ ' - ' + str(self.category.survey)
+      return 'QuestionID: ' + self.question_ID + ' - ' +' Question Type ' + self.question_Type + ' - '+ str(self.category)
 
 
-class Answers(models.Model):
-   survey_Id = models.CharField(max_length=20, help_text="Add the Survey ID from Typefrom here")
-   #Nehöver ta itneia wojfoidklcx
+class Answer(models.Model):
+   question = models.ForeignKey(Question, on_delete=models.CASCADE,help_text="Choose to what Question the Answer belongs tobelongs to" ,blank=True, null=True)
+   answer = models.CharField(max_length=500, help_text="Important that this is exact", blank=True, null=True)
+   points = models.DecimalField(max_digits=5, decimal_places=2, blank=True, default=0, help_text='points for this answer')
    
+   def __str__(self):
+      return  'Answer: ' + self.answer + ' - ' +'Points: ' + self.points +  ' - '+ str(self.question)
 
+
+class Response(models.Model):
+   survey = models.ForeignKey(Survey, on_delete=models.CASCADE, help_text="Choose what Survey thiss Answer belogs to." , blank=True, null=True)
+   response_id = models.CharField(primary_key=True, max_length=100, help_text="Autofield response id from hidden field in Typeform. Don't change this")
+   verksamhetsstyrning =  models.DecimalField(max_digits=5, decimal_places=2, blank=True, default=0, help_text='Points for this category')
+   engagemang =  models.DecimalField(max_digits=5, decimal_places=3, blank=True, default=0, help_text='Points for this category')
+   resurser =  models.DecimalField(max_digits=5, decimal_places=3, blank=True, default=0, help_text='Points for this category')
+   kommunikation =  models.DecimalField(max_digits=5, decimal_places=3, blank=True, default=0, help_text='Points for this category')
+
+   def __str__(self):
+      return 'Respons ID: '+ self.response_id + ' - ' +  'Verksamhetsstyrning: ' + self.verksamhetsstyrning + ' - ' + 'Engagemang: ' + self.engagemang + ' - ' + 'Resuser: ' + self.resurser + ' - ' + 'Kommunikation: ' + self.kommunikation + ' - ' + 'Info: '+  str(self.survey) + ' - END -'
+   
