@@ -74,19 +74,18 @@ class Question(models.Model):
 class Answer(models.Model):
    question = models.ForeignKey(Question, on_delete=models.CASCADE,help_text="Choose to what Question the Answer belongs tobelongs to" ,blank=True, null=True)
    answer = models.CharField(max_length=500, help_text="Important that this is exact", blank=True, null=True)
-   points = models.DecimalField(max_digits=5, decimal_places=2, blank=True, default=0, help_text='points for this answer')
+   points = models.DecimalField(max_digits=5, decimal_places=2, default=0, help_text='points for this answer', blank=True, null=True)
    
    def __str__(self):
       return  'Answer: ' + self.answer + ' - ' +'Points: ' + self.points +  ' - '+ str(self.question)
 
 
 class Response(models.Model):
-   survey = models.ForeignKey(Survey, on_delete=models.CASCADE, help_text="Choose what Survey thiss Answer belogs to." , blank=True, null=True)
-   response_id = models.CharField(primary_key=True, max_length=100, help_text="Autofield response id from hidden field in Typeform. Don't change this")
-   verksamhetsstyrning =  models.DecimalField(max_digits=5, decimal_places=2, blank=True, default=0, help_text='Points for this category')
-   engagemang =  models.DecimalField(max_digits=5, decimal_places=3, blank=True, default=0, help_text='Points for this category')
-   resurser =  models.DecimalField(max_digits=5, decimal_places=3, blank=True, default=0, help_text='Points for this category')
-   kommunikation =  models.DecimalField(max_digits=5, decimal_places=3, blank=True, default=0, help_text='Points for this category')
+   response_id = models.CharField(primary_key=True, max_length=50, help_text="Autofield response id from hidden field in Typeform. Don't change this",  blank=True)
+   verksamhetsstyrning =  models.DecimalField(max_digits=5, decimal_places=2,  default=0, help_text='Points for this category',  blank=True, null=True)
+   engagemang =  models.DecimalField(max_digits=5, decimal_places=3, default=0, help_text='Points for this category', blank=True, null=True)
+   resurser =  models.DecimalField(max_digits=5, decimal_places=3,default=0, help_text='Points for this category',  blank=True, null=True)
+   kommunikation =  models.DecimalField(max_digits=5, decimal_places=3, default=0, help_text='Points for this category', blank=True, null=True)
 
    def __str__(self):
       return 'Respons ID: '+ self.response_id + ' - ' +  'Verksamhetsstyrning: ' + self.verksamhetsstyrning + ' - ' + 'Engagemang: ' + self.engagemang + ' - ' + 'Resuser: ' + self.resurser + ' - ' + 'Kommunikation: ' + self.kommunikation + ' - ' + 'Info: '+  str(self.survey) + ' - END -'

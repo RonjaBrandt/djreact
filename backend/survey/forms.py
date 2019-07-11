@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Category
+from .models import Category, Answer
 
 class CategoryModelForm(forms.ModelForm):
 
