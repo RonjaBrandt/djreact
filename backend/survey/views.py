@@ -77,6 +77,7 @@ class CategoryDetailView(DetailView, TypeFormApiMixin):
     model = Category
     template_name = 'survey/index.html'
 
+    #Check if objecet with the id exist or create a new one
     def create_object(self):
         id_ = self.kwargs.get("id")
         try:
