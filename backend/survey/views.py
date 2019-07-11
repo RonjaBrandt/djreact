@@ -79,13 +79,14 @@ class CategoryDetailView(DetailView, TypeFormApiMixin):
 
     def create_object(self):
         id_ = self.kwargs.get("id")
-        if Response.objects.get(id=id_):
-            pass
-        else:
-            Response.objects.create(response_id = id_, 
+        try:
+            obj = Response.objects.get(id=id_)
+        except Response.DoesNotExist:
+            obj = Response(response_id = id_, 
             verksamhetsstyrning = 0, 
             engagemang = 0, resurser= 0, 
             kommunikation= 0)
+            obj.save()
         
     
     def get_object(self):
@@ -128,10 +129,16 @@ class CategoryDetailView(DetailView, TypeFormApiMixin):
 
 #Generat token for the form to send with to Typeforms hiddenfield 
 
+
 def _generate_token(length=50):
     out = ""
     for i in range(length):
         out += choice(ascii_letters + digits)
+    
+    if Response.objects.filter(response_id = out).exist:
+        _generate_token()
+    else:
+        pass
     return out
 
 def _get_link(request):
