@@ -8,8 +8,11 @@ app_name = 'survey'
 urlpatterns = [
     #generats tooken for the form and sends the user to Typeform
     path('start/', views._get_link , name='start'),
+
+    
     # /survey/mdasmio1313JILAF
-    path('<int:id>/', views.CategoryDetailView.as_view(), name='view'),
+    path('response_id/<view>/', views.ResponseListView.as_view(), name='view'),
+
     #/survey/test/update
     path('test/update/<int:pk>/', views.CategoryUpdate.as_view(), name='update'),
     #api

@@ -86,7 +86,6 @@ class Response(models.Model):
    engagemang =  models.DecimalField(max_digits=5, decimal_places=3, default=0, help_text='Points for this category', blank=True, null=True)
    resurser =  models.DecimalField(max_digits=5, decimal_places=3,default=0, help_text='Points for this category',  blank=True, null=True)
    kommunikation =  models.DecimalField(max_digits=5, decimal_places=3, default=0, help_text='Points for this category', blank=True, null=True)
-
-   def __str__(self):
-      return 'Respons ID: '+ self.response_id + ' - ' +  'Verksamhetsstyrning: ' + self.verksamhetsstyrning + ' - ' + 'Engagemang: ' + self.engagemang + ' - ' + 'Resuser: ' + self.resurser + ' - ' + 'Kommunikation: ' + self.kommunikation + ' - ' + 'Info: '+  str(self.survey) + ' - END -'
    
+   def __str__(self):
+      return 'Respons ID: '+ str(self.response_id)

@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import HttpResponse, HttpResponseRedirect
 from rest_framework import status
+from urllib.parse import urlparse
 
 from random import choice
 from string import ascii_letters, digits
@@ -18,6 +19,7 @@ from .mixins import AjaxFormMixin
 
 import json
 import requests
+
 #En model.Model är ditt interface mot databasen. En View är ett sätt att visa data, eller ta emot.
 
 
@@ -69,36 +71,26 @@ class TypeFormApiMixin:
         r = requests.get(self._get_url(path), headers=self.headers)
         r.raise_for_status()
         return r
-        
 
-        
+
 # List
-class CategoryDetailView(DetailView, TypeFormApiMixin):
-    model = Category
+class ResponseListView(ListView, TypeFormApiMixin):
+    model = Response
     template_name = 'survey/index.html'
-
+    print(1)
     #Check if objecet with the id exist or create a new one
-    def create_object(self):
-        id_ = self.kwargs.get("id")
-        try:
-            obj = Response.objects.get(id=id_)
-        except Response.DoesNotExist:
-            obj = Response(response_id = id_, 
-            verksamhetsstyrning = 0, 
-            engagemang = 0, resurser= 0, 
-            kommunikation= 0)
-            obj.save()
-        
+
+    def get_queryset(self):
+        return self.request.GET.get('')
     
-    def get_object(self):
-        id_ = self.kwargs.get("id")
-        return get_object_or_404(Answer, id=id_)
-
-
     def get_context_data(self, **kwargs):
+        
         context = super().get_context_data(**kwargs)
+        print(2)
+        print(self.get_queryset())
         try:
-            data = self.typeform_get('forms/{id}/responses?query='.format(id='g46uGI')).json() + get_object()
+            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=self.get_queryset())).json()
+            print(data)
             context['items'] = data['items'] #ev kan krångla se över. om ej kan kontakta api /admin view sen
         except requests.HTTPError:
             pass
@@ -108,13 +100,7 @@ class CategoryDetailView(DetailView, TypeFormApiMixin):
                 for answer in item['answers']:
                     try:
                         answer = Answer.objects.get(question_ID = answer['field']['ref'])
-
-                        if Response.objects.get(response_id= get_object()):
-                            pass
-                        else:
-                            create_object()
-
-                        response= Response.objects.get(response_ID = answer['hidden']['query']) #DUBBEL KOLLA DETTA
+                        response= Response.objects.get(response_ID = answer['hidden']['query']) 
                         question.category.current_Points += question.question_Points
                         question.category.save()
                     except Question.DoesNotExist:
@@ -126,17 +112,16 @@ class CategoryDetailView(DetailView, TypeFormApiMixin):
         #print(context)
         return context
 
-
+   
+  
 
 #Generat token for the form to send with to Typeforms hiddenfield 
-
-
 def _generate_token(length=50):
     out = ""
     for i in range(length):
         out += choice(ascii_letters + digits)
     
-    if Response.objects.filter(response_id = out).exist:
+    if Response.objects.filter(response_id = out) == True:
         _generate_token()
     else:
         pass
@@ -145,9 +130,17 @@ def _generate_token(length=50):
 def _get_link(request):
     return redirect ("https://beyondintent.typeform.com/to/g46uGI?response_id=" + _generate_token())
 
-
+'''
+def create_object(self):
+    print(3)
+    obj = Response(response_id = get_id(), 
+    verksamhetsstyrning = 0, 
+    engagemang = 0, resurser= 0, 
+    kommunikation= 0)
+    obj.save()
+    return redirect('survey:view')
   
-
+'''
 
 
 
