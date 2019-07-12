@@ -18,6 +18,7 @@ from .forms import CategoryModelForm
 from .mixins import AjaxFormMixin
 
 import json
+import urllib.request
 import requests
 
 #En model.Model är ditt interface mot databasen. En View är ett sätt att visa data, eller ta emot.
@@ -72,16 +73,21 @@ class TypeFormApiMixin:
         r.raise_for_status()
         return r
 
+class Tooken:
+    obj = ""
+    def get_queryset(request, response_value):
+        obj += request.GET.get('response', None)
+        return obj
+    
 
 # List
-class ResponseListView(ListView, TypeFormApiMixin):
+class ResponseListView(ListView, TypeFormApiMixin, Tooken):
     model = Response
     template_name = 'survey/index.html'
     print(1)
     #Check if objecet with the id exist or create a new one
 
-    def get_queryset(self):
-        return self.request.GET.get('')
+  
     
     def get_context_data(self, **kwargs):
         
@@ -89,6 +95,7 @@ class ResponseListView(ListView, TypeFormApiMixin):
         print(2)
         print(self.get_queryset())
         try:
+            
             data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=self.get_queryset())).json()
             print(data)
             context['items'] = data['items'] #ev kan krångla se över. om ej kan kontakta api /admin view sen

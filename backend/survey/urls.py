@@ -11,7 +11,7 @@ urlpatterns = [
 
     
     # /survey/mdasmio1313JILAF
-    path('response_id/<view>/', views.ResponseListView.as_view(), name='view'),
+    path('response_id/response=<slug:response_value>/', views.ResponseListView.as_view(), name='view'),
 
     #/survey/test/update
     path('test/update/<int:pk>/', views.CategoryUpdate.as_view(), name='update'),
