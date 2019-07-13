@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import HttpResponse, HttpResponseRedirect
 from rest_framework import status
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
 from random import choice
 from string import ascii_letters, digits
@@ -19,6 +19,7 @@ from .mixins import AjaxFormMixin
 
 import json
 import urllib.request
+import urllib.parse as urlparse
 import requests
 
 #En model.Model är ditt interface mot databasen. En View är ett sätt att visa data, eller ta emot.
@@ -73,30 +74,26 @@ class TypeFormApiMixin:
         r.raise_for_status()
         return r
 
-class Tooken:
-    obj = ""
-    def get_queryset(request, response_value):
-        obj += request.GET.get('response', None)
-        return obj
-    
 
 # List
-class ResponseListView(ListView, TypeFormApiMixin, Tooken):
+class ResponseListView(ListView, TypeFormApiMixin):
     model = Response
     template_name = 'survey/index.html'
     print(1)
-    #Check if objecet with the id exist or create a new one
+    # Här är där jag håller på eric.
+    def get_tooken(request, value):
+        print(value)
+        print((value))
+        url = "http://127.0.0.1:8000/survey/response_id/response={resp}/".format(resp=str(value))
+        resp = url.rpartition("=")[2]
+        print(resp)
+        return resp
 
-  
-    
     def get_context_data(self, **kwargs):
-        
         context = super().get_context_data(**kwargs)
         print(2)
-        print(self.get_queryset())
         try:
-            
-            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=self.get_queryset())).json()
+            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=self.get_tooken(self, **kwargs))).json()
             print(data)
             context['items'] = data['items'] #ev kan krångla se över. om ej kan kontakta api /admin view sen
         except requests.HTTPError:
@@ -119,35 +116,31 @@ class ResponseListView(ListView, TypeFormApiMixin, Tooken):
         #print(context)
         return context
 
-   
-  
 
-#Generat token for the form to send with to Typeforms hiddenfield 
+# Generat token for the form to send with to Typeforms hiddenfield
 def _generate_token(length=50):
     out = ""
     for i in range(length):
         out += choice(ascii_letters + digits)
-    
-    if Response.objects.filter(response_id = out) == True:
+    if Response.objects.filter(response_id=out) is True:
         _generate_token()
     else:
         pass
     return out
 
-def _get_link(request):
-    return redirect ("https://beyondintent.typeform.com/to/g46uGI?response_id=" + _generate_token())
 
-'''
-def create_object(self):
-    print(3)
-    obj = Response(response_id = get_id(), 
-    verksamhetsstyrning = 0, 
-    engagemang = 0, resurser= 0, 
-    kommunikation= 0)
-    obj.save()
-    return redirect('survey:view')
-  
-'''
+def _get_link(request):
+    return redirect("https://beyondintent.typeform.com/to/g46uGI?response_id=" + _generate_token())
+
+
+#def create_object(self):
+#    print(3)
+#    obj = Response(response_id = get_id(), 
+#    verksamhetsstyrning = 0, 
+#    engagemang = 0, resurser= 0, 
+#    kommunikation= 0)
+#    obj.save()
+#    return redirect('survey:view')
 
 
 
