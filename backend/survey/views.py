@@ -80,6 +80,7 @@ class ResponseListView(ListView, TypeFormApiMixin):
     model = Response
     template_name = 'survey/index.html'
     print(1)
+
     # Här är där jag håller på eric.
     def get_tooken(request, value):
         print(value)
@@ -93,13 +94,14 @@ class ResponseListView(ListView, TypeFormApiMixin):
         context = super().get_context_data(**kwargs)
         print(2)
         try:
-            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=self.get_tooken(self, **kwargs))).json()
+            # det är hit jag vill få själva värdet från url ovan
+            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=self.get_tooken())).json()
             print(data)
-            context['items'] = data['items'] #ev kan krångla se över. om ej kan kontakta api /admin view sen
+            context['items'] = data['items']  # ev kan krångla se över. Ej klart
         except requests.HTTPError:
             pass
         else:
-            #Update scores here
+            # INte klart 
             for item in data['items']:
                 for answer in item['answers']:
                     try:
