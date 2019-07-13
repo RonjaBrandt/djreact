@@ -80,24 +80,24 @@ class ResponseListView(ListView, TypeFormApiMixin):
     model = Response
     template_name = 'survey/index.html'
     print(1)
-
-    # Här är där jag håller på eric.
+    # Här är där jag håller på Eric.
     def get_tooken(request, value):
         print(value)
         print((value))
-        url = "http://127.0.0.1:8000/survey/response_id/response={resp}/".format(resp=str(value))
-        resp = url.rpartition("=")[2]
-        print(resp)
-        return resp
+        url = "http://127.0.0.1:8000/survey/response_id/response={resp}/".format(resp=value)
+        parsed = urlparse.urlparse(url)
+        print(urlparse.parse_qs(parsed.query)['response'])
+        return parsed
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         print(2)
         try:
-            # det är hit jag vill få själva värdet från url ovan
-            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=self.get_tooken())).json()
+            # det är hit jag vill ha value, osäker på vilka värden som ska in på get_tooken här, den klagar om jag inte har 2 värden där
+            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=self.get_tooken(self, **kwargs))).json()
             print(data)
-            context['items'] = data['items']  # ev kan krångla se över. Ej klart
+#ev kan krångla se över. Ej klart
+            context['items'] = data['items'] 
         except requests.HTTPError:
             pass
         else:
