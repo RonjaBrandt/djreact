@@ -81,33 +81,29 @@ class ResponseListView(ListView, TypeFormApiMixin):
     template_name = 'survey/index.html'
     print(1)
     # Här är där jag håller på Eric.
-    def get_tooken(request, value):
-            print(value)
-            print((value))
-            url = "http://127.0.0.1:8000/survey/response_id/response={resp}/".format(resp=value)
-            parsed = urlparse.urlparse(url)
-            print(urlparse.parse_qs(parsed.query)['response'])
-            return parsed
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        print(context)
         print(2)
         try:
             # det är hit jag vill ha value, osäker på vilka värden som ska in på get_tooken här, den klagar om jag inte har 2 värden där
-            print(self.get_queryset(self))
-            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=self.get_queryset(self))).json()
+            qs = self.request.GET['response']
+            print(qs)
+            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
             print(data)
-#ev kan krångla se över. Ej klart
+# ev kan krångla se över. Ej klart
             context['items'] = data['items'] 
         except requests.HTTPError:
             pass
         else:
-            # INte klart 
+            # INte klart
             for item in data['items']:
                 for answer in item['answers']:
                     try:
-                        answer = Answer.objects.get(question_ID = answer['field']['ref'])
-                        response= Response.objects.get(response_ID = answer['hidden']['query']) 
+                        answer = Answer.objects.get(question=answer['field']['ref'])
+                        response = Response.objects.get(response_ID=answer['hidden']['query']) 
                         question.category.current_Points += question.question_Points
                         question.category.save()
                     except Question.DoesNotExist:
@@ -149,8 +145,5 @@ def create_object(request, value):
 
 
 
-def parse_query(param):
-        target = dict(request.args).get(param)
-        return target[0] if target else None
 
 
