@@ -106,6 +106,8 @@ class ResponseListView(ListView, TypeFormApiMixin):
             pass
         try:
             answers = data['items'][0]['answers']
+            for Question.objects.all() in Category.objects.all():
+                print(Question.objects.all())
             for field in answers:
                 print(field)
             print(answers)
