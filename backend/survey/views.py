@@ -93,9 +93,12 @@ class ResponseListView(ListView, TypeFormApiMixin):
             print(qs)
             data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
             print(data)
-            obj = Response.objects.create(response_id=qs)
-            obj.save()
-# ev kan krångla se över. Ej klart
+            if Response.objects.get(response_id=qs):
+                pass
+            else:
+                obj = Response.objects.create(response_id=qs)
+                obj.save()
+
             context['items'] = data['items'] 
         except requests.HTTPError:
             pass
@@ -105,7 +108,15 @@ class ResponseListView(ListView, TypeFormApiMixin):
                 for answer in item['answers']:
                     try:
                         answer = Answer.objects.get(question=answer['field']['ref'])
-                        response = Response.objects.get(response_ID=answer['hidden']['query']) 
+                        response = Response.objects.get(response_id=qs)
+                        if answer.question.category.category_Name == 'verksamhetsstyrning':
+                            answer.answer == 
+                        elif answer.question.category.category_Name == 'engagemang':
+                            pass
+                        elif answer.question.category.category_Name == 'resurser':
+                            pass
+                        elif answer.question.category.category_Name == 'resurser':
+                            pass
                         question.category.current_Points += question.question_Points
                         question.category.save()
                     except Question.DoesNotExist:

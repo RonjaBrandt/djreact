@@ -85,7 +85,7 @@ class Response(models.Model):
    verksamhetsstyrning =  models.DecimalField(max_digits=5, decimal_places=2,  default=0, help_text='Points for this category',  blank=True, null=True)
    engagemang =  models.DecimalField(max_digits=5, decimal_places=3, default=0, help_text='Points for this category', blank=True, null=True)
    resurser =  models.DecimalField(max_digits=5, decimal_places=3,default=0, help_text='Points for this category',  blank=True, null=True)
-   kommunikation =  models.DecimalField(max_digits=5, decimal_places=3, default=0, help_text='Points for this category', blank=True, null=True)
+   resurser =  models.DecimalField(max_digits=5, decimal_places=3, default=0, help_text='Points for this category', blank=True, null=True)
    
    def __str__(self):
-      return 'Respons ID: '+ str(self.response_id)
+      return 'Response ID: '+ str(self.response_id)
