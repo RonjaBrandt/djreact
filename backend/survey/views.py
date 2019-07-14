@@ -82,19 +82,20 @@ class ResponseListView(ListView, TypeFormApiMixin):
     print(1)
     # Här är där jag håller på Eric.
     def get_tooken(request, value):
-        print(value)
-        print((value))
-        url = "http://127.0.0.1:8000/survey/response_id/response={resp}/".format(resp=value)
-        parsed = urlparse.urlparse(url)
-        print(urlparse.parse_qs(parsed.query)['response'])
-        return parsed
+            print(value)
+            print((value))
+            url = "http://127.0.0.1:8000/survey/response_id/response={resp}/".format(resp=value)
+            parsed = urlparse.urlparse(url)
+            print(urlparse.parse_qs(parsed.query)['response'])
+            return parsed
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         print(2)
         try:
             # det är hit jag vill ha value, osäker på vilka värden som ska in på get_tooken här, den klagar om jag inte har 2 värden där
-            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=self.get_tooken(self, **kwargs))).json()
+            print(self.get_queryset(self))
+            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=self.get_queryset(self))).json()
             print(data)
 #ev kan krångla se över. Ej klart
             context['items'] = data['items'] 
@@ -135,15 +136,21 @@ def _get_link(request):
     return redirect("https://beyondintent.typeform.com/to/g46uGI?response_id=" + _generate_token())
 
 
-#def create_object(self):
-#    print(3)
-#    obj = Response(response_id = get_id(), 
-#    verksamhetsstyrning = 0, 
-#    engagemang = 0, resurser= 0, 
-#    kommunikation= 0)
-#    obj.save()
-#    return redirect('survey:view')
+def create_object(request, value):
+    print(3)
+    print(value)
+    obj = Response(response_id = value, 
+    verksamhetsstyrning = 0, 
+    engagemang = 0, resurser= 0, 
+    kommunikation= 0)
+    obj.save()
+    return redirect('survey:view')
 
 
+
+
+def parse_query(param):
+        target = dict(request.args).get(param)
+        return target[0] if target else None
 
 

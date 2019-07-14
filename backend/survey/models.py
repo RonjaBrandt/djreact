@@ -81,7 +81,7 @@ class Answer(models.Model):
 
 
 class Response(models.Model):
-   response_id = models.CharField(primary_key=True, max_length=50, help_text="Autofield response id from hidden field in Typeform. Don't change this",  blank=True)
+   response_id = models.SlugField(primary_key=True, max_length=50, help_text="Autofield response id from hidden field in Typeform. Don't change this",  blank=True)
    verksamhetsstyrning =  models.DecimalField(max_digits=5, decimal_places=2,  default=0, help_text='Points for this category',  blank=True, null=True)
    engagemang =  models.DecimalField(max_digits=5, decimal_places=3, default=0, help_text='Points for this category', blank=True, null=True)
    resurser =  models.DecimalField(max_digits=5, decimal_places=3,default=0, help_text='Points for this category',  blank=True, null=True)
