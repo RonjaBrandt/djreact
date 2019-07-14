@@ -84,43 +84,64 @@ class ResponseListView(ListView, TypeFormApiMixin):
 
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        print(context)
+       
+        
         print(2)
         try:
             # det är hit jag vill ha value, osäker på vilka värden som ska in på get_tooken här, den klagar om jag inte har 2 värden där
             qs = self.request.GET['response']
             print(qs)
             data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
-            print(data)
-            if Response.objects.get(response_id=qs):
+            print(3)
+            #context = super().get_context_data(**kwargs)
+            #context['items'] = data['items']
+            print(999)
+            if Response.objects.filter(response_id=qs).exists():
                 pass
             else:
+                print(4)
                 obj = Response.objects.create(response_id=qs)
                 obj.save()
-
-            context['items'] = data['items'] 
         except requests.HTTPError:
             pass
-        else:
-            # INte klart
-            for item in data['items']:
-                for answer in item['answers']:
-                    try:
-                        answer = Answer.objects.get(question=answer['field']['ref'])
-                        response = Response.objects.get(response_id=qs)
-                        if answer.question.category.category_Name == 'verksamhetsstyrning':
-                            answer.answer == 
-                        elif answer.question.category.category_Name == 'engagemang':
-                            pass
-                        elif answer.question.category.category_Name == 'resurser':
-                            pass
-                        elif answer.question.category.category_Name == 'resurser':
-                            pass
-                        question.category.current_Points += question.question_Points
-                        question.category.save()
-                    except Question.DoesNotExist:
-                        pass
+        try:
+            answers = data['items'][0]['answers']
+            for field in answers:
+                print(field)
+            print(answers)
+            #question = Question.objects.get(question_ID=answers['field']['ref'])
+            print(666)
+            #print(question)
+            
+            
+            response = Response.objects.get(response_id=qs)
+
+            if question.category.category_Name == 'verksamhetsstyrning':
+                if question.question_Type =='short_text'or'long_text'or'dropdown':
+                    answers = question.objects.get(question_Type=answers['field']['text'])
+
+                elif question.question_Type == 'multiple_choice (multiple options)' or'picture_choice (single option)':
+                    pass
+                elif question.question_Type == 'multiple_choice (single option)' or'picture_choice (multiple options)':
+                    pass    
+                elif question.question_Type == 'yes_no':
+                    pass
+                elif question.question_Type == 'rating':
+                    pass
+                elif question.question_Type == 'number':
+                    pass
+                
+
+            elif question.category.category_Name == 'engagemang':
+                pass
+            elif question.category.category_Name == 'resurser':
+                pass
+            elif question.category.category_Name == 'resurser':
+                pass
+            question.category.current_Points += question.question_Points
+            question.category.save()
+        except Question.DoesNotExist:
+            pass
 
         context['questions'] = Question.objects.all()
         context['categorys'] = Category.objects.all()
