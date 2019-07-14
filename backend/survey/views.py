@@ -93,6 +93,8 @@ class ResponseListView(ListView, TypeFormApiMixin):
             print(qs)
             data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
             print(data)
+            obj = Response.objects.create(response_id=qs)
+            obj.save()
 # ev kan krångla se över. Ej klart
             context['items'] = data['items'] 
         except requests.HTTPError:
@@ -132,14 +134,7 @@ def _get_link(request):
     return redirect("https://beyondintent.typeform.com/to/g46uGI?response_id=" + _generate_token())
 
 
-def create_object(request, value):
-    print(3)
-    print(value)
-    obj = Response(response_id = value, 
-    verksamhetsstyrning = 0, 
-    engagemang = 0, resurser= 0, 
-    kommunikation= 0)
-    obj.save()
+def create_object(self):
     return redirect('survey:view')
 
 

@@ -13,7 +13,7 @@ urlpatterns = [
     # /survey/mdasmio1313JILAF
     path('response_id/', views.ResponseListView.as_view(), name='view'),
     
-    path('response_id/response=<value>', views.create_object, name='create'),
+    path('response_id/?response=<value>', views.create_object, name='create'),
     #/survey/test/update
     path('test/update/<int:pk>/', views.CategoryUpdate.as_view(), name='update'),
     #api
