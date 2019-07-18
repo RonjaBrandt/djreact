@@ -65,26 +65,34 @@ class ResponseListView(ListView, TypeFormApiMixin):
             #question = Question.objects.all()
             #answer = Answer.objects.all()
             response = Response.objects.all()
+            question_ref ={}
+            for question in Question.objects.values_list('question_ID'):
+                # Gets the Ref for the question from the DB
+                question_ref = question
+                #print(question_ref)
             for field in typeform_API:
-               # print(field)
-                for question in Question.objects.values_list('question_ID'):
-                    i = 0
-                    while i < len(typeform_API[i]['field']['ref'])
-                        print(typeform_API[i])
-                        i++
-                        if Question.objects.values_list('question_ID') == typeform_API[0]['field']['ref']:
+                fields = field
+                #print(fields)
+                typeform_ID = field['field']['ref']
+                #print(typeform_ID)
+                i=0
+                while i <len(question_ref):
+                    print(question_ref[i])
+                    i+=1
+                    for ref in typeform_ID:
+                        if question_ref == typeform_ID:
                             print('hej från question id')
                             for category in Category.objects.all():
-                        # print('kategor i katagorier')
-                            
-                            # go throw all questions called fields from Typeform
+                            # print('kategor i katagorier')
+                                
+                                # go throw all questions called fields from Typeform
                                 for field in typeform_API:
-                            #     print('för field i field')
-                                    # If the category is this ->
+                                #     print('för field i field')
+                                        # If the category is this ->
                                     if category.category_Name == 'verksamhetsstyrning':
-                                #        print('hello från verksamhets')
-                                    # print(question.question_Type)
-                                        # then check what if data category have a question with the same ref as field
+                                    #        print('hello från verksamhets')
+                                        # print(question.question_Type)
+                                            # then check what if data category have a question with the same ref as field
                                 
                                     
                                         # Then check what type that question have.
