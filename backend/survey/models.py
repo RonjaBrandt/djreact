@@ -9,7 +9,7 @@ class Survey(models.Model):
       return 'SurveyID: '+self.survey_Id
    # TODO: Skapa Read-only fält för current points
 class Category(models.Model):
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, help_text="Choose what Survey this Category belogs to." , blank=True, null=True)
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, help_text="Choose what Survey this Category belongs to.", blank=True, null=True)
     category_Name = models.CharField(max_length=20, help_text="Name of the Catagory", blank=True, null=True)
     max_Points = models.DecimalField(max_digits=3, decimal_places=1, default=0, help_text="Maximum points for this catagory", blank=True, null=True)
     current_Points = models.DecimalField(max_digits=5, decimal_places=2, default=0, help_text="Displaying current points. DO NOT CHANGE THIS.", blank=True, null=True)
@@ -19,7 +19,7 @@ class Category(models.Model):
       return reverse('survey:test-detail', kwargs={'id':self.id})
 
     def __str__(self):
-       return 'Category: '+ self.category_Name + ' - ' + str(self.survey)
+       return self.category_Name
 
 
 class Question(models.Model):
@@ -75,9 +75,9 @@ class Answer(models.Model):
    question = models.ForeignKey(Question, on_delete=models.CASCADE,help_text="Choose to what Question the Answer belongs tobelongs to" ,blank=True, null=True)
    answer = models.CharField(max_length=500, help_text="Important that this is exact", blank=True, null=True)
    points = models.DecimalField(max_digits=5, decimal_places=2, default=0, help_text='points for this answer', blank=True, null=True)
-   
+
    def __str__(self):
-      return  'Answer: ' + self.answer + ' - ' +'Points: ' + self.points +  ' - '+ str(self.question)
+      return self.answer
 
 
 class Response(models.Model):

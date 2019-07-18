@@ -22,48 +22,9 @@ import urllib.request
 import urllib.parse as urlparse
 import requests
 
-#En model.Model är ditt interface mot databasen. En View är ett sätt att visa data, eller ta emot.
-
-
-class JoinFormView(AjaxFormMixin, FormView):
-    form_class = CategoryModelForm
-    template_name = 'survey/index.html'
-
-class CategoryUpdate(AjaxFormMixin ,UpdateView):
-    model = Category
-    fields = ['current_Points']
-
-    def form_valid(self, form):
-        """If the form is valid, save the associated model."""
-        self.object = form.save()
-        return http.JsonResponse({'status': 'SUCCESS', 'value': self.object.current_Points})
-
-
-# API view for catagory
-class  ChartData(APIView):
-    authentication_classes = []
-    permission_classes = []
-
-    def get(self, request, format=None):
-        category = Category.objects.all()
-        serializer = CategorySerializer(category, many=True)
-
-        return Response(serializer.data)
-
-class  QuestionData(APIView):
-    authentication_classes = []
-    permission_classes = []
-
-    def get(self, request, format=None):
-        question = Question.objects.all()
-        serializer = QuestionSerializer(question, many=True)
-
-        return Response(serializer.data)
-
-
 
 class TypeFormApiMixin:
-    base_url="https://api.typeform.com/"
+    base_url ="https://api.typeform.com/"
     headers = {'Authorization': 'Bearer G5YQ7E5yn8qRdVMcAEUxEHpvHNjnnhq8EUXsrChdqid7'}
 
     def _get_url(self, path):
@@ -82,19 +43,13 @@ class ResponseListView(ListView, TypeFormApiMixin):
     print(1)
     # Här är där jag håller på Eric.
 
-
     def get_context_data(self, **kwargs):
-       
-        
         print(2)
         try:
-            # det är hit jag vill ha value, osäker på vilka värden som ska in på get_tooken här, den klagar om jag inte har 2 värden där
             qs = self.request.GET['response']
             print(qs)
             data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
             print(3)
-            #context = super().get_context_data(**kwargs)
-            #context['items'] = data['items']
             print(999)
             if Response.objects.filter(response_id=qs).exists():
                 pass
@@ -105,51 +60,92 @@ class ResponseListView(ListView, TypeFormApiMixin):
         except requests.HTTPError:
             pass
         try:
-            answers = data['items'][0]['answers']
-            for Question.objects.all() in Category.objects.all():
-                print(Question.objects.all())
-            for field in answers:
-                print(field)
-            print(answers)
-            #question = Question.objects.get(question_ID=answers['field']['ref'])
-            print(666)
-            #print(question)
-            
-            
+            typeform_API = data['items'][0]['answers']
             response = Response.objects.get(response_id=qs)
+            survey = Survey.objects.all()
+            category = Category.objects.all()
+            question = Question.objects.all()
+            answer = Answer.objects.all()
+            response = Response.objects.all()
+            #print(typeform_API[0]['field']) 
+            #print(typeform_API[0]['field']['id'])
+            for category in category:
+                    print('kategori')
+                    print(category.category_Name)
+                    print('question ID')
+                    print(category.question_set.all())
+                    for field in typeform_API:
+                        print('Fråga')
+                        print(field)
+                        if category.category_Name == 'verksamhetsstyrning':
+                            print('hello från verksamhets')
+                            print(question.question_Type)
+                            if (question.question_Type == 'short_text'or'long_text'or'dropdown' and question.question_ID == typeform_API[0]['field']['id']):
+                                print('hej från question type')
 
-            if question.category.category_Name == 'verksamhetsstyrning':
-                if question.question_Type =='short_text'or'long_text'or'dropdown':
-                    answers = question.objects.get(question_Type=answers['field']['text'])
+                            elif question.question_Type == 'multiple_choice (multiple options)' or'picture_choice (single option)' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'multiple_choice (single option)' or'picture_choice (multiple options)' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'yes_no' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'rating' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'number' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
 
-                elif question.question_Type == 'multiple_choice (multiple options)' or'picture_choice (single option)':
-                    pass
-                elif question.question_Type == 'multiple_choice (single option)' or'picture_choice (multiple options)':
-                    pass    
-                elif question.question_Type == 'yes_no':
-                    pass
-                elif question.question_Type == 'rating':
-                    pass
-                elif question.question_Type == 'number':
-                    pass
-                
+                        elif question.category.category_Name == 'engagemang':
+                            if (question.question_Type == 'short_text'or'long_text'or'dropdown' and question.question_ID == typeform_API[0]['field']['id']):
+                                print('hej från question type')
+                            elif question.question_Type == 'multiple_choice (multiple options)' or'picture_choice (single option)' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'multiple_choice (single option)' or'picture_choice (multiple options)' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'yes_no' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'rating' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'number' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            pass
 
-            elif question.category.category_Name == 'engagemang':
-                pass
-            elif question.category.category_Name == 'resurser':
-                pass
-            elif question.category.category_Name == 'resurser':
-                pass
-            question.category.current_Points += question.question_Points
-            question.category.save()
+                        elif question.category.category_Name == 'kommunikation':
+                            if (question.question_Type == 'short_text'or'long_text'or'dropdown' and question.question_ID == typeform_API[0]['field']['id']):
+                                print('hej från question type')
+
+                            elif question.question_Type == 'multiple_choice (multiple options)' or'picture_choice (single option)' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'multiple_choice (single option)' or'picture_choice (multiple options)' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'yes_no' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'rating' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'number' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            pass
+                        elif question.category.category_Name == 'resurser':
+                            if (question.question_Type == 'short_text'or'long_text'or'dropdown' and question.question_ID == typeform_API[0]['field']['id']):
+                                print('hej från question type')
+
+                            elif question.question_Type == 'multiple_choice (multiple options)' or'picture_choice (single option)' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'multiple_choice (single option)' or'picture_choice (multiple options)' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'yes_no' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'rating' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            elif question.question_Type == 'number' and question.question_ID == typeform_API[0]['field']['id']:
+                                pass
+                            pass
+                            
         except Question.DoesNotExist:
             pass
 
-        context['questions'] = Question.objects.all()
-        context['categorys'] = Category.objects.all()
-        context['surveys'] = Survey.objects.all()
+      
         #print(context)
-        return context
+        #return context
 
 
 # Generat token for the form to send with to Typeforms hiddenfield
