@@ -14,12 +14,7 @@ urlpatterns = [
     path('response_id/', views.ResponseListView.as_view(), name='view'),
     
     path('response_id/?response=<value>', views.create_object, name='create'),
-    #/survey/test/update
-    path('test/update/<int:pk>/', views.CategoryUpdate.as_view(), name='update'),
-    #api
-    path('test/chart/api/', views.ChartData.as_view(), name='api-chart'),
 
-    path('test/question/api/', views.QuestionData.as_view(), name='api-Question')
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

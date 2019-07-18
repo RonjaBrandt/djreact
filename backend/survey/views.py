@@ -22,46 +22,6 @@ import urllib.request
 import urllib.parse as urlparse
 import requests
 
-#En model.Model är ditt interface mot databasen. En View är ett sätt att visa data, eller ta emot.
-
-
-class JoinFormView(AjaxFormMixin, FormView):
-    form_class = CategoryModelForm
-    template_name = 'survey/index.html'
-
-class CategoryUpdate(AjaxFormMixin ,UpdateView):
-    model = Category
-    fields = ['current_Points']
-
-    def form_valid(self, form):
-        """If the form is valid, save the associated model."""
-        self.object = form.save()
-        return http.JsonResponse({'status': 'SUCCESS', 'value': self.object.current_Points})
-
-
-# API view for catagory
-class  ChartData(APIView):
-    authentication_classes = []
-    permission_classes = []
-
-    def get(self, request, format=None):
-        category = Category.objects.all()
-        serializer = CategorySerializer(category, many=True)
-
-        return Response(serializer.data)
-
-class  QuestionData(APIView):
-    authentication_classes = []
-    permission_classes = []
-
-    def get(self, request, format=None):
-        question = Question.objects.all()
-        serializer = QuestionSerializer(question, many=True)
-
-        return Response(serializer.data)
-
-
-
 class TypeFormApiMixin:
     base_url="https://api.typeform.com/"
     headers = {'Authorization': 'Bearer G5YQ7E5yn8qRdVMcAEUxEHpvHNjnnhq8EUXsrChdqid7'}
@@ -99,7 +59,7 @@ class ResponseListView(ListView, TypeFormApiMixin):
                 obj = Response.objects.create(response_id=qs)
                 obj.save()
 
-            context['items'] = data['items'] 
+            typeform_API['items'] = data['items'] 
         except requests.HTTPError:
             pass
         else:

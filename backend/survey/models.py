@@ -19,7 +19,7 @@ class Category(models.Model):
       return reverse('survey:test-detail', kwargs={'id':self.id})
 
     def __str__(self):
-       return 'Category: '+ self.category_Name + ' - ' + str(self.survey)
+       return 'Category: '+ self.category_Name
 
 
 class Question(models.Model):
