@@ -65,9 +65,6 @@ class ResponseListView(ListView, TypeFormApiMixin):
             question = Question.objects.all()
             answer = Answer.objects.all()
             response = Response.objects.all()
-            #print(typeform_API[0]['field']) 
-            #print(typeform_API[0]['field']['id'])
-            # go throw all Categorys
             
             for category in category:
                     print('kategori')
@@ -82,14 +79,14 @@ class ResponseListView(ListView, TypeFormApiMixin):
                         if category.category_Name == 'verksamhetsstyrning':
                             print('hello från verksamhets')
                             print(question.question_Type)
-                            # then check what if data category have a question with the same id as field
-                            if question.question_ID == typeform_API[0]['field']['id']:
+                            # then check what if data category have a question with the same ref as field
+                            if question.question_ID == typeform_API[0]['field']['ref']:
                                 print('hej från question type')
                                 # Then check what type that question have.
                                 if question.question_Type == 'short_text'or'long_text'or'dropdown':
                                     print('hej från question type')
                                     # Then check if that answer is the same as the field answer is
-                                    if
+                                    #if
                                         # Finaly add points of that answer to
                                         # the Response field that have the same category name
                                 elif question.question_Type == 'multiple_choice (multiple options)' or'picture_choice (single option)':

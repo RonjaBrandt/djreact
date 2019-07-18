@@ -62,7 +62,7 @@ class Question(models.Model):
    )
 
    category = models.ForeignKey(Category, on_delete=models.CASCADE,help_text="Choose to what Category this question belongs to" ,blank=True, null=True)
-   question_ID = models.CharField(max_length=500, help_text="Add the Question ID from Typefrom goes here", blank=True, null=True)
+   question_ID = models.CharField(max_length=500, unique=True, help_text="Add the Question ID from Typefrom goes here", blank=True, null=True)
    question_Type = models.CharField(max_length=20, choices=typeChoices, help_text="Important that this is right")
    
    def get_absolute_url(self):
@@ -79,7 +79,7 @@ class Answer(models.Model):
    points = models.DecimalField(max_digits=5, decimal_places=2, default=0, help_text='points for this answer', blank=True, null=True)
 
    def __str__(self):
-      return self.answer
+      return str(self.question) + ' - ' + self.answer
 
 
 class Response(models.Model):
@@ -87,7 +87,7 @@ class Response(models.Model):
    verksamhetsstyrning =  models.DecimalField(max_digits=5, decimal_places=2,  default=0, help_text='Points for this category',  blank=True, null=True)
    engagemang =  models.DecimalField(max_digits=5, decimal_places=3, default=0, help_text='Points for this category', blank=True, null=True)
    resurser =  models.DecimalField(max_digits=5, decimal_places=3,default=0, help_text='Points for this category',  blank=True, null=True)
-   resurser =  models.DecimalField(max_digits=5, decimal_places=3, default=0, help_text='Points for this category', blank=True, null=True)
+   kommunikation =  models.DecimalField(max_digits=5, decimal_places=3, default=0, help_text='Points for this category', blank=True, null=True)
    
    def __str__(self):
       return 'Response ID: '+ str(self.response_id)
