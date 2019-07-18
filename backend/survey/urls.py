@@ -14,7 +14,6 @@ urlpatterns = [
     path('response_id/', views.ResponseListView.as_view(), name='view'),
     
     path('response_id/?response=<value>', views.create_object, name='create'),
-
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
