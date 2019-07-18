@@ -67,40 +67,40 @@ class ResponseListView(ListView, TypeFormApiMixin):
             response = Response.objects.all()
             
             for category in category:
-                    print('kategori')
-                    print(category.category_Name)
-                    print('question ID')
-                    print(category.question_set.all())
+                    print('kategor i katagorier')
+                    
                     # go throw all questions called fields from Typeform
                     for field in typeform_API:
-                        print('Fråga')
-                        print(field)
+                        print('för field i field')
                         # If the category is this ->
                         if category.category_Name == 'verksamhetsstyrning':
                             print('hello från verksamhets')
-                            print(question.question_Type)
+                           # print(question.question_Type)
                             # then check what if data category have a question with the same ref as field
-                            if question.question_ID == typeform_API[0]['field']['ref']:
-                                print('hej från question type')
-                                # Then check what type that question have.
-                                if question.question_Type == 'short_text'or'long_text'or'dropdown':
+                            for question in Question.objects.all():
+                                print('för question i Questiion.objects.all')
+                                if question.question_ID == typeform_API[0]['field']['ref']:
                                     print('hej från question type')
-                                    # Then check if that answer is the same as the field answer is
-                                    #if
+                                
+                                    # Then check what type that question have.
+                                    if question.question_Type == 'short_text'or'long_text'or'dropdown':
+                                        print('hej från question type')
+                                          # Then check if that answer is the same as the field answer is
+                                         # if answer.answer == 
                                         # Finaly add points of that answer to
                                         # the Response field that have the same category name
-                                elif question.question_Type == 'multiple_choice (multiple options)' or'picture_choice (single option)':
-                                    pass
+                                    elif question.question_Type == 'multiple_choice (multiple options)' or'picture_choice (single option)':
+                                        pass
 
-                                elif question.question_Type == 'multiple_choice (single option)' or'picture_choice (multiple options)':
-                                    pass
+                                    elif question.question_Type == 'multiple_choice (single option)' or'picture_choice (multiple options)':
+                                        pass
 
-                                elif question.question_Type == 'yes_no' and question.question_ID:
-                                    pass
-                                elif question.question_Type == 'rating':
-                                    pass
-                                elif question.question_Type == 'number':
-                                    pass
+                                    elif question.question_Type == 'yes_no' and question.question_ID:
+                                        pass
+                                    elif question.question_Type == 'rating':
+                                        pass
+                                    elif question.question_Type == 'number':
+                                        pass
                         # Else if the category is this ->
                         elif question.category.category_Name == 'engagemang':
                             if (question.question_Type == 'short_text'or'long_text'or'dropdown' and question.question_ID == typeform_API[0]['field']['id']):
