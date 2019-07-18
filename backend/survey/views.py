@@ -69,6 +69,7 @@ class ResponseListView(ListView, TypeFormApiMixin):
             #print(typeform_API[0]['field']) 
             #print(typeform_API[0]['field']['id'])
             # go throw all Categorys
+            this it its
             for category in category:
                     print('kategori')
                     print(category.category_Name)
