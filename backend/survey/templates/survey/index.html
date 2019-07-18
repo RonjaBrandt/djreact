@@ -7,10 +7,10 @@
                 var myChart = new Chart(ctx, {
                     type: 'polarArea',
                     data: {
-                        labels: [{% for survey in surveys %}{% for category in survey.category_set.all %}'{{category.category_Name}}', {% endfor %}{% endfor %}],
+                        labels: ['Verksamhetsstyrning', 'Engagemang', 'Resurser', 'Kommunikation'],
                         datasets: [{
                             label: '# of Scores',
-                            data: [ {% for survey in surveys %}{% for category in survey.category_set.all %}{{category.current_Points}},{% endfor %}{% endfor %}],
+                            data: [],
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',
                                 'rgba(54, 162, 235, 0.2)',
