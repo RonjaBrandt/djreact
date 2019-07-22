@@ -69,7 +69,14 @@ class ResponseListView(ListView, TypeFormApiMixin):
         
         
         for field in typeform_API:
-            print(field['boolean'][0])
+         #   print(field.get('boolean', ''))
+          #  print(field.get('text', ''))
+         # try:
+           #   print(field["boolean"])
+        #  except:
+         #     pass
+              
+            
             #typeform_ID = field['field']['ref']
             #print(typeform_ID)
     #        try:
