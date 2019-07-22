@@ -39,20 +39,20 @@ class TypeFormApiMixin:
 class ResponseListView(ListView, TypeFormApiMixin):
     model = Response
     template_name = 'survey/index.html'
-    print(1)
+
     # Här är där jag håller på Eric.
 
     def get_context_data(self, **kwargs):
-        print(2)
+
         try:
             qs = self.request.GET['response']
             print(qs)
             data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
-            print(3)
+
             if Response.objects.filter(response_id=qs).exists():
                 pass
             else:
-                print(4)
+
                 obj = Response.objects.create(response_id=qs)
                 obj.save()
         except requests.HTTPError:
@@ -65,106 +65,17 @@ class ResponseListView(ListView, TypeFormApiMixin):
             #question = Question.objects.all()
             #answer = Answer.objects.all()
             response = Response.objects.all()
-            question_ref ={}
-            for question in Question.objects.values_list('question_ID'):
-                # Gets the Ref for the question from the DB
-                question_ref = question
-                #print(question_ref)
+            typeform_ID = {}
+            
+            
             for field in typeform_API:
-                fields = field
                 #print(fields)
                 typeform_ID = field['field']['ref']
                 #print(typeform_ID)
-                i=0
-                while i <len(question_ref):
-                    print(question_ref[i])
-                    i+=1
-                    for ref in typeform_ID:
-                        if question_ref == typeform_ID:
-                            print('hej från question id')
-                            for category in Category.objects.all():
-                            # print('kategor i katagorier')
-                                
-                                # go throw all questions called fields from Typeform
-                                for field in typeform_API:
-                                #     print('för field i field')
-                                        # If the category is this ->
-                                    if category.category_Name == 'verksamhetsstyrning':
-                                    #        print('hello från verksamhets')
-                                        # print(question.question_Type)
-                                            # then check what if data category have a question with the same ref as field
-                                
-                                    
-                                        # Then check what type that question have.
-                                        if question.question_Type == 'boolan':
-                                            print('hej från question type')
-                                            # Then check if that answer is the same as the field answer is
-                                            for answer in Answer.objects.all():
-                                                print(answer)
-                                            # Finaly add points of that answer to
-                                            # the Response field that have the same category name
-                                        elif question.question_Type == 'multiple_choice (multiple options)' or'picture_choice (single option)':
-                                            pass
-
-                                        elif question.question_Type == 'multiple_choice (single option)' or'picture_choice (multiple options)':
-                                            pass
-
-                                        elif question.question_Type == 'yes_no':
-                                            pass
-                                        elif question.question_Type == 'rating':
-                                            pass
-                                        elif question.question_Type == 'number':
-                                            pass
-                                    # Else if the category is this ->
-                                    elif question.category.category_Name == 'engagemang':
-
-                                        if question.question_Type == 'short_text'or'long_text'or'dropdown':
-
-                                            pass
-                                        # print('hej från question type') 
-                                        elif question.question_Type == 'multiple_choice (multiple options)' or'picture_choice (single option)':
-                                            pass
-                                        elif question.question_Type == 'multiple_choice (single option)' or'picture_choice (multiple options)':
-                                            pass
-                                        elif question.question_Type == 'yes_no':
-                                            pass
-                                        elif question.question_Type == 'rating':
-                                            pass
-                                        elif question.question_Type == 'number':
-                                            pass
-                                        pass
-
-                                    elif question.category.category_Name == 'kommunikation':
-                                        if question.question_Type == 'short_text'or'long_text'or'dropdown':
-                                            #print('hej från question type')
-                                            pass
-                                        elif question.question_Type == 'multiple_choice (multiple options)':
-                                            pass
-                                        elif question.question_Type == 'multiple_choice (single option)' or'picture_choice (multiple options)':
-                                            pass
-                                        elif question.question_Type == 'yes_no':
-                                            pass
-                                        elif question.question_Type == 'rating':
-                                            pass
-                                        elif question.question_Type == 'number':
-                                            pass
-                                        pass
-                                    elif question.category.category_Name == 'resurser':
-                                        if question.question_Type == 'short_text'or'long_text'or'dropdown':
-                                            #print('hej från question type')
-                                            pass
-
-                                        elif question.question_Type == 'multiple_choice (multiple options)' or'picture_choice (single option)':
-                                            pass
-                                        elif question.question_Type == 'multiple_choice (single option)' or'picture_choice (multiple options)':
-                                            pass
-                                        elif question.question_Type == 'yes_no':
-                                            pass
-                                        elif question.question_Type == 'rating':
-                                            pass
-                                        elif question.question_Type == 'number':
-                                            pass
-                                        pass
+            for typeform_ID in Question.objects.values_list('question_ID'):
+                     print(typeform_ID)
+                    
+                #print(question_ref)
 
         except Question.DoesNotExist:
             pass
