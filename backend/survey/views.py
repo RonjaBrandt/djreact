@@ -57,28 +57,42 @@ class ResponseListView(ListView, TypeFormApiMixin):
                 obj.save()
         except requests.HTTPError:
             pass
-        try:
-            typeform_API = data['items'][0]['answers']
-            response = Response.objects.get(response_id=qs)
-            survey = Survey.objects.all()
-            #category = Category.objects.all()
-            #question = Question.objects.all()
-            #answer = Answer.objects.all()
-            response = Response.objects.all()
-            typeform_ID = {}
-            
-            
-            for field in typeform_API:
-                #print(fields)
-                typeform_ID = field['field']['ref']
-                #print(typeform_ID)
-            for typeform_ID in Question.objects.values_list('question_ID'):
-                     print(typeform_ID)
-                    
-                #print(question_ref)
+       
+        typeform_API = data['items'][0]['answers']
+        response = Response.objects.get(response_id=qs)
+        survey = Survey.objects.all()
+        #category = Category.objects.all()
+        #question = Question.objects.all()
+        #answer = Answer.objects.all()
+        response = Response.objects.all()
+        typeform_ID = {}
+        
+        
+        for field in typeform_API:
+            print(field['boolean'][0])
+            #typeform_ID = field['field']['ref']
+            #print(typeform_ID)
+    #        try:
+    #            obj = Question.objects.get(question_ID= field['field']['ref'])
+    #            print('Fungerar')
+     #           print(obj.question_Type)
+      #          if obj.question_Type == 'boolan':
+   #                 print('typen här')
+     #               print(obj)
+        #            print(field['type'])
+    #                print(field['field']['ref'])
+   #                 boolan_answer = Answer.objects.get(answer=field['field']['ref'])
+    #                print(boolan_answer)
+                               
+    #        except Question.DoesNotExist:
+     #           print('fungerar inte')
+     #           print(field['field']['ref'])
+      #      else:
+      #          pass
+                
+            #print(question_ref)
 
-        except Question.DoesNotExist:
-            pass
+      
 
       
         #print(context)
