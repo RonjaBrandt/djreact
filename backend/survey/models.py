@@ -70,7 +70,7 @@ class Question(models.Model):
       return reverse('question:detail', kwargs={'pk':self.pk})
    
    def __str__(self):
-      return 'QuestionID: ' + self.question_ID + ' - ' +' Question Type ' + self.question_Type + ' - '+ str(self.category)
+      return 'QuestionID: ' + self.question_ID + ' - ' + 'Question Type ' + self.question_Type + ' - ' + 'Category:' + str(self.category)
 
 
 class Answer(models.Model):
