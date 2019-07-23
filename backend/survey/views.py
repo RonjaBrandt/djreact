@@ -22,8 +22,9 @@ import urllib.request
 import urllib.parse as urlparse
 import requests
 
+
 class TypeFormApiMixin:
-    base_url ="https://api.typeform.com/"
+    base_url = "https://api.typeform.com/"
     headers = {'Authorization': 'Bearer G5YQ7E5yn8qRdVMcAEUxEHpvHNjnnhq8EUXsrChdqid7'}
 
     def _get_url(self, path):
@@ -40,10 +41,7 @@ class ResponseListView(ListView, TypeFormApiMixin):
     model = Response
     template_name = 'survey/index.html'
 
-    # Här är där jag håller på Eric.
-
     def get_context_data(self, **kwargs):
-
         try:
             qs = self.request.GET['response']
             print(qs)
@@ -52,7 +50,6 @@ class ResponseListView(ListView, TypeFormApiMixin):
             if Response.objects.filter(response_id=qs).exists():
                 pass
             else:
-
                 obj = Response.objects.create(response_id=qs)
                 obj.save()
         except requests.HTTPError:
@@ -61,49 +58,28 @@ class ResponseListView(ListView, TypeFormApiMixin):
         typeform_API = data['items'][0]['answers']
         response = Response.objects.get(response_id=qs)
         survey = Survey.objects.all()
-        #category = Category.objects.all()
-        #question = Question.objects.all()
-        #answer = Answer.objects.all()
+        # category = Category.objects.all()
+        # question = Question.objects.all()
+        # answer = Answer.objects.all()
         response = Response.objects.all()
         typeform_ID = {}
-        
-        
+
         for field in typeform_API:
-         #   print(field.get('boolean', ''))
-          #  print(field.get('text', ''))
-         # try:
-           #   print(field["boolean"])
-        #  except:
-         #     pass
-              
-            
-            #typeform_ID = field['field']['ref']
-            #print(typeform_ID)
-    #        try:
-    #            obj = Question.objects.get(question_ID= field['field']['ref'])
-    #            print('Fungerar')
-     #           print(obj.question_Type)
-      #          if obj.question_Type == 'boolan':
-   #                 print('typen här')
-     #               print(obj)
-        #            print(field['type'])
-    #                print(field['field']['ref'])
-   #                 boolan_answer = Answer.objects.get(answer=field['field']['ref'])
-    #                print(boolan_answer)
-                               
-    #        except Question.DoesNotExist:
-     #           print('fungerar inte')
-     #           print(field['field']['ref'])
-      #      else:
-      #          pass
-                
-            #print(question_ref)
-
-      
-
-      
-        #print(context)
-        #return context
+            try:
+                obj = Question.objects.get(question_ID=field['field']['ref'])                
+                if obj.question_Type == 'boolan':
+                    print(1)
+                    boolan_answer = Answer.objects.get(answer=field['boolean'])
+                    print(Answer.answer)
+                    print(boolan_answer)
+                    try:
+                        boolan_answer = Answer.objects.get(answer=field['boolean'])
+                        print(2)
+                        print(boolan_answer)
+                    except:
+                        pass
+            except:
+                pass
 
 
 # Generat token for the form to send with to Typeforms hiddenfield
