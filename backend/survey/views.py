@@ -117,15 +117,19 @@ class ResponseListView(ListView, TypeFormApiMixin):
                             #print(b1.points)
                             response.verksamhetsstyrning += b1.points
                             response.save()
+                            break
                         elif str(obj.category) == 'engagemang':
                             response.engagemang += b1.points
                             response.save()
+                            break
                         elif str(obj.category) == 'kommunikation':
                             response.kommunikation += b1.points
                             response.save()
+                            break
                         elif str(obj.category) == 'resurser':
                             response.resurser += b1.points
-                            response.save()        
+                            response.save()
+                            break        
 
                 elif Question.objects.get(question_ID=field['field']['ref']):
                     obj = Question.objects.get(question_ID=field['field']['ref'])
@@ -142,15 +146,19 @@ class ResponseListView(ListView, TypeFormApiMixin):
                             #print(b1.points)
                             response.verksamhetsstyrning += b1.points
                             response.save()
+                            break
                         elif str(obj.category) == 'engagemang':
                             response.engagemang += b1.points
                             response.save()
+                            break
                         elif str(obj.category) == 'kommunikation':
                             response.kommunikation += b1.points
                             response.save()
+                            break
                         elif str(obj.category) == 'resurser':
                             response.resurser += b1.points
-                            response.save()        
+                            response.save()
+                            break
             except:
                 pass
 
