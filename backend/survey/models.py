@@ -67,7 +67,7 @@ class Question(models.Model):
    
    def get_absolute_url(self):
       #send user to page that display the detiels of the input data
-      return reverse('question:detail', kwargs={'pk':self.pk})
+      return reverse('question:detail', kwargs={'pk': self.pk})
    
    def __str__(self):
       return 'QuestionID: ' + self.question_ID + ' - ' + 'Question Type ' + self.question_Type + ' - ' + 'Category:' + str(self.category)
@@ -75,11 +75,11 @@ class Question(models.Model):
 
 class Answer(models.Model):
    question = models.ForeignKey(Question, on_delete=models.CASCADE,help_text="Choose to what Question the Answer belongs tobelongs to" ,blank=True, null=True)
-   answer = models.CharField(max_length=500, help_text="Important that this is exact", blank=True, null=True)
+   the_answer = models.CharField(max_length=500, help_text="Important that this is exact", blank=True, null=True)
    points = models.DecimalField(max_digits=5, decimal_places=2, default=0, help_text='points for this answer', blank=True, null=True)
 
    def __str__(self):
-      return self.answer
+      return self.the_answer
 
 
 class Response(models.Model):

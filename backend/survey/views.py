@@ -57,27 +57,18 @@ class ResponseListView(ListView, TypeFormApiMixin):
        
         typeform_API = data['items'][0]['answers']
         response = Response.objects.get(response_id=qs)
-        survey = Survey.objects.all()
-        # category = Category.objects.all()
-        # question = Question.objects.all()
-        # answer = Answer.objects.all()
         response = Response.objects.all()
-        typeform_ID = {}
 
         for field in typeform_API:
             try:
-                obj = Question.objects.get(question_ID=field['field']['ref'])                
-                if obj.question_Type == 'boolan':
-                    print(1)
-                    boolan_answer = Answer.objects.get(answer=field['boolean'])
-                    print(Answer.answer)
-                    print(boolan_answer)
-                    try:
-                        boolan_answer = Answer.objects.get(answer=field['boolean'])
-                        print(2)
-                        print(boolan_answer)
-                    except:
-                        pass
+                #field[] is a dict
+                #obj is a object of class Question
+                obj = Question.objects.get(question_ID=field['field']['ref'])
+                
+                # This get all the answers who are of type boolean.
+                boolan_answers = field['boolean']
+                b1 = Answer.objects.all().filter(the_answer=boolan_answers).values()
+                print(list(b1.keys()))
             except:
                 pass
 
