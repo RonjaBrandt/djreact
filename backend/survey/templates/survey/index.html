@@ -3,60 +3,100 @@
 <script>
 {% block jquery %}
 
-                var ctx = document.getElementById('myChart').getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'polarArea',
-                    data: {
-                        labels: ['Verksamhetsstyrning', 'Engagemang', 'Resurser', 'Kommunikation'],
-                        datasets: [{
-                            label: '# of Scores',
-                            data: [{% for response in responses %}{{response.verksamhetsstyrning}} {% endfor %}],
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            //{% for survey in surveys %}{% for category in survey.category_set.all %}{{category.current_Points}},{% endfor %}{% endfor %}
-                            borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                   
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }]
-                        }
-                    }
-                });
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'polarArea',
+    data: {
+        labels: ['Verksamhetsstyrning', 'Engagemang', 'Resurser', 'Kommunikation'],
+        datasets: [{
+            label: '# of Scores',
+            data: [14, 12, 4, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            //{% for survey in surveys %}{% for category in survey.category_set.all %}{{category.current_Points}},{% endfor %}{% endfor %}
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    
+    
+});
+var ctx = document.getElementById('myDoughnutChart').getContext('2d');
+var myDoughnutChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Verksamhetsstyrning'],
+        datasets: [{
+            label: '# of Scores',
+            data: [14],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            //{% for survey in surveys %}{% for category in survey.category_set.all %}{{category.current_Points}},{% endfor %}{% endfor %}
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }],
+        options: {
+                responsive: false
+            }
+    },
+  
+});
 {% endblock jquery %}
          </script>
 
 
 
 {% block content %}
-<div class='row'>
-    <div class='col-sm-12' '>
-            <div class="chart-container" style="position: relative; height:40vh; width:80vw">
-            <canvas id="myChart" ></canvas>
-           
+<div class="container"> 
+
+    <div class='row'>
+        <div class='col-sm-1' '>
+            <div class="chart-container" style="position: relative; height:30vh; width:70vw">
+              
+                    <canvas id="myChart" ></canvas>
+                    <canvas id="myDoughnutChart" ></canvas>
+                    <br> 
+                    <h1>Verksamhetsstyrning</h1>
+                    <br>
+                    <p>
+                            Har organisationen strukturer som främjar socialt ansvarstagande? Med hållbarhet integrerat i strategier, processer och nyckeltal, men också i det dagliga arbetet, kan man hantera olika hållbarhetsaspekter på bästa sätt. Utmaningen består ofta i att få alla delar av verksamheten att bidra till en övergripande strategi. För att få full utväxling av hållbarhetsarbetet gäller det att arbeta fokuserat med strategiimplementering och integrering av hållbarhetaspekterna i kärnverksamheten.
+                            
+                            </p>
+                            <br>
+       
+                
+            </div>
         </div>
     </div>
-</div>
-        
+
+
+</div>      
 
 {% endblock content %}
 
