@@ -68,29 +68,89 @@ class ResponseListView(ListView, TypeFormApiMixin):
                 # Checks if there is a Question in the DB with the ref from Tyoe form
                 if Question.objects.get(question_ID=field['field']['ref']):
                     obj = Question.objects.get(question_ID=field['field']['ref'])
-                    print(field)
+                  #  print(field)
                     # 'choice', 'choices',
                     for bool_answer in answers.filter(bool_answer=field['boolean']):
                         _id = bool_answer.id
                         b1 = answers.get(pk=_id)
 
-                        point = b1.points
-                        for category in categorys:
+                        #point = b1.points
+                        #for category in categorys:
 
-                            if str(obj.category) == 'verksamhetsstyrning':
-                                response.verksamhetsstyrning += point
-                                response.save()
-                            elif str(obj.category) == 'engagemang':
-                                response.engagemang += point
-                                response.save()
-                            elif str(obj.category) == 'kommunikation':
-                                response.kommunikation += point
-                                response.save()
-                            elif str(obj.category) == 'resurser':
-                                response.resurser += point
-                                response.save()
+                        if str(obj.category) == 'verksamhetsstyrning':
+                            print(obj)
+                            print(obj.category)
+                            response.verksamhetsstyrning += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'engagemang':
+                            print(obj)
+                            print(obj.category)
+                            response.engagemang += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'kommunikation':
+                            print(obj)
+                            print(obj.category)
+                            response.kommunikation += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'resurser':
+                            print(obj)
+                            print(obj.category)
+                            response.resurser += b1.points
+                            response.save()
+                            break
 
-                    
+                elif Question.objects.get(question_ID=field['field']['ref']):
+                    obj = Question.objects.get(question_ID=field['field']['ref'])
+                  #  print(field)
+                    # 'choice', 'choices',
+                    for chocie_answer in answers.filter(the_answer=field['choice']):
+                        _id = chocie_answer.id
+                        b1 = answers.get(pk=_id)
+
+                        #point = b1.points
+                        #for category in categorys:
+
+                        if str(obj.category) == 'verksamhetsstyrning':
+                            #print(b1.points)
+                            response.verksamhetsstyrning += b1.points
+                            response.save()
+                        elif str(obj.category) == 'engagemang':
+                            response.engagemang += b1.points
+                            response.save()
+                        elif str(obj.category) == 'kommunikation':
+                            response.kommunikation += b1.points
+                            response.save()
+                        elif str(obj.category) == 'resurser':
+                            response.resurser += b1.points
+                            response.save()        
+
+                elif Question.objects.get(question_ID=field['field']['ref']):
+                    obj = Question.objects.get(question_ID=field['field']['ref'])
+                  #  print(field)
+                    # 'choice', 'choices',
+                    for chocies_answer in answers.filter(the_answer=field['choices']):
+                        _id = chocies_answer.id
+                        b1 = answers.get(pk=_id)
+
+                        #point = b1.points
+                        #for category in categorys:
+
+                        if str(obj.category) == 'verksamhetsstyrning':
+                            #print(b1.points)
+                            response.verksamhetsstyrning += b1.points
+                            response.save()
+                        elif str(obj.category) == 'engagemang':
+                            response.engagemang += b1.points
+                            response.save()
+                        elif str(obj.category) == 'kommunikation':
+                            response.kommunikation += b1.points
+                            response.save()
+                        elif str(obj.category) == 'resurser':
+                            response.resurser += b1.points
+                            response.save()        
             except:
                 pass
 
