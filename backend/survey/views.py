@@ -47,7 +47,7 @@ class ResponseListView(ListView, TypeFormApiMixin):
             qs = self.request.GET['response']
             print(qs)
             data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
-
+            
             if Response.objects.filter(response_id=qs).exists():
                 pass
             else:
@@ -157,8 +157,9 @@ class ResponseListView(ListView, TypeFormApiMixin):
                         break
             except:
                 pass
-        context['responses'] = Response.objects.all()
-        return response
+        typeform_API['responses'] = Response.objects.all()
+        print(typeform_API)
+        return typeform_API
                 
 
      
