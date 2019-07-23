@@ -58,20 +58,23 @@ class ResponseListView(ListView, TypeFormApiMixin):
         typeform_API = data['items'][0]['answers']
         response = Response.objects.get(response_id=qs)
         response = Response.objects.all()
-
+        answers = Answer.objects.all()
         for field in typeform_API:
             try:
                 # field[] is a dict
                 # obj is a object of class Question
                 # Checks if there is a Question in the DB with the ref from Tyoe form
                 obj = Question.objects.get(question_ID=field['field']['ref'])
-                
+                for bool_answer in answers.filter(bool_answer=field['boolean']):
+                    _id = bool_answer.id
+                    b1 = answers.get(pk=_id)
+                    print(b1.points)
                 # This get all the answers who are of type boolean.
-                boolan_answers = field['boolean']
+                #boolan_answers = field['boolean']
                 # Checks if the answers to the Quesions is in the DB
-                b1 = Answer.objects.all().filter(the_answer=boolan_answers).values()
-                point = b1.values('points')
-                print(point)
+                #b1 = Answer.objects.all().filter(bool_answer=boolan_answers).values()
+              #  point = b1.values('points')
+              #  print(b1)
             except:
                 pass
 
