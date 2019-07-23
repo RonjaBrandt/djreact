@@ -66,31 +66,31 @@ class ResponseListView(ListView, TypeFormApiMixin):
                 # field[] is a dict
                 # obj is a object of class Question
                 # Checks if there is a Question in the DB with the ref from Tyoe form
-                obj = Question.objects.get(question_ID=field['field']['ref'])
-                #Checks all boolean questions
-                for bool_answer in answers.filter(bool_answer=field['boolean']):
-                    _id = bool_answer.id
-                    b1 = answers.get(pk=_id)
-                    #gets points for the answer
-                    point = b1.points
-                    for category in categorys:
-                        #print(obj.category)
+                if Question.objects.get(question_ID=field['field']['ref']):
+                    obj = Question.objects.get(question_ID=field['field']['ref'])
+                    print(field)
+                    # 'choice', 'choices',
+                    for bool_answer in answers.filter(bool_answer=field['boolean']):
+                        _id = bool_answer.id
+                        b1 = answers.get(pk=_id)
 
-                        if str(obj.category) == 'verksamhetsstyrning':
-                            print(response.verksamhetsstyrning)
-                            print(point)
-                            res
-                            point += response.verksamhetsstyrning
-                            response.verksamhetsstyrning.save()
-                            print('done')
-                          #  print(response.verksamhetsstyrning)
-                        #   response.save()
-                        if str(obj.category) == 'engagemang':
-                            pass
-                        if str(obj.category) == 'kommunikation':
-                            pass
-                        if str(obj.category) == 'resurser':
-                            pass
+                        point = b1.points
+                        for category in categorys:
+
+                            if str(obj.category) == 'verksamhetsstyrning':
+                                response.verksamhetsstyrning += point
+                                response.save()
+                            elif str(obj.category) == 'engagemang':
+                                response.engagemang += point
+                                response.save()
+                            elif str(obj.category) == 'kommunikation':
+                                response.kommunikation += point
+                                response.save()
+                            elif str(obj.category) == 'resurser':
+                                response.resurser += point
+                                response.save()
+
+                    
             except:
                 pass
 
