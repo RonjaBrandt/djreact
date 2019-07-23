@@ -79,7 +79,7 @@ class Answer(models.Model):
    points = models.DecimalField(max_digits=5, decimal_places=2, default=0, help_text='points for this answer', blank=True, null=True)
 
    def __str__(self):
-      return str(self.question) + ' - ' + self.answer
+      return self.answer
 
 
 class Response(models.Model):
