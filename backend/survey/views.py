@@ -156,15 +156,7 @@ class ResponseListView(ListView, TypeFormApiMixin):
                         break
             except:
                 pass
-
-                
-
-            
-
-                
-                
-                #  print(field)
-                # 'choice', 'choices',
+        return response
                 
 
                        

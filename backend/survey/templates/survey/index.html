@@ -10,7 +10,7 @@
                         labels: ['Verksamhetsstyrning', 'Engagemang', 'Resurser', 'Kommunikation'],
                         datasets: [{
                             label: '# of Scores',
-                            data: [{% response %}],
+                            data: [{% for response in responses %}{{response.verksamhetsstyrning}} {% endfor %}],
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',
                                 'rgba(54, 162, 235, 0.2)',
@@ -42,7 +42,7 @@
                         }
                     }
                 });
-        {% endblock jquery %}
+{% endblock jquery %}
          </script>
 
 
