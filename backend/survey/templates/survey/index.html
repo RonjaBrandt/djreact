@@ -10,7 +10,7 @@ var myChart = new Chart(ctx, {
         labels: ['Verksamhetsstyrning', 'Engagemang', 'Resurser', 'Kommunikation'],
         datasets: [{
             label: '# of Scores',
-            data: [14, 12, 4, 3],
+            data: [1,2,3,4],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -81,6 +81,7 @@ var myDoughnutChart = new Chart(ctx, {
               
                     <canvas id="myChart" ></canvas>
                     <canvas id="myDoughnutChart" ></canvas>
+                    <h1>Här: {{response.Response}}</h1>
                     <br> 
                     <h1>Verksamhetsstyrning</h1>
                     <br>

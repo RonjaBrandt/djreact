@@ -55,7 +55,7 @@ class ResponseListView(ListView, TypeFormApiMixin):
                 obj.save()
         except requests.HTTPError:
             pass
-       
+       # göra denna till []  förra var contex[]
         typeform_API = data['items'][0]['answers']
         response = Response.objects.get(response_id=qs)
        # response = Response.objects.all()
@@ -158,10 +158,10 @@ class ResponseListView(ListView, TypeFormApiMixin):
             except:
                 pass
 
-    def response_(self, request):
-        qs = self.request.GET['response']
-        responses = Response.objects.get(response_id=qs)
-        return responses
+    def _get_response(request):
+        template = 'survey/index.html'
+        context['response'] = Response.objects.all() 
+        return render_to_response(template, context)
                 
 
      
