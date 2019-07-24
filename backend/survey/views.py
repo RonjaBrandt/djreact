@@ -45,7 +45,7 @@ class ResponseListView(ListView, TypeFormApiMixin):
         #context = super().get_context_data(**kwargs)
         try:
             qs = self.request.GET['response']
-            print(qs)
+           # print(qs)
             data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
             
             if Response.objects.filter(response_id=qs).exists():
@@ -110,7 +110,7 @@ class ResponseListView(ListView, TypeFormApiMixin):
                 for the_answer in answers.filter(the_answer=field['choice']):
                    # print(chocie_answer.id)
                     _id = the_answer.id
-                    print(_id)
+                   # print(_id)
                     b1 = answers.get(pk=_id)
 
                     if str(obj.category) == 'verksamhetsstyrning':
@@ -158,10 +158,14 @@ class ResponseListView(ListView, TypeFormApiMixin):
             except:
                 pass
 
-    def _get_response(request):
-        template = 'survey/index.html'
-        context['response'] = Response.objects.all() 
-        return render_to_response(template, context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        qs = self.request.GET['response']
+        #print(qs)
+
+        context['response'] = Response.objects.get(response_id=qs)
+        print(context)
+        return context
                 
 
      
