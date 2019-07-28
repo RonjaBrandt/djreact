@@ -34,10 +34,7 @@ var myChart = new Chart(ctx, {
             borderWidth: 5
         }],
        
-    },
-    
-    
-    
+    },    
 });
 
 var ctx = document.getElementById('verksamhetsChart').getContext('2d');
@@ -73,16 +70,15 @@ var myDoughnutChart = new Chart(ctx, {
   
 });
 
-var ctx = document.getElementById('engagemangchart').getContext('2d');
+var ctx = document.getElementById('engagemangChart').getContext('2d');
 var myDoughnutChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: ['Verksamhetsstyrning'],
+        labels: ['Engagemang'],
         datasets: [{
             label: '# of Scores',
-            data: [{{response.verksamhetsstyrning}}],
+            data: [{{response.engagemang}}],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
@@ -91,9 +87,62 @@ var myDoughnutChart = new Chart(ctx, {
             ],
             //{% for survey in surveys %}{% for category in survey.category_set.all %}{{category.current_Points}},{% endfor %}{% endfor %}
             borderColor: [
-                'rgba(255, 99, 132, 1)',
                 'rgba(54, 162, 235, 1)',
                 'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }],
+      
+    },
+   
+  
+});
+
+var ctx = document.getElementById('resurserChart').getContext('2d');
+var myDoughnutChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Resurser'],
+        datasets: [{
+            label: '# of Scores',
+            data: [{{response.resurser}}],
+            backgroundColor: [
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            //{% for survey in surveys %}{% for category in survey.category_set.all %}{{category.current_Points}},{% endfor %}{% endfor %}
+            borderColor: [
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }],
+      
+    },  
+});
+
+var ctx = document.getElementById('kommunikationChart').getContext('2d');
+var myDoughnutChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ['Kommunikation'],
+        datasets: [{
+            label: '# of Scores',
+            data: [{{response.kommunikation}}],
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            //{% for survey in surveys %}{% for category in survey.category_set.all %}{{category.current_Points}},{% endfor %}{% endfor %}
+            borderColor: [
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
                 'rgba(255, 159, 64, 1)'
@@ -127,35 +176,72 @@ var myDoughnutChart = new Chart(ctx, {
 
         <div class="row justify-content-around">
             <div class='col-sm-6'>
-                        
-                        <canvas id="verksamhetsChart" ></canvas>
-                        <br> 
-                        
-                        <h1>Verksamhetsstyrning</h1>
-                        <br>
-                        <p>
-                                Har organisationen strukturer som främjar socialt ansvarstagande? Med hållbarhet integrerat i strategier, processer och nyckeltal, men också i det dagliga arbetet, kan man hantera olika hållbarhetsaspekter på bästa sätt. Utmaningen består ofta i att få alla delar av verksamheten att bidra till en övergripande strategi. För att få full utväxling av hållbarhetsarbetet gäller det att arbeta fokuserat med strategiimplementering och integrering av hållbarhetaspekterna i kärnverksamheten.
-                        </p>
-                        <br>                
-    
-            </div>
-
-            <div class='col-sm-6'>
-                            
-                    <canvas id="engagemangchart" ></canvas>
+                    
+                    <canvas id="verksamhetsChart" ></canvas>
                     <br> 
                     
-                    <h1>Engagemang</h1>
+                    <h1>Verksamhetsstyrning</h1>
                     <br>
                     <p>
                             Har organisationen strukturer som främjar socialt ansvarstagande? Med hållbarhet integrerat i strategier, processer och nyckeltal, men också i det dagliga arbetet, kan man hantera olika hållbarhetsaspekter på bästa sätt. Utmaningen består ofta i att få alla delar av verksamheten att bidra till en övergripande strategi. För att få full utväxling av hållbarhetsarbetet gäller det att arbeta fokuserat med strategiimplementering och integrering av hållbarhetaspekterna i kärnverksamheten.
                     </p>
                     <br>                
+    
+            </div>
 
+            <div class='col-sm-6'>
+                            
+                    <canvas id="engagemangChart" ></canvas>
+                    <br> 
+                    
+                    <h1>Engagemang</h1>
+                    <br>
+                    <p>
+                            Hur väl lever företaget upp till principer för hållbart företagande? Företagets deltagande och
+                            åtaganden i nationella och internationella initiativ ger viktiga referenspunkter för hur verksamheten
+                            ska kan göras mer hållbar. Det kan också bidra med ny och mer kunskap. Verksamhetsmetoder som
+                            är ansvarstagande och möjliggör nödvändiga förändringar är förutsättningar för ett effektivt
+                            hållbarhetsarbete.
+                    </p>
+                    <br>                
+
+            </div>
         </div>
 
+        <div class="row justify-content-around">
+            <div class='col-sm-6'>
+                            
+                    <canvas id="resurserChart" ></canvas>
+                    <br> 
+                    
+                    <h1>Resurser</h1>
+                    <br>
+                    <p>
+                            Avsätter företaget tillräckliga resurser för att driva på, utveckla och följa upp sitt hållbarhetsarbete?
+                            Utan ett aktivt och löpande arbete och tydliggjort internt ansvar riskerar hållbarhetsambitionen bli
+                            en papperstiger. Utbildning och fortbildning för anställda är avgörande för att alla vid företaget ska
+                            kunna förstå hur och bidra till att företaget lever upp till sitt sociala ansvar.
+                    </p>
+                      
 
-    </div>
+            </div>
+            <div class='col-sm-6'>
+                            
+                    <canvas id="kommunikationChart" ></canvas>
+                    <br> 
+                    
+                    <h1>Kommunikation</h1>
+                    <br>
+                    <p>
+                            Redovisar och kommunicerar företaget sitt hållbarhetsarbete på ett transparent sätt? Det brukar
+                            sägas att hållbarhetsarbete till stor del baseras på att veta och visa. Med andra ord att det finns
+                            rutiner för att förstå sin påverkan och en öppenhet kring hur man arbetar för att förhindra risker och för att bidra till sin omvärld. En grundlig uppföljning, saklig rapportering och aktiv kommunikation av hållbarhetsarbetet är centrala delar i företagets sociala ansvarstagande.
+                    </p>
+                    <br>                
+
+            </div>
+
+        </div>
 
 </div>
 
