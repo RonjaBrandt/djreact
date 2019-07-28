@@ -48,9 +48,8 @@ class ResponseListView(ListView, TypeFormApiMixin):
         context['response'] = Response.objects.get(response_id=qs)
 
         try:
-           # print(qs)
             data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
-            
+
             if Response.objects.filter(response_id=qs).exists():
                 pass
             else:
@@ -58,31 +57,26 @@ class ResponseListView(ListView, TypeFormApiMixin):
                 obj.save()
         except requests.HTTPError:
             pass
-       # göra denna till []  förra var contex[]
+
         typeform_API = data['items'][0]['answers']
         response = Response.objects.get(response_id=qs)
-       # response = Response.objects.all()
         categorys = Category.objects.all()
         questions = Question.objects.all()
         answers = Answer.objects.all()
-        #obj = Question.objects.get(question_ID=field['field']['ref'])
-       # print(obj)
+
         for field in typeform_API:
             try:
                 obj = Question.objects.get(question_ID=field['field']['ref'])
-                #print(obj)
-               # print(answers.filter(the_answer=field['choice']))
+
             except:
                 pass
-            
+
             try:
                 # field[] is a dict
                 # obj is a object of class Question
                 # Checks if there is a Question in the DB with the ref from Tyoe form
                 for bool_answer in answers.filter(bool_answer=field['boolean']):
-                   # print(bool_answer)
                     _id = bool_answer.id
-                    #print(_id)
                     b1 = answers.get(pk=_id)
 
                     if str(obj.category) == 'verksamhetsstyrning':
@@ -92,33 +86,23 @@ class ResponseListView(ListView, TypeFormApiMixin):
                         response.save()
                         break
                     elif str(obj.category) == 'engagemang':
-                        #print(obj)
-                       # print(obj.category)
                         response.engagemang += b1.points
                         response.save()
                         break
                     elif str(obj.category) == 'kommunikation':
-                      #  print(obj)
-                        #print(obj.category)
                         response.kommunikation += b1.points
                         response.save()
                         break
                     elif str(obj.category) == 'resurser':
-                        #print(obj)
-                        #print(obj.category)
                         response.resurser += b1.points
                         response.save()
                         break
 
                 for the_answer in answers.filter(the_answer=field['choice']):
-                   # print(chocie_answer.id)
                     _id = the_answer.id
-                   # print(_id)
                     b1 = answers.get(pk=_id)
 
                     if str(obj.category) == 'verksamhetsstyrning':
-                        #print(obj)
-                       # print(obj.category)
                         response.verksamhetsstyrning += b1.points
                         response.save()
                         break
@@ -134,15 +118,12 @@ class ResponseListView(ListView, TypeFormApiMixin):
                         response.resurser += b1.points
                         response.save()
                         break
-      
+
                 for the_answer in answers.filter(the_answer=field['choices']):
                     _id = the_answer.id
-                    #print(_id)
                     b1 = answers.get(pk=_id)
 
                     if str(obj.category) == 'verksamhetsstyrning':
-                        #print(obj)
-                       # print(obj.category)
                         response.verksamhetsstyrning += b1.points
                         response.save()
                         break
@@ -156,19 +137,11 @@ class ResponseListView(ListView, TypeFormApiMixin):
                         break
                     elif str(obj.category) == 'resurser':
                         response.resurser += b1.points
-                        response.save() 
+                        response.save()
                         break
             except:
                 pass
         return context
-
-
-                
-
-     
-            
-                      
- 
 
 
 # Generat token for the form to send with to Typeforms hiddenfield
@@ -189,9 +162,3 @@ def _get_link(request):
 
 def create_object(self):
     return redirect('survey:view')
-
-
-
-
-
-
