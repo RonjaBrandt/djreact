@@ -45,7 +45,7 @@ class ResponseListView(ListView, TypeFormApiMixin):
         context = super().get_context_data(**kwargs)
         qs = self.request.GET['response']
 
-        context['response'] = Response.objects.get(response_id=qs)
+        
 
         try:
             data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
@@ -141,6 +141,8 @@ class ResponseListView(ListView, TypeFormApiMixin):
                         break
             except:
                 pass
+
+        context['response'] = Response.objects.get(response_id=qs)
         return context
 
 
