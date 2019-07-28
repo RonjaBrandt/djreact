@@ -41,10 +41,13 @@ class ResponseListView(ListView, TypeFormApiMixin):
     model = Response
     template_name = 'survey/index.html'
 
-    def calc_score(self, **kwargs):
-        #context = super().get_context_data(**kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        qs = self.request.GET['response']
+
+        context['response'] = Response.objects.get(response_id=qs)
+
         try:
-            qs = self.request.GET['response']
            # print(qs)
             data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
             
@@ -83,8 +86,8 @@ class ResponseListView(ListView, TypeFormApiMixin):
                     b1 = answers.get(pk=_id)
 
                     if str(obj.category) == 'verksamhetsstyrning':
-                       #  print(obj)
-                       # print(obj.category)
+                        print(obj)
+                        print(obj.category)
                         response.verksamhetsstyrning += b1.points
                         response.save()
                         break
@@ -157,15 +160,9 @@ class ResponseListView(ListView, TypeFormApiMixin):
                         break
             except:
                 pass
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        qs = self.request.GET['response']
-        #print(qs)
-
-        context['response'] = Response.objects.get(response_id=qs)
-        print(context)
         return context
+
+
                 
 
      

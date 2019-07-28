@@ -10,7 +10,10 @@ var myChart = new Chart(ctx, {
         labels: ['Verksamhetsstyrning', 'Engagemang', 'Resurser', 'Kommunikation'],
         datasets: [{
             label: '# of Scores',
-            data: [1,2,3,4],
+            data: [{{response.verksamhetsstyrning}},
+                   {{response.engagemang}},
+                   {{response.resurser}},
+                   {{response.kommunikation}}],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -41,7 +44,7 @@ var myDoughnutChart = new Chart(ctx, {
         labels: ['Verksamhetsstyrning'],
         datasets: [{
             label: '# of Scores',
-            data: [14],
+            data: [{{response.verksamhetsstyrning}}],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -95,9 +98,8 @@ var myDoughnutChart = new Chart(ctx, {
             </div>
         </div>
     </div>
-
-
-</div>      
+</div>
+        
 
 {% endblock content %}
 
