@@ -143,7 +143,7 @@ class ResponseListView(ListView, TypeFormApiMixin):
                             break
                 except:
                     pass
-
+        context['catagory'] = Category.objects.all()
         context['response'] = Response.objects.get(response_id=qs)
         return context
 
