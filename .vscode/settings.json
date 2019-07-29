@@ -4,13 +4,14 @@
     "python.pythonPath": "C:\\Program Files\\Python37\\python.exe",
     "python.linting.pylintEnabled": false,
     "python.linting.pep8Enabled": true,
-    "python.linting.pep8Args": [
-        "--max-line-length=120"
-    ],
-    "editor.formatOnSave": true,
-    "key": "ctrl+b",
-    "command": "HookyQR.beautify",
-    "when": "editorFocus"
-} {
-
+    "python.linting.pep8Args": ["--max-line-length=120" ]
 }
+
+/*Todo
+1. Få över JSON till Django
+2. Sotera Django så de blir olika delar.
+
+
+
+
+*/
