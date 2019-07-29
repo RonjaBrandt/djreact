@@ -1,6 +1,21 @@
-footer.footer{
-    
+div.navbar{
+    position: sticky;
     background-color: #3DAF2C;
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+div.row{
+    padding-bottom: 10px;
+}
+
+
+button.btn{
+    background-color: #3DAF2C;
+    padding-bottom: 10px;
+
+}
+button.btn:hover{
+    
+    background-color: #3DAF2C;
 }

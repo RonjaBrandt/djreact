@@ -141,6 +141,9 @@ var myDoughnutChart = new Chart(ctx, {
    
   
 });
+function printFunction() {
+    window.print();
+}
 {% endblock jquery %}
          </script>
 
@@ -150,7 +153,7 @@ var myDoughnutChart = new Chart(ctx, {
 <div class="container"> 
         <div class="mx-auto" >
             <div class='row'>
-                <div class='col-sm-12'>
+                <div class='col-sm'>
                     <div class="chart-container" >
                             
                             <canvas  id="myChart" ></canvas>
@@ -161,7 +164,7 @@ var myDoughnutChart = new Chart(ctx, {
 
 
 
-        <div class="row justify-content-around">
+         <div class="row justify-content-around">
             <div class='col-sm-6'>
                     
                     <canvas id="verksamhetsChart" ></canvas>
@@ -228,8 +231,12 @@ var myDoughnutChart = new Chart(ctx, {
 
         </div>
 
-</div>
-
+    </div>
+    <div class="row">
+        <center>
+            <button class="btn btn-primary hidden-print" onclick="printFunction()"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print</button>
+        </center>
+    </div>
 </div>
 
         
