@@ -121,6 +121,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'css')
+MEDIA_URL = '/css/'
+
+
+
 REST_FRAMEWORK = {
     
     'DEFAULT_PERMISSION_CLASSES': (

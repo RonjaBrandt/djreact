@@ -8,7 +8,9 @@
 
 <!--Loads css-->    
 <!-- Adds Boostrap-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}"/>
 
 
 
@@ -24,15 +26,6 @@
 </head>
 
 <body>
-<!--NAVBAR-->
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <!--Logo-->
-        <div class="navbar-header">
-            <h2>logo</h2>            
-        </div>
-    </div>
-</nav>
 
 {% block content %}{% endblock content %}
 
@@ -40,6 +33,14 @@
     $(document).ready(function(){})
 {% block jquery %}{% endblock jquery %}
 </script>
+<footer class="footer mt-5 py-5">
+    <div class="container">
+        <span>
+        <img src="{% static 'images\bi_white_logo.png' %}" class="pull-left" alt="Beyond Intent" width="250">
+        <img src="{% static 'images\unionen_rgb_vit.png' %}" class="pull-right" alt="Unionen" width="200">
+    </span>
+    </div>
+  </footer>
 
 </body>
 </html>
