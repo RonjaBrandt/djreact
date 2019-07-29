@@ -1,45 +1,47 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> {% block title %}Result{% endblock title %}</title>
-   
-
-<!--Loads css-->    
-<!-- Adds Boostrap-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
 
+    <!--Loads css-->
+    <!-- Adds Boostrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
-<!--Scripts-->
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<!--Chart.Js-->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+
+
+    <!--Scripts-->
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <!--Chart.Js-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 
 
 </head>
 
 <body>
-<!--NAVBAR-->
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <!--Logo-->
-        <div class="navbar-header">
-            <h2>logo</h2>            
+    <!--NAVBAR-->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <!--Logo-->
+            <div class="navbar-header">
+                <h2>logo</h2>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-{% block content %}{% endblock content %}
+    {% block content %}{% endblock content %}
 
-<script>
-    $(document).ready(function(){})
-{% block jquery %}{% endblock jquery %}
-</script>
+    <script>
+        $(document).ready(function () { })
+        {% block jquery %} {% endblock jquery %}
+    </script>
 
 </body>
+
 </html>

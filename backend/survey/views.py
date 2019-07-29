@@ -25,7 +25,8 @@ import requests
 
 class TypeFormApiMixin:
     base_url = "https://api.typeform.com/"
-    headers = {'Authorization': 'Bearer G5YQ7E5yn8qRdVMcAEUxEHpvHNjnnhq8EUXsrChdqid7'}
+    headers = {
+        'Authorization': 'Bearer G5YQ7E5yn8qRdVMcAEUxEHpvHNjnnhq8EUXsrChdqid7'}
 
     def _get_url(self, path):
         return self.base_url + path
@@ -45,10 +46,9 @@ class ResponseListView(ListView, TypeFormApiMixin):
         context = super().get_context_data(**kwargs)
         qs = self.request.GET['response']
 
-        
-
         try:
-            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
+            data = self.typeform_get(
+                'forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
 
             if Response.objects.filter(response_id=qs).exists():
                 pass
@@ -67,7 +67,8 @@ class ResponseListView(ListView, TypeFormApiMixin):
             response.been_calculated = True
             for field in typeform_API:
                 try:
-                    obj = Question.objects.get(question_ID=field['field']['ref'])
+                    obj = Question.objects.get(
+                        question_ID=field['field']['ref'])
 
                 except:
                     pass
