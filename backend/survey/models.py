@@ -89,6 +89,7 @@ class Response(models.Model):
    engagemang =  models.DecimalField(max_digits=5, decimal_places=3, default=0, help_text='Points for this category', blank=True, null=True)
    resurser =  models.DecimalField(max_digits=5, decimal_places=3,default=0, help_text='Points for this category',  blank=True, null=True)
    kommunikation =  models.DecimalField(max_digits=5, decimal_places=3, default=0, help_text='Points for this category', blank=True, null=True)
+   been_calculated = models.BooleanField(default=False, help_text="If False it haven't been calculated. Helps prevent so that it dont keep adding")
    
    def __str__(self):
       return 'Response ID: '+ str(self.response_id)

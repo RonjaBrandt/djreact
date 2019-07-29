@@ -63,84 +63,85 @@ class ResponseListView(ListView, TypeFormApiMixin):
         categorys = Category.objects.all()
         questions = Question.objects.all()
         answers = Answer.objects.all()
+        if not response.been_calculated:
+            response.been_calculated = True
+            for field in typeform_API:
+                try:
+                    obj = Question.objects.get(question_ID=field['field']['ref'])
 
-        for field in typeform_API:
-            try:
-                obj = Question.objects.get(question_ID=field['field']['ref'])
+                except:
+                    pass
 
-            except:
-                pass
+                try:
+                    # field[] is a dict
+                    # obj is a object of class Question
+                    # Checks if there is a Question in the DB with the ref from Tyoe form
+                    for bool_answer in answers.filter(bool_answer=field['boolean']):
+                        _id = bool_answer.id
+                        b1 = answers.get(pk=_id)
 
-            try:
-                # field[] is a dict
-                # obj is a object of class Question
-                # Checks if there is a Question in the DB with the ref from Tyoe form
-                for bool_answer in answers.filter(bool_answer=field['boolean']):
-                    _id = bool_answer.id
-                    b1 = answers.get(pk=_id)
+                        if str(obj.category) == 'verksamhetsstyrning':
+                            print(obj)
+                            print(obj.category)
+                            response.verksamhetsstyrning += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'engagemang':
+                            response.engagemang += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'kommunikation':
+                            response.kommunikation += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'resurser':
+                            response.resurser += b1.points
+                            response.save()
+                            break
 
-                    if str(obj.category) == 'verksamhetsstyrning':
-                        print(obj)
-                        print(obj.category)
-                        response.verksamhetsstyrning += b1.points
-                        response.save()
-                        break
-                    elif str(obj.category) == 'engagemang':
-                        response.engagemang += b1.points
-                        response.save()
-                        break
-                    elif str(obj.category) == 'kommunikation':
-                        response.kommunikation += b1.points
-                        response.save()
-                        break
-                    elif str(obj.category) == 'resurser':
-                        response.resurser += b1.points
-                        response.save()
-                        break
+                    for the_answer in answers.filter(the_answer=field['choice']):
+                        _id = the_answer.id
+                        b1 = answers.get(pk=_id)
 
-                for the_answer in answers.filter(the_answer=field['choice']):
-                    _id = the_answer.id
-                    b1 = answers.get(pk=_id)
+                        if str(obj.category) == 'verksamhetsstyrning':
+                            response.verksamhetsstyrning += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'engagemang':
+                            response.engagemang += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'kommunikation':
+                            response.kommunikation += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'resurser':
+                            response.resurser += b1.points
+                            response.save()
+                            break
 
-                    if str(obj.category) == 'verksamhetsstyrning':
-                        response.verksamhetsstyrning += b1.points
-                        response.save()
-                        break
-                    elif str(obj.category) == 'engagemang':
-                        response.engagemang += b1.points
-                        response.save()
-                        break
-                    elif str(obj.category) == 'kommunikation':
-                        response.kommunikation += b1.points
-                        response.save()
-                        break
-                    elif str(obj.category) == 'resurser':
-                        response.resurser += b1.points
-                        response.save()
-                        break
+                    for the_answer in answers.filter(the_answer=field['choices']):
+                        _id = the_answer.id
+                        b1 = answers.get(pk=_id)
 
-                for the_answer in answers.filter(the_answer=field['choices']):
-                    _id = the_answer.id
-                    b1 = answers.get(pk=_id)
-
-                    if str(obj.category) == 'verksamhetsstyrning':
-                        response.verksamhetsstyrning += b1.points
-                        response.save()
-                        break
-                    elif str(obj.category) == 'engagemang':
-                        response.engagemang += b1.points
-                        response.save()
-                        break
-                    elif str(obj.category) == 'kommunikation':
-                        response.kommunikation += b1.points
-                        response.save()
-                        break
-                    elif str(obj.category) == 'resurser':
-                        response.resurser += b1.points
-                        response.save()
-                        break
-            except:
-                pass
+                        if str(obj.category) == 'verksamhetsstyrning':
+                            response.verksamhetsstyrning += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'engagemang':
+                            response.engagemang += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'kommunikation':
+                            response.kommunikation += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'resurser':
+                            response.resurser += b1.points
+                            response.save()
+                            break
+                except:
+                    pass
 
         context['response'] = Response.objects.get(response_id=qs)
         return context
