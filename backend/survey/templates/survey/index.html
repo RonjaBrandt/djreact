@@ -39,13 +39,17 @@ var myChart = new Chart(ctx, {
 });
 
 var ctx = document.getElementById('verksamhetsChart').getContext('2d');
+var points = {{response.verksamhetsstyrning}}/12*100;
+points = points.toFixed(2);
+var total = 100-{{response.verksamhetsstyrning}}/12*100;
+total = total.toFixed(2);
 var myDoughnutChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
         labels: ['Verksamhetsstyrning'],
         datasets: [{
             label: '%',
-            data: [{{response.verksamhetsstyrning}}/12*100, (100-{{response.verksamhetsstyrning}}/12*100)],
+            data: [points, total],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(115, 115, 115, 0.2)',
