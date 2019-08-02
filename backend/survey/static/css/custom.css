@@ -12,7 +12,7 @@ div.row{
 
 button.btn{
     background-color: #3DAF2C;
-    padding-bottom: 10px;
+    padding: 20px;
 
 }
 button.btn:hover{
