@@ -6,7 +6,12 @@
 var ctx = document.getElementById('myChart').getContext('2d');
 var verk_point = {{response.verksamhetsstyrning}}/12*100;
 verk_point = verk_point.toFixed(2);
-
+var enga_point = {{response.engagemang}}/13*100;
+enga_point = enga_point.toFixed(2);
+var resu_point = {{response.resurser}}/7*100;
+resu_point = resu_point.toFixed(2);
+var kommu_point = {{response.kommunikation}}/3*100;
+kommu_point = kommu_point.toFixed(2);
 var myChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
@@ -14,9 +19,10 @@ var myChart = new Chart(ctx, {
         datasets: [{
             label: '%',
             data: [verk_point,
-                   {{response.engagemang}}/13*100,
-                   {{response.resurser}}/7*100,
-                   {{response.kommunikation}}/3*100],
+                   enga_point,
+                   resu_point,
+                   kommu_point,
+                   ],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -65,9 +71,7 @@ var myDoughnutChart = new Chart(ctx, {
             borderWidth: 1
         }],
       
-    },
-    
-  
+    },  
 });
 
 var ctx = document.getElementById('engagemangChart').getContext('2d');
@@ -84,7 +88,6 @@ var myDoughnutChart = new Chart(ctx, {
 
 
             ],
-            //{% for survey in surveys %}{% for category in survey.category_set.all %}{{category.current_Points}},{% endfor %}{% endfor %}
             borderColor: [
                 'rgba(54, 162, 235, 1)',
                 'rgba(115, 115, 115, 1)',
@@ -111,7 +114,6 @@ var myDoughnutChart = new Chart(ctx, {
                 'rgba(115, 115, 115, 0.2)',
 
             ],
-            //{% for survey in surveys %}{% for category in survey.category_set.all %}{{category.current_Points}},{% endfor %}{% endfor %}
             borderColor: [
                 'rgba(255, 206, 86, 1)',
                 'rgba(115, 115, 115, 1)',
@@ -135,7 +137,6 @@ var myDoughnutChart = new Chart(ctx, {
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(115, 115, 115, 0.2)',
             ],
-            //{% for survey in surveys %}{% for category in survey.category_set.all %}{{category.current_Points}},{% endfor %}{% endfor %}
             borderColor: [
                 'rgba(75, 192, 192, 1)',
                 'rgba(115, 115, 115, 1)',
