@@ -13,7 +13,7 @@ resu_point = resu_point.toFixed(2);
 var kommu_point = {{response.kommunikation}}/3*100;
 kommu_point = kommu_point.toFixed(2);
 var myChart = new Chart(ctx, {
-    type: 'radar',
+    type: 'doughnut',
     data: {
         labels: ['Verksamhetsstyrning', 'Engagemang', 'Resurser', 'Kommunikation'],
         datasets: [{
