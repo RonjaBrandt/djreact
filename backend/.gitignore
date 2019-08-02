@@ -4,3 +4,9 @@
 /lib
 /develop-eggs
 /eggs
+/static
+
+/db.sqlite3
+
+*.pyc
+__pycache__
