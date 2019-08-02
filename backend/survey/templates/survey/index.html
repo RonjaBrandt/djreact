@@ -75,13 +75,19 @@ var myDoughnutChart = new Chart(ctx, {
 });
 
 var ctx = document.getElementById('engagemangChart').getContext('2d');
+var points = {{response.engagemang}}/13*100;
+points = points.toFixed(2);
+var total = 100- {{response.engagemang}}/13*100;
+total = total.toFixed(2);
 var myDoughnutChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
         labels: ['Engagemang'],
         datasets: [{
             label: '%',
-            data: [{{response.engagemang}}/13*100,100- ({{response.engagemang}}/13*100)],
+            data: [points,
+                   total,
+                   ],
             backgroundColor: [
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(115, 115, 115, 0.2)',
@@ -102,13 +108,19 @@ var myDoughnutChart = new Chart(ctx, {
 });
 
 var ctx = document.getElementById('resurserChart').getContext('2d');
+var points = {{response.resurser}}/7*100;
+points = points.toFixed(2);
+var total = 100-{{response.resurser}}/7*100
+total = total.toFixed(2);
 var myDoughnutChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
         labels: ['Resurser'],
         datasets: [{
             label: '%',
-            data: [{{response.resurser}}/7*100,100-({{response.resurser}}/7*100)],
+            data: [points,
+                   total,
+                   ],
             backgroundColor: [
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(115, 115, 115, 0.2)',
@@ -126,13 +138,19 @@ var myDoughnutChart = new Chart(ctx, {
 });
 
 var ctx = document.getElementById('kommunikationChart').getContext('2d');
+var points = {{response.kommunikation}}/3*100;
+points = points.toFixed(2);
+var total = 100-{{response.kommunikation}}/3*100;
+total = total.toFixed(2);
 var myDoughnutChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
         labels: ['Kommunikation'],
         datasets: [{
             label: '%',
-            data: [{{response.kommunikation}}/3*100, 100-({{response.kommunikation}}/3*100)],
+            data: [points, 
+                    total,
+                    ],
             backgroundColor: [
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(115, 115, 115, 0.2)',
