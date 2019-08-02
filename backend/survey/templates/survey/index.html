@@ -86,7 +86,27 @@ var myDoughnutChart = new Chart(ctx, {
             borderWidth: 1
         }],
       
-    },  
+    },
+    options: {
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var dataset = data.datasets[tooltipItem.datasetIndex];
+                var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                    return previousValue + currentValue;
+                });
+                var currentValue = dataset.data[tooltipItem.index];       
+                return currentValue + "%";
+                }
+            }
+        },
+        legend: {
+            labels: {
+                fontFamily: 'Paralucent Condensed Bold',
+                fontSize: 14
+            }
+              }
+    }
 });
 
 var ctx = document.getElementById('engagemangChart').getContext('2d');
@@ -118,7 +138,26 @@ var myDoughnutChart = new Chart(ctx, {
         }],
       
     },
-   
+    options: {
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var dataset = data.datasets[tooltipItem.datasetIndex];
+                var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                    return previousValue + currentValue;
+                });
+                var currentValue = dataset.data[tooltipItem.index];       
+                return currentValue + "%";
+                }
+            }
+        },
+        legend: {
+            labels: {
+                fontFamily: 'Paralucent Condensed Bold',
+                fontSize: 14
+            }
+              }
+    }
   
 });
 
@@ -150,6 +189,26 @@ var myDoughnutChart = new Chart(ctx, {
         }],
       
     },  
+    options: {
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var dataset = data.datasets[tooltipItem.datasetIndex];
+                var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                    return previousValue + currentValue;
+                });
+                var currentValue = dataset.data[tooltipItem.index];       
+                return currentValue + "%";
+                }
+            }
+        },
+        legend: {
+            labels: {
+                fontFamily: 'Paralucent Condensed Bold',
+                fontSize: 14
+            }
+              }
+    }
 });
 
 var ctx = document.getElementById('kommunikationChart').getContext('2d');
@@ -176,7 +235,26 @@ var myDoughnutChart = new Chart(ctx, {
             ],
             borderWidth: 1
         }],
-      
+        options: {
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var dataset = data.datasets[tooltipItem.datasetIndex];
+                var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                    return previousValue + currentValue;
+                });
+                var currentValue = dataset.data[tooltipItem.index];       
+                return currentValue + "%";
+                }
+            }
+        },
+        legend: {
+            labels: {
+                fontFamily: 'Paralucent Condensed Bold',
+                fontSize: 14
+            }
+              }
+    }
     },
    
   
