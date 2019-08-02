@@ -5,15 +5,15 @@
 
 var ctx = document.getElementById('myChart').getContext('2d');
 var verk_point = {{response.verksamhetsstyrning}}/12*100;
-verk_point = 
-var enga_point = 
+verk_point = verk_point.toFixed(2);
+
 var myChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
         labels: ['Verksamhetsstyrning', 'Engagemang', 'Resurser', 'Kommunikation'],
         datasets: [{
             label: '%',
-            data: [,
+            data: [verk_point,
                    {{response.engagemang}}/13*100,
                    {{response.resurser}}/7*100,
                    {{response.kommunikation}}/3*100],
