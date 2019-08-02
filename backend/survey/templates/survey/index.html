@@ -18,7 +18,7 @@ var myChart = new Chart(ctx, {
         labels: ['Verksamhetsstyrning', 'Engagemang', 'Resurser', 'Kommunikation'],
         datasets: [{
             label: '%',
-            data: [verk_point + "%",
+            data: [verk_point,
                    enga_point,
                    resu_point,
                    kommu_point,
@@ -39,6 +39,17 @@ var myChart = new Chart(ctx, {
         }],
        
     },
+    tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data) {
+        	var dataset = data.datasets[tooltipItem.datasetIndex];
+          var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+            return previousValue + currentValue;
+          });
+          var currentValue = dataset.data[tooltipItem.index];    
+          return currentValue + "%";
+        }
+      }
     
 });
 
