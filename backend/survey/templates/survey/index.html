@@ -40,12 +40,6 @@ var myChart = new Chart(ctx, {
        
     },
     options: {
-        legend: {
-            labels: {
-                fontFamily: 'Paralucent Condensed Bold'
-                
-            }
-              }
         tooltips: {
             callbacks: {
                 label: function(tooltipItem, data) {
@@ -57,7 +51,13 @@ var myChart = new Chart(ctx, {
                 return currentValue + "%";
                 }
             }
-        }
+        },
+        legend: {
+            labels: {
+                fontFamily: 'Paralucent Condensed Bold'
+                
+            }
+              }
     }
 });
 
