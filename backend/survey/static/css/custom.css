@@ -1,12 +1,29 @@
 div.navbar{
     position: sticky;
     background-color: #3DAF2C;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 div.row{
     padding-bottom: 10px;
 }
 
+h1{
+    font-style:bold;
+    font-stretch: condensed;
+    font-family: Paralucent;
+}
+
+h2{
+    font-style: medium;
+    font-stretch: condensed;
+    font-family: Paralucent;
+}
+p{
+    font-family: minion pro;
+    font-size: 16;
+}
 
 button.btn{
     background-color: #64BF56;

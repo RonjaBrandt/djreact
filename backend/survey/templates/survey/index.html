@@ -14,7 +14,7 @@ resu_point = resu_point.toFixed(2);
 var kommu_point = {{response.kommunikation}}/3*100;
 kommu_point = kommu_point.toFixed(2);
 var myChart = new Chart(ctx, {
-    type: 'doughnut',
+    type: 'polarArea',
     data: {
         labels: ['Verksamhetsstyrning', 'Engagemang', 'Resurser', 'Kommunikation'],
         datasets: [{
@@ -30,13 +30,11 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 164, 0, 0.2)',
                 'rgba(0, 161, 176, 0.2)',
             ],
+            
             borderColor: [
-                'rgba(255, 38, 28, 1)',
-                'rgba(101, 178, 233, 1)',
-                'rgba(255, 164, 0, 1)',
-                'rgba(0, 161, 176, 1)',
+
             ],
-            borderWidth: 5
+            borderWidth: 0
         }],
        
     },
@@ -54,9 +52,10 @@ var myChart = new Chart(ctx, {
             }
         },
         legend: {
+            position:'bottom',
             labels: {
                 fontFamily: 'Paralucent Condensed Bold',
-                fontSize: 14
+                fontSize: 16
             }
               }
     }
@@ -76,19 +75,28 @@ var myDoughnutChart = new Chart(ctx, {
             data: [points, total],
             backgroundColor: [
                 'rgba(255, 38, 28, 0.2)',
-                'rgba(111, 98, 90, 0.2)',
+                'rgba(255, 255, 255, 1)',
             ],
-
+            hoverBackgroundColor: [
+                'rgba(255, 38, 28, 0.2)',
+                'rgba(255, 255, 255, 1)',
+            ],
+            
             borderColor: [
-                'rgba(255, 38, 28, 1)',
-                'rgba(111, 98, 90, 1)',
 
             ],
-            borderWidth: 1
+            borderWidth: 0
         }],
       
     },
     options: {
+        title: {
+            display: true,
+            fontFamily: 'Paralucent Condensed Bold',
+            position: 'top',
+            fontSize: 18,
+            text: '%',
+        },
         tooltips: {
             callbacks: {
                 label: function(tooltipItem, data) {
@@ -102,6 +110,7 @@ var myDoughnutChart = new Chart(ctx, {
             }
         },
         legend: {
+            display: false,
             labels: {
                 fontFamily: 'Paralucent Condensed Bold',
                 fontSize: 14
@@ -126,20 +135,25 @@ var myDoughnutChart = new Chart(ctx, {
                    ],
             backgroundColor: [
                 'rgba(101, 178, 233, 0.2)',
-                'rgba(111, 98, 90, 0.2)',
-
-
+                'rgba(255, 255, 255, 1)',
             ],
-            borderColor: [
-                'rgba(101, 178, 233, 1)',
-                'rgba(111, 98, 90, 1)',
-
+            hoverBackgroundColor: [
+                'rgba(101, 178, 233, 0.2)',
+                'rgba(255, 255, 255, 1)',
             ],
-            borderWidth: 1
+            borderColor: [],
+            borderWidth: 0
         }],
       
     },
     options: {
+        title: {
+            display: true,
+            fontFamily: 'Paralucent Condensed Bold',
+            position: 'top',
+            fontSize: 18,
+            text: '%',
+        },
         tooltips: {
             callbacks: {
                 label: function(tooltipItem, data) {
@@ -153,6 +167,7 @@ var myDoughnutChart = new Chart(ctx, {
             }
         },
         legend: {
+            display: false,
             labels: {
                 fontFamily: 'Paralucent Condensed Bold',
                 fontSize: 14
@@ -178,19 +193,25 @@ var myDoughnutChart = new Chart(ctx, {
                    ],
             backgroundColor: [
                 'rgba(255, 164, 0, 0.2)',
-                'rgba(111, 98, 90, 0.2)',
-
+                'rgba(255, 255, 255, 1)',
             ],
-            borderColor: [
-                'rgba(255, 164, 0, 1)',
-                'rgba(111, 98, 90, 1)',
-
+            hoverBackgroundColor: [
+                'rgba(255, 164, 0, 0.2)',
+                'rgba(255, 255, 255, 1)',
             ],
-            borderWidth: 1
+            borderColor: [],
+            borderWidth: 0
         }],
       
     },  
     options: {
+        title: {
+            display: true,
+            fontFamily: 'Paralucent Condensed Bold',
+            position: 'top',
+            fontSize: 18,
+            text: '%',
+        },
         tooltips: {
             callbacks: {
                 label: function(tooltipItem, data) {
@@ -204,6 +225,7 @@ var myDoughnutChart = new Chart(ctx, {
             }
         },
         legend: {
+            display: false,
             labels: {
                 fontFamily: 'Paralucent Condensed Bold',
                 fontSize: 14
@@ -228,15 +250,24 @@ var myDoughnutChart = new Chart(ctx, {
                     ],
             backgroundColor: [
                 'rgba(0, 161, 176, 0.2)',
-                'rgba(111, 98, 90, 0.2)',
+                'rgba(255, 255, 255, 1)',
             ],
-            borderColor: [
-                'rgba(0, 161, 176, 1)',
-                'rgba(111, 98, 90, 1)',
+            hoverBackgroundColor: [
+                'rgba(0, 161, 176, 0.2)',
+                'rgba(255, 255, 255, 1)',
             ],
-            borderWidth: 1
+            borderColor: [],
+            borderWidth: 0
         }],
-        options: {
+    },
+    options: {
+        title: {
+            display: true,
+            fontFamily: 'Paralucent Condensed Bold',
+            position: 'top',
+            fontSize: 18,
+            text: '%',
+        },
         tooltips: {
             callbacks: {
                 label: function(tooltipItem, data) {
@@ -250,16 +281,15 @@ var myDoughnutChart = new Chart(ctx, {
             }
         },
         legend: {
+            display: false,
             labels: {
                 fontFamily: 'Paralucent Condensed Bold',
                 fontSize: 14
             }
               }
-    }
-    },
-   
-  
+    }  
 });
+
 function printFunction() {
     window.print();
 }
@@ -270,6 +300,11 @@ function printFunction() {
 
 {% block content %}
 <div class="container"> 
+    <center>
+    <h1>ASSET för Unionen</h1>
+    <h2>Resultatrapport</h2>
+    </center>
+    <br>
         <div class="mx-auto" >
             <div class='row'>
                 <div class='col-sm'>
@@ -289,7 +324,7 @@ function printFunction() {
                     <canvas id="verksamhetsChart" ></canvas>
                     <br> 
                     
-                    <h1>Verksamhetsstyrning</h1>
+                    <h2>Verksamhetsstyrning</h2>
                     <br>
                     
                     <p>
@@ -304,25 +339,23 @@ function printFunction() {
                     <canvas id="engagemangChart" ></canvas>
                     <br> 
                     
-                    <h1>Engagemang</h1>
+                    <h2>Engagemang</h2>
                     <br>
                     <p>
                             Hur väl lever företaget upp till principer för hållbart företagande? Företagets deltagande och
                             åtaganden i nationella och internationella initiativ ger viktiga referenspunkter för hur verksamheten ska kan göras mer hållbar. Det kan också bidra med ny och mer kunskap. Verksamhetsmetoder som är ansvarstagande och möjliggör nödvändiga förändringar är förutsättningar för ett effektivt hållbarhetsarbete.
-                    </p>
-                    <br>                
+                    </p>              
 
             </div>
         </div>
-            <br>
-            <br>
+    
         <div class="row justify-content-around">
             <div class='col-sm-6'>
                             
                     <canvas id="resurserChart" ></canvas>
                     <br> 
                     
-                    <h1>Resurser</h1>
+                    <h2>Resurser</h2>
                     <br>
                     <p>
                             Avsätter företaget tillräckliga resurser för att driva på, utveckla och följa upp sitt hållbarhetsarbete?
@@ -338,7 +371,7 @@ function printFunction() {
                     <canvas id="kommunikationChart" ></canvas>
                     <br> 
                     
-                    <h1>Kommunikation</h1>
+                    <h2>Kommunikation</h2>
                     <br>
                     <p>
                             Redovisar och kommunicerar företaget sitt hållbarhetsarbete på ett transparent sätt? Det brukar
