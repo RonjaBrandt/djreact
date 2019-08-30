@@ -6,10 +6,9 @@ from . import views
 app_name = 'survey'
 
 urlpatterns = [
-    #generats tooken for the form and sends the user to Typeform
+    # generats tooken for the form and sends the user to Typeform
     path('start/', views._get_link, name='start'),
 
-    
     # /survey/mdasmio1313JILAF
     path('response_id/', views.ResponseListView.as_view(), name='view'),
     

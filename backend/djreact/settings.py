@@ -23,9 +23,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ac+(0k7(i!$0_qlftnbn4h&zr1o5(*z=bv#gw1___#i2-3r86h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = [
+    'surveys.beyondintent.se',
+    'assets.beyondintent.se'
+    ]
 
 
 # Application definition
@@ -125,10 +129,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'css')
 MEDIA_URL = '/css/'
 
-
-
 REST_FRAMEWORK = {
-    
+
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.DjangoModelPermissions',
     )
