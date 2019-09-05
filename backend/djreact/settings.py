@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'surveys.beyondintent.se',
-    'assets.beyondintent.se'
+    'asset.beyondintent.se'
     ]
 
 
