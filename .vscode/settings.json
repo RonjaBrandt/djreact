@@ -6,11 +6,3 @@
     "python.linting.pep8Enabled": true
 }
 
-/*Todo
-1. Få över JSON till Django
-2. Sotera Django så de blir olika delar.
-
-
-
-
-*/

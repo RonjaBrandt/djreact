@@ -17,53 +17,18 @@ from .serializeres import SurveySerializer, CategorySerializer, QuestionSerializ
 from .forms import CategoryModelForm
 from .mixins import AjaxFormMixin
 
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+
 import json
 import urllib.request
 import urllib.parse as urlparse
 import requests
 
-#En model.Model är ditt interface mot databasen. En View är ett sätt att visa data, eller ta emot.
-
-
-class JoinFormView(AjaxFormMixin, FormView):
-    form_class = CategoryModelForm
-    template_name = 'survey/index.html'
-
-class CategoryUpdate(AjaxFormMixin ,UpdateView):
-    model = Category
-    fields = ['current_Points']
-
-    def form_valid(self, form):
-        """If the form is valid, save the associated model."""
-        self.object = form.save()
-        return http.JsonResponse({'status': 'SUCCESS', 'value': self.object.current_Points})
-
-
-# API view for catagory
-class  ChartData(APIView):
-    authentication_classes = []
-    permission_classes = []
-
-    def get(self, request, format=None):
-        category = Category.objects.all()
-        serializer = CategorySerializer(category, many=True)
-
-        return Response(serializer.data)
-
-class  QuestionData(APIView):
-    authentication_classes = []
-    permission_classes = []
-
-    def get(self, request, format=None):
-        question = Question.objects.all()
-        serializer = QuestionSerializer(question, many=True)
-
-        return Response(serializer.data)
-
-
 
 class TypeFormApiMixin:
-    base_url="https://api.typeform.com/"
+    base_url = "https://api.typeform.com/"
+    # kan behövas uppdateras
     headers = {'Authorization': 'Bearer G5YQ7E5yn8qRdVMcAEUxEHpvHNjnnhq8EUXsrChdqid7'}
 
     def _get_url(self, path):
@@ -79,43 +44,109 @@ class TypeFormApiMixin:
 class ResponseListView(ListView, TypeFormApiMixin):
     model = Response
     template_name = 'survey/index.html'
-    print(1)
-    # Här är där jag håller på Eric.
-    def get_tooken(request, value):
-        print(value)
-        print((value))
-        url = "http://127.0.0.1:8000/survey/response_id/response={resp}/".format(resp=value)
-        parsed = urlparse.urlparse(url)
-        print(urlparse.parse_qs(parsed.query)['response'])
-        return parsed
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(2)
+        qs = self.request.GET['response']
         try:
-            # det är hit jag vill ha value, osäker på vilka värden som ska in på get_tooken här, den klagar om jag inte har 2 värden där
-            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=self.get_tooken(self, **kwargs))).json()
-            print(data)
-#ev kan krångla se över. Ej klart
-            context['items'] = data['items'] 
+            # importera ID från URL
+            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
+
+            if Response.objects.filter(response_id=qs).exists():
+                pass
+            else:
+                obj = Response.objects.create(response_id=qs)
+                obj.save()
         except requests.HTTPError:
             pass
-        else:
-            # INte klart 
-            for item in data['items']:
-                for answer in item['answers']:
-                    try:
-                        answer = Answer.objects.get(question_ID = answer['field']['ref'])
-                        response= Response.objects.get(response_ID = answer['hidden']['query']) 
-                        question.category.current_Points += question.question_Points
-                        question.category.save()
-                    except Question.DoesNotExist:
-                        pass
 
-        context['questions'] = Question.objects.all()
-        context['categorys'] = Category.objects.all()
-        context['surveys'] = Survey.objects.all()
-        #print(context)
+        typeform_API = data['items'][0]['answers']
+        response = Response.objects.get(response_id=qs)
+        # städa upp överig övrig kod
+        categorys = Category.objects.all()
+        questions = Question.objects.all()
+        answers = Answer.objects.all()
+        if not response.been_calculated:
+            response.been_calculated = True
+            for field in typeform_API:
+                try:
+                    obj = Question.objects.get(question_ID=field['field']['ref'])
+
+                except:
+                    pass
+
+                try:
+                    # field[] is a dict
+                    # obj is a object of class Question
+                    # Checks if there is a Question in the DB with the ref from Tyoe form
+                    for bool_answer in answers.filter(bool_answer=field['boolean']):
+                        _id = bool_answer.id
+                        b1 = answers.get(pk=_id)
+                                # importera kategorier
+                        if str(obj.category) == 'verksamhetsstyrning':
+                            #print(obj)
+                            #print(obj.category)
+                            response.verksamhetsstyrning += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'engagemang':
+                            response.engagemang += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'kommunikation':
+                            response.kommunikation += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'resurser':
+                            response.resurser += b1.points
+                            response.save()
+                            break
+
+                    for the_answer in answers.filter(the_answer=field['choice']):
+                        _id = the_answer.id
+                        b1 = answers.get(pk=_id)
+
+                        if str(obj.category) == 'verksamhetsstyrning':
+                            response.verksamhetsstyrning += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'engagemang':
+                            response.engagemang += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'kommunikation':
+                            response.kommunikation += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'resurser':
+                            response.resurser += b1.points
+                            response.save()
+                            break
+
+                    for the_answer in answers.filter(the_answer=field['choices']):
+                        _id = the_answer.id
+                        b1 = answers.get(pk=_id)
+
+                        if str(obj.category) == 'verksamhetsstyrning':
+                            response.verksamhetsstyrning += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'engagemang':
+                            response.engagemang += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'kommunikation':
+                            response.kommunikation += b1.points
+                            response.save()
+                            break
+                        elif str(obj.category) == 'resurser':
+                            response.resurser += b1.points
+                            response.save()
+                            break
+                except:
+                    pass
+
+        context['response'] = Response.objects.get(response_id=qs)
         return context
 
 
@@ -130,20 +161,24 @@ def _generate_token(length=50):
         pass
     return out
 
-
+#ändra så form idet hämtas
 def _get_link(request):
     return redirect("https://beyondintent.typeform.com/to/g46uGI?response_id=" + _generate_token())
 
 
-#def create_object(self):
-#    print(3)
-#    obj = Response(response_id = get_id(), 
-#    verksamhetsstyrning = 0, 
-#    engagemang = 0, resurser= 0, 
-#    kommunikation= 0)
-#    obj.save()
-#    return redirect('survey:view')
+def create_object(self):
+    return redirect('survey:view')
 
 
+def handler404(request, *args, **argv):
+    response = render_to_response('404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
 
 
+def handler500(request, *args, **argv):
+    response = render_to_response('500.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 500
+    return response

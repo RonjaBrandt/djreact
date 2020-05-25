@@ -17,5 +17,4 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        #field = ('titlel', 'items')
         fields = '__all__'
