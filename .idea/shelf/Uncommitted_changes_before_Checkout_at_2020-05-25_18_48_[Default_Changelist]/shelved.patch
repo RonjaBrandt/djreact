@@ -1,0 +1,157 @@
+Index: backend/survey/views.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django import http\nfrom django.views import generic\nfrom django.views.generic import FormView, TemplateView, ListView, DetailView\nfrom django.views.generic.edit import UpdateView, CreateView\nfrom django.shortcuts import render, get_object_or_404, redirect\nfrom rest_framework.views import APIView\nfrom rest_framework.response import Response\nfrom django.http import HttpResponse, HttpResponseRedirect\nfrom rest_framework import status\nfrom urllib.parse import urlparse, parse_qs\n\nfrom random import choice\nfrom string import ascii_letters, digits\n\nfrom .models import Survey, Category, Question, Answer, Response\nfrom .serializeres import SurveySerializer, CategorySerializer, QuestionSerializer\nfrom .forms import CategoryModelForm\nfrom .mixins import AjaxFormMixin\n\nfrom django.shortcuts import render_to_response\nfrom django.template import RequestContext\n\nimport json\nimport urllib.request\nimport urllib.parse as urlparse\nimport requests\n\n\nclass TypeFormApiMixin:\n    base_url = \"https://api.typeform.com/\"\n    headers = {'Authorization': 'Bearer G5YQ7E5yn8qRdVMcAEUxEHpvHNjnnhq8EUXsrChdqid7'}\n\n    def _get_url(self, path):\n        return self.base_url + path\n\n    def typeform_get(self, path):\n        r = requests.get(self._get_url(path), headers=self.headers)\n        r.raise_for_status()\n        return r\n\n\n# List\nclass ResponseListView(ListView, TypeFormApiMixin):\n    model = Response\n    template_name = 'survey/index.html'\n\n    def get_context_data(self, **kwargs):\n        context = super().get_context_data(**kwargs)\n        qs = self.request.GET['response']\n\n        \n\n        try:\n            data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()\n\n            if Response.objects.filter(response_id=qs).exists():\n                pass\n            else:\n                obj = Response.objects.create(response_id=qs)\n                obj.save()\n        except requests.HTTPError:\n            pass\n\n        typeform_API = data['items'][0]['answers']\n        response = Response.objects.get(response_id=qs)\n        categorys = Category.objects.all()\n        questions = Question.objects.all()\n        answers = Answer.objects.all()\n        if not response.been_calculated:\n            response.been_calculated = True\n            for field in typeform_API:\n                try:\n                    obj = Question.objects.get(question_ID=field['field']['ref'])\n\n                except:\n                    pass\n\n                try:\n                    # field[] is a dict\n                    # obj is a object of class Question\n                    # Checks if there is a Question in the DB with the ref from Tyoe form\n                    for bool_answer in answers.filter(bool_answer=field['boolean']):\n                        _id = bool_answer.id\n                        b1 = answers.get(pk=_id)\n\n                        if str(obj.category) == 'verksamhetsstyrning':\n                            print(obj)\n                            print(obj.category)\n                            response.verksamhetsstyrning += b1.points\n                            response.save()\n                            break\n                        elif str(obj.category) == 'engagemang':\n                            response.engagemang += b1.points\n                            response.save()\n                            break\n                        elif str(obj.category) == 'kommunikation':\n                            response.kommunikation += b1.points\n                            response.save()\n                            break\n                        elif str(obj.category) == 'resurser':\n                            response.resurser += b1.points\n                            response.save()\n                            break\n\n                    for the_answer in answers.filter(the_answer=field['choice']):\n                        _id = the_answer.id\n                        b1 = answers.get(pk=_id)\n\n                        if str(obj.category) == 'verksamhetsstyrning':\n                            response.verksamhetsstyrning += b1.points\n                            response.save()\n                            break\n                        elif str(obj.category) == 'engagemang':\n                            response.engagemang += b1.points\n                            response.save()\n                            break\n                        elif str(obj.category) == 'kommunikation':\n                            response.kommunikation += b1.points\n                            response.save()\n                            break\n                        elif str(obj.category) == 'resurser':\n                            response.resurser += b1.points\n                            response.save()\n                            break\n\n                    for the_answer in answers.filter(the_answer=field['choices']):\n                        _id = the_answer.id\n                        b1 = answers.get(pk=_id)\n\n                        if str(obj.category) == 'verksamhetsstyrning':\n                            response.verksamhetsstyrning += b1.points\n                            response.save()\n                            break\n                        elif str(obj.category) == 'engagemang':\n                            response.engagemang += b1.points\n                            response.save()\n                            break\n                        elif str(obj.category) == 'kommunikation':\n                            response.kommunikation += b1.points\n                            response.save()\n                            break\n                        elif str(obj.category) == 'resurser':\n                            response.resurser += b1.points\n                            response.save()\n                            break\n                except:\n                    pass\n\n        context['response'] = Response.objects.get(response_id=qs)\n        return context\n\n\n# Generat token for the form to send with to Typeforms hiddenfield\ndef _generate_token(length=50):\n    out = \"\"\n    for i in range(length):\n        out += choice(ascii_letters + digits)\n    if Response.objects.filter(response_id=out) is True:\n        _generate_token()\n    else:\n        pass\n    return out\n\n\ndef _get_link(request):\n    return redirect(\"https://beyondintent.typeform.com/to/g46uGI?response_id=\" + _generate_token())\n\n\ndef create_object(self):\n    return redirect('survey:view')\n\n\ndef handler404(request, *args, **argv):\n    response = render_to_response('404.html', {},\n                                  context_instance=RequestContext(request))\n    response.status_code = 404\n    return response\n\n\ndef handler500(request, *args, **argv):\n    response = render_to_response('500.html', {},\n                                  context_instance=RequestContext(request))\n    response.status_code = 500\n    return response\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- backend/survey/views.py	(revision 74ac9744cb18663faee6cde2441cb7234f5f87ae)
++++ backend/survey/views.py	(date 1582812216453)
+@@ -38,8 +38,6 @@
+         r.raise_for_status()
+         return r
+ 
+-
+-# List
+ class ResponseListView(ListView, TypeFormApiMixin):
+     model = Response
+     template_name = 'survey/index.html'
+@@ -49,7 +47,7 @@
+         qs = self.request.GET['response']
+ 
+         
+-
++            # HÄR TAS SURVEY ID IN!
+         try:
+             data = self.typeform_get('forms/{id}/responses?query={resp}'.format(id='g46uGI', resp=qs)).json()
+ 
+@@ -78,7 +76,7 @@
+                 try:
+                     # field[] is a dict
+                     # obj is a object of class Question
+-                    # Checks if there is a Question in the DB with the ref from Tyoe form
++                    # Checks if there is a Question in the DB with the ref from Typeform
+                     for bool_answer in answers.filter(bool_answer=field['boolean']):
+                         _id = bool_answer.id
+                         b1 = answers.get(pk=_id)
+@@ -161,7 +159,7 @@
+         pass
+     return out
+ 
+-
++                            # Här ligger också form_id
+ def _get_link(request):
+     return redirect("https://beyondintent.typeform.com/to/g46uGI?response_id=" + _generate_token())
+ 
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(date 1582804044189)
++++ .idea/vcs.xml	(date 1582804044189)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.gitignore	(date 1582804044865)
++++ .idea/.gitignore	(date 1582804044865)
+@@ -0,0 +1,2 @@
++# Default ignored files
++/workspace.xml
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/modules.xml	(date 1582804044193)
++++ .idea/modules.xml	(date 1582804044193)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/djreact.iml" filepath="$PROJECT_DIR$/.idea/djreact.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/djreact.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/djreact.iml	(date 1582804416776)
++++ .idea/djreact.iml	(date 1582804416776)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="PYTHON_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$" />
++    <orderEntry type="jdk" jdkName="Python 3.6" jdkType="Python SDK" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(date 1582804416780)
++++ .idea/misc.xml	(date 1582804416780)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.6" project-jdk-type="Python SDK" />
++  <component name="PyCharmProfessionalAdvertiser">
++    <option name="shown" value="true" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .vscode/settings.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\n    \"git.ignoreLimitWarning\": true,\n    \"python.linting.enabled\": true,\n    \"python.pythonPath\": \"/usr/bin/python3\",\n    \"python.linting.pylintEnabled\": false,\n    \"python.linting.pep8Enabled\": true,\n    \"python.linting.pep8Args\": [\"--max-line-length=120\" ]\n}\n\n/*Todo\n1. Få över JSON till Django\n2. Sotera Django så de blir olika delar.\n\n\n\n\n*/
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .vscode/settings.json	(revision 74ac9744cb18663faee6cde2441cb7234f5f87ae)
++++ .vscode/settings.json	(date 1582804477637)
+@@ -7,11 +7,3 @@
+     "python.linting.pep8Args": ["--max-line-length=120" ]
+ }
+ 
+-/*Todo
+-1. Få över JSON till Django
+-2. Sotera Django så de blir olika delar.
+-
+-
+-
+-
+-*/
+\ No newline at end of file
+Index: .idea/inspectionProfiles/profiles_settings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/inspectionProfiles/profiles_settings.xml	(date 1582804044201)
++++ .idea/inspectionProfiles/profiles_settings.xml	(date 1582804044201)
+@@ -0,0 +1,6 @@
++<component name="InspectionProjectProfileManager">
++  <settings>
++    <option name="USE_PROJECT_PROFILE" value="false" />
++    <version value="1.0" />
++  </settings>
++</component>
+\ No newline at end of file
