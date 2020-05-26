@@ -39,7 +39,7 @@ class TypeFormApiMixin:
         return r
 
 
-# List
+# List to get the response
 class ResponseListView(ListView, TypeFormApiMixin):
     model = Response
     template_name = 'survey/index.html'
@@ -182,3 +182,5 @@ def handler500(request, *args, **argv):
                                   context_instance=RequestContext(request))
     response.status_code = 500
     return response
+
+class surveyImport

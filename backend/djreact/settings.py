@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'imp_survey.apps.Imp_surveyConfig',
     'survey.apps.SurveyConfig',
     'rest_framework',
 ]
