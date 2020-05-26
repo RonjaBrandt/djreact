@@ -4,6 +4,7 @@ from django.db.models import Max
 
 class Survey(models.Model):
    survey_Id = models.CharField(max_length=20, help_text="Add the Survey ID from Typefrom here")
+   survey_Name = models.CharField(max_length=40, help_text="Short name of the Survey, exempel Unionen", blank=True, null=True)
    
    def __str__(self):
       return 'SurveyID: '+self.survey_Id
@@ -13,7 +14,8 @@ class Category(models.Model):
     category_Name = models.CharField(max_length=20, help_text="Name of the Catagory", blank=True, null=True)
     max_Points = models.DecimalField(max_digits=3, decimal_places=1, default=0, help_text="Maximum points for this catagory", blank=True, null=True)
     current_Points = models.DecimalField(max_digits=5, decimal_places=2, default=0, help_text="Displaying current points. DO NOT CHANGE THIS.", blank=True, null=True)
-    
+    category_Info = models.CharField(max_length=500, help_text="Info text for this category", blank=True,null=True)
+
     def get_absolute_url(self):
       #send user to page that display the detiels of the input data
       return reverse('survey:test-detail', kwargs={'id':self.id})

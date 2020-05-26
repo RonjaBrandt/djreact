@@ -84,8 +84,8 @@ class ResponseListView(ListView, TypeFormApiMixin):
                         b1 = answers.get(pk=_id)
 
                         if str(obj.category) == 'verksamhetsstyrning':
-                            print(obj)
-                            print(obj.category)
+                            #print(obj)
+                            #print(obj.category)
                             response.verksamhetsstyrning += b1.points
                             response.save()
                             break
