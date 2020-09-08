@@ -28,7 +28,7 @@ import requests
 
 class TypeFormApiMixin:
     base_url = "https://api.typeform.com/"
-    headers = {'Authorization': 'Bearer G5YQ7E5yn8qRdVMcAEUxEHpvHNjnnhq8EUXsrChdqid7'}
+    headers = {'Authorization': 'Bearer 7XAf48G986HMAeK9GrGyENQsAGbbDxt3uhJCfRYzU3P1'}
 
     def _get_url(self, path):
         return self.base_url + path
